@@ -1,0 +1,36 @@
+name: local-implementer
+repo: https://github.com/<USER>/local-implementer
+sha: 0000000000000000000000000000000000000000
+title: Local Implementer
+description: >-
+  Adds one tool, `implement_task`, that hands a single well-specified coding task to a local
+  model (Ollama, llama.cpp or any OpenAI-compatible local server) and returns the resulting
+  diff. The local model works inside a fixed toolset with no shell (read, grep, glob, git
+  status/diff, write/edit, run the configured test command, finish) under hard turn and
+  context budgets, with a path jail, read-only test files, an auto-finish when tests go
+  green, a repeat-call guard, and revert of partial edits when a run is blocked. Your main
+  model spends tokens only on the instruction and the returned diff. Disclosure — runs git
+  and the test command you or the user configured (the agent should pass only a command the
+  user authorized) as subprocesses in the working directory; writes only inside the given
+  `workdir` (never .git or node_modules) plus a run transcript under
+  `<workdir>/.local-implementer/`; network access only to the configured local model
+  endpoint (non-local endpoints are refused); no telemetry, no self-update, no stored
+  credentials.
+maintainer: Bart Porcincula
+tier: community
+category: tools
+requires_hermes: ">=0.23.0"
+version: "0.1.0"
+docs_url: https://github.com/<USER>/local-implementer#readme
+platforms: []
+capabilities:
+  provides_tools:
+    - implement_task
+  provides_hooks: []
+  provides_middleware: []
+  requires_env:
+    - LI_ENDPOINT
+    - LI_MODEL
+    - LI_MAX_TURNS
+    - LI_CTX_BUDGET
+    - LI_TEST_COMMAND

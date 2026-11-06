@@ -1,0 +1,102 @@
+[
+ {
+  "bug": "bug1",
+  "status": "done",
+  "reason": "auto_finish",
+  "turns": 5,
+  "tokens": 6020,
+  "secs": 183.6,
+  "green": true,
+  "diff": "--- a/scorer.py\n+++ b/scorer.py\n@@ -1,3 +1,3 @@\n def best_score(scores):\n     \"\"\"Return the highest score in the list.\"\"\"\n-    return min(scores)\n+    return max(scores)\n"
+ },
+ {
+  "bug": "bug1",
+  "status": "done",
+  "reason": null,
+  "turns": 6,
+  "tokens": 7213,
+  "secs": 208.7,
+  "green": true,
+  "diff": "--- a/scorer.py\n+++ b/scorer.py\n@@ -1,3 +1,3 @@\n def best_score(scores):\n     \"\"\"Return the highest score in the list.\"\"\"\n-    return min(scores)\n+    return max(scores)\n"
+ },
+ {
+  "bug": "bug1",
+  "status": "done",
+  "reason": null,
+  "turns": 6,
+  "tokens": 7209,
+  "secs": 209.6,
+  "green": true,
+  "diff": "--- a/scorer.py\n+++ b/scorer.py\n@@ -1,3 +1,3 @@\n def best_score(scores):\n     \"\"\"Return the highest score in the list.\"\"\"\n-    return min(scores)\n+    return max(scores)\n"
+ },
+ {
+  "bug": "bug1",
+  "status": "done",
+  "reason": "auto_finish",
+  "turns": 6,
+  "tokens": 7177,
+  "secs": 206.5,
+  "green": true,
+  "diff": "--- a/scorer.py\n+++ b/scorer.py\n@@ -1,3 +1,3 @@\n def best_score(scores):\n     \"\"\"Return the highest score in the list.\"\"\"\n-    return min(scores)\n+    return max(scores)\n"
+ },
+ {
+  "bug": "bug1",
+  "status": "done",
+  "reason": "auto_finish",
+  "turns": 5,
+  "tokens": 5986,
+  "secs": 165.3,
+  "green": true,
+  "diff": "--- a/scorer.py\n+++ b/scorer.py\n@@ -1,3 +1,3 @@\n def best_score(scores):\n     \"\"\"Return the highest score in the list.\"\"\"\n-    return min(scores)\n+    return max(scores)\n"
+ },
+ {
+  "bug": "bug2",
+  "status": "done",
+  "reason": "auto_finish",
+  "turns": 7,
+  "tokens": 8953,
+  "secs": 289.8,
+  "green": true,
+  "diff": "--- a/ranking.py\n+++ b/ranking.py\n@@ -1,3 +1,3 @@\n def rank(players):\n     \"\"\"Return player names ordered from highest points to lowest.\"\"\"\n-    return [p[\"name\"] for p in sorted(players, key=lambda p: p[\"points\"])]\n+    return [p[\"name\"] for p in sorted(players, key=lambda p: p[\"points\"], reverse=True)]\n"
+ },
+ {
+  "bug": "bug2",
+  "status": "done",
+  "reason": null,
+  "turns": 6,
+  "tokens": 7700,
+  "secs": 244.2,
+  "green": true,
+  "diff": "--- a/ranking.py\n+++ b/ranking.py\n@@ -1,3 +1,3 @@\n def rank(players):\n     \"\"\"Return player names ordered from highest points to lowest.\"\"\"\n-    return [p[\"name\"] for p in sorted(players, key=lambda p: p[\"points\"])]\n+    return [p[\"name\"] for p in sorted(players, key=lambda p: p[\"points\"], reverse=True)]\n"
+ },
+ {
+  "bug": "bug2",
+  "status": "done",
+  "reason": null,
+  "turns": 6,
+  "tokens": 7710,
+  "secs": 248.5,
+  "green": true,
+  "diff": "--- a/ranking.py\n+++ b/ranking.py\n@@ -1,3 +1,3 @@\n def rank(players):\n     \"\"\"Return player names ordered from highest points to lowest.\"\"\"\n-    return [p[\"name\"] for p in sorted(players, key=lambda p: p[\"points\"])]\n+    return [p[\"name\"] for p in sorted(players, key=lambda p: p[\"points\"], reverse=True)]\n"
+ },
+ {
+  "bug": "bug2",
+  "status": "done",
+  "reason": null,
+  "turns": 6,
+  "tokens": 7721,
+  "secs": 250.4,
+  "green": true,
+  "diff": "--- a/ranking.py\n+++ b/ranking.py\n@@ -1,3 +1,3 @@\n def rank(players):\n     \"\"\"Return player names ordered from highest points to lowest.\"\"\"\n-    return [p[\"name\"] for p in sorted(players, key=lambda p: p[\"points\"])]\n+    return [p[\"name\"] for p in sorted(players, key=lambda p: p[\"points\"], reverse=True)]\n"
+ },
+ {
+  "bug": "bug2",
+  "status": "done",
+  "reason": null,
+  "turns": 6,
+  "tokens": 7719,
+  "secs": 245.4,
+  "green": true,
+  "diff": "--- a/ranking.py\n+++ b/ranking.py\n@@ -1,3 +1,3 @@\n def rank(players):\n     \"\"\"Return player names ordered from highest points to lowest.\"\"\"\n-    return [p[\"name\"] for p in sorted(players, key=lambda p: p[\"points\"])]\n+    return [p[\"name\"] for p in sorted(players, key=lambda p: p[\"points\"], reverse=True)]\n"
+ }
+]
