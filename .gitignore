@@ -1,0 +1,6 @@
+/PLAN.md
+/.local-implementer/
+__pycache__/
+.pytest_cache/
+*.py[cod]
+.venv/
