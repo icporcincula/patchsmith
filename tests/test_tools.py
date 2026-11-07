@@ -2,11 +2,11 @@ from pathlib import Path
 
 import pytest
 
-from li_plugin.tools import Jail, Session, clip
+from patchsmith_plugin.tools import Jail, Session, clip
 
 
 @pytest.mark.parametrize("path", ["../outside", ".git/config", "node_modules/a", ".ship/a",
-                                  ".local-implementer/a", "test_app.py", "src/x.spec.tsx",
+                                  ".patchsmith/a", "test_app.py", "src/x.spec.tsx",
                                   "lib/tests/helper.py", "x/__tests__/fixture.json"])
 def test_refused_write(repo, path):
     with pytest.raises(Jail):
@@ -46,7 +46,7 @@ def test_clip(repo):
 
 def test_glob_and_grep_respect_git_visibility(repo):
     (repo / ".gitignore").write_text("ignored.txt\n")
-    for name in ("visible.txt", "ignored.txt", ".local-implementer/run.jsonl"):
+    for name in ("visible.txt", "ignored.txt", ".patchsmith/run.jsonl"):
         file = repo / name
         file.parent.mkdir(exist_ok=True)
         file.write_text("needle")

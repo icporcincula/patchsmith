@@ -14,9 +14,9 @@ TASKS = {
 
 def load_plugin():
     spec = importlib.util.spec_from_file_location(
-        "local_implementer", ROOT / "__init__.py", submodule_search_locations=[str(ROOT)])
+        "patchsmith", ROOT / "__init__.py", submodule_search_locations=[str(ROOT)])
     mod = importlib.util.module_from_spec(spec)
-    sys.modules["local_implementer"] = mod
+    sys.modules["patchsmith"] = mod
     spec.loader.exec_module(mod)
     return mod
 
@@ -26,7 +26,7 @@ def git(cwd, *a):
 
 
 def one(plugin, bug, args):
-    work = Path(tempfile.mkdtemp(prefix=f"li-{bug}-"))
+    work = Path(tempfile.mkdtemp(prefix=f"ps-{bug}-"))
     shutil.copytree(ROOT / "tests" / "fixtures" / bug, work, dirs_exist_ok=True)
     git(work, "init", "-q"); git(work, "config", "user.email", "e@e"); git(work, "config", "user.name", "e")
     git(work, "add", "-A"); git(work, "commit", "-qm", "seed")

@@ -1,4 +1,4 @@
-# local-implementer
+# patchsmith
 
 A Hermes plugin that adds one tool, `implement_task`. Your main agent hands a **single, well-specified coding task** to a **local model** (Ollama, llama.cpp, or any OpenAI-compatible local server). The local model edits the code under hard budgets and the tool returns the diff.
 
@@ -7,7 +7,7 @@ Why: the expensive model keeps its context and tokens for planning and review. T
 ## Install
 
 ```
-hermes plugins install <owner>/local-implementer --enable
+hermes plugins install <owner>/patchsmith --enable
 ```
 
 You need a local OpenAI-compatible server with a tool-calling model, for example `ollama pull qwen3.5:9b`.
@@ -16,13 +16,13 @@ You need a local OpenAI-compatible server with a tool-calling model, for example
 
 | Variable | Default | Meaning |
 |---|---|---|
-| `LI_ENDPOINT` | `http://127.0.0.1:11434/v1` | Local API base (must be a local address) |
-| `LI_MODEL` | `qwen3.5:9b` | Model identifier |
-| `LI_MAX_TURNS` | `25` | Model turns per task (hard cap 60) |
-| `LI_CTX_BUDGET` | `24000` | Approximate token budget for the whole run |
-| `LI_TEST_COMMAND` | none | Test command the model may run |
+| `PS_ENDPOINT` | `http://127.0.0.1:11434/v1` | Local API base (must be a local address) |
+| `PS_MODEL` | `qwen3.5:9b` | Model identifier |
+| `PS_MAX_TURNS` | `25` | Model turns per task (hard cap 60) |
+| `PS_CTX_BUDGET` | `24000` | Approximate token budget for the whole run |
+| `PS_TEST_COMMAND` | none | Test command the model may run |
 
-Each can also be passed as an argument of the tool call. If Hermes runs in WSL and Ollama on Windows, point `LI_ENDPOINT` at the Windows host address.
+Each can also be passed as an argument of the tool call. If Hermes runs in WSL and Ollama on Windows, point `PS_ENDPOINT` at the Windows host address.
 
 ## The tool
 

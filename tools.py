@@ -15,7 +15,7 @@ import tempfile
 from dataclasses import dataclass
 
 OUT_LIMIT = 6000
-TRANSCRIPTS = ".local-implementer"
+TRANSCRIPTS = ".patchsmith"
 HIDDEN = {".git", "node_modules", ".ship", TRANSCRIPTS}
 TEST_RE = re.compile(r"(\.(test|spec)\.[jt]sx?$)|(^|/)test_[^/]+\.py$|(^|/)(tests|__tests__)(/|$)", re.I)
 
@@ -62,7 +62,7 @@ def replace_file(path: Path, state: FileState | None) -> None:
         path.unlink(missing_ok=True)
         path.symlink_to(state.data)
     else:
-        fd, name = tempfile.mkstemp(prefix=".li-", dir=path.parent)
+        fd, name = tempfile.mkstemp(prefix=".ps-", dir=path.parent)
         temporary = Path(name)
         try:
             with os.fdopen(fd, "wb") as stream:

@@ -206,15 +206,15 @@ def implement(args):
     if not isinstance(workdir, str) or not workdir.strip() or not Path(workdir).is_dir():
         raise ValueError("workdir must be an existing directory.")
     root = Path(workdir).resolve(strict=True)
-    turns = positive(configured(args, "max_turns", "LI_MAX_TURNS", 25), "max_turns", 60)
-    budget = positive(configured(args, "context_budget_tokens", "LI_CTX_BUDGET", 24000),
+    turns = positive(configured(args, "max_turns", "PS_MAX_TURNS", 25), "max_turns", 60)
+    budget = positive(configured(args, "context_budget_tokens", "PS_CTX_BUDGET", 24000),
                       "context_budget_tokens")
     keep = args.get("keep_partial", False)
     if type(keep) is not bool:
         raise ValueError("keep_partial must be a boolean.")
-    endpoint = configured(args, "endpoint", "LI_ENDPOINT", "http://127.0.0.1:11434/v1")
-    model = configured(args, "model", "LI_MODEL", "qwen3.5:9b")
-    command = configured(args, "test_command", "LI_TEST_COMMAND", "")
+    endpoint = configured(args, "endpoint", "PS_ENDPOINT", "http://127.0.0.1:11434/v1")
+    model = configured(args, "model", "PS_MODEL", "qwen3.5:9b")
+    command = configured(args, "test_command", "PS_TEST_COMMAND", "")
     if not isinstance(endpoint, str) or not isinstance(model, str) or not model.strip():
         raise ValueError("endpoint and model must be nonempty strings.")
     if not isinstance(command, str):

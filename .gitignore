@@ -1,6 +1,7 @@
 /PLAN.md
-/.local-implementer/
+/.patchsmith/
 __pycache__/
 .pytest_cache/
 *.py[cod]
 .venv/
+/EXTENSION_PLAN.md

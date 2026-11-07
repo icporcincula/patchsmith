@@ -94,3 +94,42 @@ Installed with `hermes plugins install file:///root/li-src --enable --yes-deps`;
 - `doctor --ci`: OK, 1 tool registered.
 - Forbidden-word grep over tracked files: zero hits. Secret scan: only the word "token" (LLM tokens); no credentials.
 - `python -m pytest tests -q` (Windows 3.12.7): 25 passed, 1 skipped (fixtures excluded from collection).
+
+## Phase 0 — Patchsmith rename
+
+Catalog collision check: no matches. Plugin name, toolset, install/catalog URLs, environment prefix, transcript directory and tests now use Patchsmith. `implement_task` and the checkout directory are unchanged. Historical run artifacts retain their original names and values. The five plugin-owned Hermes environment variable names were updated without displaying values.
+
+```text
+Python 3.12.7
+25 passed, 1 skipped in 12.00s
+Forbidden-word scan: zero matches
+Clean copy: /root/ps-test.ySvZlR
+
+âœ“ manifest â€” plugin.yaml parses
+âœ“ manifest fields â€” name, version, description present
+âœ“ requires_hermes â€” spec '>=0.23.0' parses
+âœ“ config schema â€” not declared
+âœ“ requires_env â€” all entries UPPER_SNAKE
+âœ“ oauth â€” not declared
+âœ“ loadable â€” entry: __init__.py
+âœ“ python dependencies â€” none declared
+âœ“ capability probe â€” register() ran in isolation
+âœ“ declared tools â€” matches registrations
+âœ“ declared hooks â€” matches registrations
+âœ“ declared middleware â€” matches registrations
+âœ“ built-in tool collisions â€” no collisions
+âœ“ security scan â€” safe
+âœ“ no core override â€” no runtime rebinds of Hermes core
+â—† Isolation â€” runs in the plugin host (plugins.isolation: host)
+
+Validation passed.
+Plugin Doctor: /root/ps-test.ySvZlR
+  manifest: patchsmith 0.1.0 (standalone)
+  OK: runtime discovery, manifest parsing, import, and registration passed
+  registrations: 1 tool(s), 0 hook(s)
+[plugins] DEBUG HERMES_PLUGINS_DEBUG=1 â€” verbose plugin discovery logging enabled
+[plugins] DEBUG Parsed manifest: key=patchsmith name=patchsmith kind=standalone source=user path=/root/.hermes/cache/scratch/hermes-plugin-doctor-xjjpt1u4/plugins/ps-test.ySvZlR
+[plugins] DEBUG Loading plugin 'patchsmith' (source=user, kind=standalone, path=/root/.hermes/cache/scratch/hermes-plugin-doctor-xjjpt1u4/plugins/ps-test.ySvZlR)
+[plugins] DEBUG Plugin patchsmith registered tool: implement_task
+[plugins] DEBUG   registered: 1 tool(s), 0 hook(s), 0 middleware, 0 slash command(s), 0 CLI command(s)
+```

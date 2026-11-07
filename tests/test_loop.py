@@ -10,7 +10,7 @@ from threading import Thread
 
 import pytest
 
-from li_plugin import _handle_implement_task
+from patchsmith_plugin import _handle_implement_task
 
 FINISH = ("finish", {"status": "done", "note": "Implemented."})
 STATUS = ("git_status", {})
@@ -80,7 +80,7 @@ def test_finish_and_transcript(repo):
     assert "+value = 2" in result["diff"]
     assert requests[1]["messages"][-1]["content"].startswith("REFUSED:")
     log = Path(result["transcript_path"])
-    assert log.parent == repo / ".local-implementer"
+    assert log.parent == repo / ".patchsmith"
     records = [json.loads(line) for line in log.read_text().splitlines()]
     assert records[-1]["status"] == "done"
 

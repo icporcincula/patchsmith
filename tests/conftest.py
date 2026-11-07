@@ -7,7 +7,7 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location(
-    "li_plugin", ROOT / "__init__.py", submodule_search_locations=[str(ROOT)],
+    "patchsmith_plugin", ROOT / "__init__.py", submodule_search_locations=[str(ROOT)],
 )
 PLUGIN = importlib.util.module_from_spec(SPEC)
 sys.modules[SPEC.name] = PLUGIN

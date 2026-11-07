@@ -1,4 +1,4 @@
-name: local-implementer
+name: patchsmith
 version: "0.1.0"
 description: "Implements one coding task through a bounded local-model tool loop and returns the patch."
 author: "Bart Porcincula"
@@ -6,18 +6,18 @@ requires_hermes: ">=0.23.0"
 provides_tools:
   - implement_task
 requires_env:
-  - name: LI_ENDPOINT
+  - name: PS_ENDPOINT
     description: "Local OpenAI-compatible API base."
     required: false
-  - name: LI_MODEL
+  - name: PS_MODEL
     description: "Local model identifier."
     required: false
-  - name: LI_MAX_TURNS
+  - name: PS_MAX_TURNS
     description: "Default maximum model turns."
     required: false
-  - name: LI_CTX_BUDGET
+  - name: PS_CTX_BUDGET
     description: "Default context budget."
     required: false
-  - name: LI_TEST_COMMAND
+  - name: PS_TEST_COMMAND
     description: "User-authorized test command."
     required: false

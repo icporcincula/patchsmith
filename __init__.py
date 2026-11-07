@@ -41,6 +41,6 @@ def _handle_implement_task(args: dict, **kwargs) -> str:
 
 def register(ctx) -> None:
     ctx.register_tool(
-        name="implement_task", toolset="local-implementer", schema=SCHEMA,
+        name="implement_task", toolset="patchsmith", schema=SCHEMA,
         handler=_handle_implement_task,
     )
