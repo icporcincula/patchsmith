@@ -1,0 +1,134 @@
+{
+  "status": "done",
+  "schema_version": 1,
+  "hardware": {
+    "os": "Windows",
+    "os_release": "11",
+    "architecture": "AMD64",
+    "cpu": {
+      "name": "AMD Ryzen 5 7500F 6-Core Processor",
+      "logical_cores": 12
+    },
+    "ram_bytes": 33946230784,
+    "gpus": [
+      {
+        "name": "Virtual Display Driver",
+        "total_bytes": null,
+        "free_bytes": null,
+        "source": "Windows display controller"
+      },
+      {
+        "name": "Virtual Display Driver",
+        "total_bytes": null,
+        "free_bytes": null,
+        "source": "Windows display controller"
+      },
+      {
+        "name": "NVIDIA GeForce RTX 5060 Ti",
+        "total_bytes": 17103323136,
+        "free_bytes": 6279921664,
+        "driver_version": "610.88",
+        "source": "nvidia-smi"
+      }
+    ],
+    "warnings": [],
+    "backend_commands": {
+      "ollama": true,
+      "llama-server": false
+    }
+  },
+  "backend": {
+    "kind": "Ollama",
+    "version": "0.17.6",
+    "reachable": true,
+    "models": [
+      {
+        "name": "qwen35-q4hf:latest",
+        "size_bytes": 5680522991,
+        "quantization": "Q4_K_M",
+        "digest": "640deee0524ba6da69d18cf0187668eddfceaeb0ef91c13fae3f906e851f6c60"
+      },
+      {
+        "name": "qwen3.5:9b",
+        "size_bytes": 6594474711,
+        "quantization": "Q4_K_M",
+        "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7"
+      },
+      {
+        "name": "nomic-embed-text:latest",
+        "size_bytes": 274302450,
+        "quantization": "F16",
+        "digest": "0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f"
+      }
+    ],
+    "loaded_models": [
+      {
+        "name": "qwen3.5:9b",
+        "size_bytes": 9975378560,
+        "vram_bytes": 9975378560
+      }
+    ],
+    "host_is_loopback": true,
+    "warnings": []
+  },
+  "estimates": [
+    {
+      "model": "qwen35-q4hf:latest",
+      "classification": "weights_plus_margin_in_total_vram_only",
+      "weight_bytes": 5680522991,
+      "heuristic_bytes": 8964111237,
+      "reason": "Estimate: weight bytes x 1.2 + 2 GiB; excludes context-dependent KV cache and runtime requirements. RAM capacity is not available RAM. No speed or reliability prediction."
+    },
+    {
+      "model": "qwen3.5:9b",
+      "classification": "weights_plus_margin_in_total_vram_only",
+      "weight_bytes": 6594474711,
+      "heuristic_bytes": 10060853301,
+      "reason": "Estimate: weight bytes x 1.2 + 2 GiB; excludes context-dependent KV cache and runtime requirements. RAM capacity is not available RAM. No speed or reliability prediction."
+    },
+    {
+      "model": "nomic-embed-text:latest",
+      "classification": "weights_plus_margin_in_free_vram",
+      "weight_bytes": 274302450,
+      "heuristic_bytes": 2476646588,
+      "reason": "Estimate: weight bytes x 1.2 + 2 GiB; excludes context-dependent KV cache and runtime requirements. RAM capacity is not available RAM. No speed or reliability prediction."
+    }
+  ],
+  "tested_configurations": [
+    {
+      "id": "maintainer-phase3",
+      "provenance": "maintainer measured",
+      "gpu_name": "NVIDIA GeForce RTX 5060 Ti",
+      "gpu_total_mib": 16311,
+      "os": "Windows 11",
+      "cpu": null,
+      "ram_bytes": null,
+      "backend": "Ollama",
+      "backend_version": null,
+      "model": "qwen3.5:9b",
+      "quantization": null,
+      "attempts": 3,
+      "max_turns": 25,
+      "context_budget_tokens": 24000,
+      "implementation_successes": 32,
+      "implementation_runs": 35,
+      "blocked_guardrail_successes": 5,
+      "blocked_guardrail_runs": 5,
+      "full_gpu_runs": 40,
+      "evidence": "eval/results-retries-gpu.json",
+      "hardware_evidence": "eval/gpu-hardware.txt",
+      "limits": "Historical evidence does not record CPU, RAM, backend version or quantization. These remain unknown; a matching model name may refer to different weights.",
+      "matching_fields": [
+        "gpu_name",
+        "installed_model_name",
+        "backend_kind"
+      ],
+      "comparison": "Shared fields only; not a reproduced benchmark on this machine."
+    }
+  ],
+  "limits": [
+    "Read-only; no model loading, downloads, installation or uploads.",
+    "Inventory describes the machine running Hermes, which may be WSL or a container.",
+    "Unknown fields remain unknown; memory fit does not establish speed, coding quality or tool-calling support. Inventory can include embedding models."
+  ]
+}

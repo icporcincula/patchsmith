@@ -1,0 +1,4 @@
+Initial narration and clarification are preserved in the JSONL.
+
+Final same-session clarification:
+The exact `qwen3.5:9b` estimate classification from the tool result is `"weights_plus_margin_in_total_vram_only"`. Total-VRAM-only means the fit assumes total GPU memory as a cap, which here needs ~10 GB but only ~6.27 GB free VRAM remains—so it doesn't fit the observed free budget. The fact that this model already lives in VRAM (~9.97 GB used) does not change the estimate: capacity alone does not guarantee [capacity margin] once other processes or future loads touch memory. Historical implementation successes are 32, blocked guardrail run count is 5, both from `maintainer-phase3`; historical quantization remains unknown and cannot be inferred for this host's current Q4_K_M build. Host uncertainty: this API uses a private-network address, so confirm its hardware matches yours before running a benchmark against the inventory.

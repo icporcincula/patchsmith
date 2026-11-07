@@ -301,3 +301,17 @@ The actual status command reports 2 recorded runs, including the error, and 5774
 Original Phase 4 evidence is also preserved privately at C:/tmp/patchsmith-phase4-raw. Release evidence keeps all identifiers and measurements; only trailing console whitespace was normalized in phase4-validation.txt and hermes-session-skill.txt. The forbidden-pattern scan over all tracked and pending release text returned zero hits before staging. Final staged checks are recorded in eval/phase4-gate.txt.
 
 The approved hardware inspection and contributor benchmark idea is recorded as a planned follow-up in docs/IMPLEMENTATION.md. Hardware detection, recommendations, downloads, and result submission are not implemented in this phase. No publication occurred.
+
+
+## Additional hardware phase: green
+
+User requested implementation after Phase 4. Added inspect_hardware, patchsmith:hardware, an evidence-linked tested registry, a reproducible contributor benchmark command, versioned reports and an outcome-consistency validator. No added dependencies, automatic downloads, uploads or publication.
+
+Acceptance: 99 passed, 1 skipped in 45.10s. Clean-copy validate --install-deps and doctor --ci passed with 4 tools; both native skills resolve; installed runtime bytes match source. Hardware skill validation passed. Windows inventory detected CPU/RAM/GPU and Ollama metadata; real Hermes inventory detected the WSL host limits and private-network endpoint uncertainty.
+
+| smoke fixture | status | independent test exit | turns | seconds | tokens_est | full GPU |
+|---|---|---|---|---|---|---|
+| bug1 | done | 0 | 5 | 9.625 | 5670 | true |
+| blocked | blocked | 1 | 5 | 12.78100000001723 | 6228 | true |
+
+Both smoke outcomes were expected; blocked made no edits. No full-suite reliability increase claimed. Raw results and transcripts are retained, including the live blank-endpoint failure before its regression fix. The live model needed a follow-up to accurately distinguish free/total VRAM and historical unknown quantization; both responses are retained. See docs/IMPLEMENTATION.md for measured limits and release-copy normalization. A harness discovery initialization issue and a helper quoting/format assertion issue were corrected without changing model measurements. Next planned work remains final delivery preparation; optional speed/context work is separate.

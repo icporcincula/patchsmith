@@ -22,6 +22,9 @@ description: >-
   credentials. Includes a namespaced delegation skill, /patchsmith status, and local run summaries
   under ~/.patchsmith/runs with estimated token totals. Optional process-local background
   runs return a job identifier for task_status; keep Hermes open until completion.
+  inspect_hardware reads CPU/RAM/GPU metadata through operating-system probes and read-only local API
+  model metadata. A hardware skill separates tested evidence from memory estimates; contributor
+  benchmarks retain raw results and export a versioned summary with no automatic upload.
 maintainer: Bart Porcincula
 tier: community
 category: tools
@@ -34,6 +37,7 @@ capabilities:
     - implement_task
     - apply_patch
     - task_status
+    - inspect_hardware
   provides_hooks: []
   provides_middleware: []
   requires_env:

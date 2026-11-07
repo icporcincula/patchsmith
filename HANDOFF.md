@@ -42,3 +42,7 @@ Known bounds: ordinary text patches only; Git proposals need an initial commit; 
 
 
 Phase 4 adds `patchsmith:delegate`, `/patchsmith status`, private summary records under `~/.patchsmith/runs`, and optional process-local background calls with `task_status`. Keep Hermes open for background work; handles do not survive a restart. The hardware compatibility feature and contributor benchmark format are planned in `docs/IMPLEMENTATION.md` and remain unimplemented.
+
+## Additional hardware phase
+
+Adds inspect_hardware (four declared tools total), patchsmith:hardware, benchmarks/tested.json, and the reproducible eval/benchmark.py command documented in benchmarks/README.md. Hardware matching and memory estimates make no new reliability claims. No public publication or model installation occurs. Next planned work remains final delivery preparation; optional speed/context work is separate.

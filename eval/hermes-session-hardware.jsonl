@@ -1,0 +1,359 @@
+{"type": "system", "subtype": "init", "model": "qwen3.5:9b", "session_id": "", "timestamp": 1794053583188}
+{"type": "tool_use", "name": "inspect_hardware", "tool_call_id": "call_ra1ti5mx", "input": {"endpoint": ""}, "timestamp": 1794053587904}
+{"type": "tool_result", "name": "inspect_hardware", "tool_call_id": "call_ra1ti5mx", "output": "{\"status\": \"done\", \"schema_version\": 1, \"hardware\": {\"os\": \"Linux\", \"os_release\": \"6.6.87.2-microsoft-standard-WSL2\", \"architecture\": \"x86_64\", \"cpu\": {\"name\": \"AMD Ryzen 5 7500F 6-Core Processor\", \"logical_cores\": 6}, \"ram_bytes\": 8328544256, \"gpus\": [{\"name\": \"NVIDIA GeForce RTX 5060 Ti\", \"total_bytes\": 17103323136, \"free_bytes\": 6276775936, \"driver_version\": \"610.88\", \"source\": \"nvidia-smi\"}], \"warnings\": [], \"backend_commands\": {\"ollama\": false, \"llama-server\": false}}, \"backend\": {\"kind\": \"Ollama\", \"version\": \"0.17.6\", \"reachable\": true, \"models\": [{\"name\": \"qwen35-q4hf:latest\", \"size_bytes\": 5680522991, \"quantization\": \"Q4_K_M\", \"digest\": \"640deee0524ba6da69d18cf0187668eddfceaeb0ef91c13fae3f906e851f6c60\"}, {\"name\": \"qwen3.5:9b\", \"size_bytes\": 6594474711, \"quantization\": \"Q4_K_M\", \"digest\": \"6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7\"}, {\"name\": \"nomic-embed-text:latest\", \"size_bytes\": 274302450, \"quantization\": \"F16\", \"digest\": \"0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f\"}], \"loaded_models\": [{\"name\": \"qwen3.5:9b\", \"size_bytes\": 9975378560, \"vram_bytes\": 9975378560}], \"host_is_loopback\": false, \"warnings\": [\"API uses a private-network address: confirm its hardware is this host before comparing it with this inventory.\"]}, \"estimates\": [{\"model\": \"qwen35-q4hf:latest\", \"classification\": \"weights_plus_margin_in_total_vram_only\", \"weight_bytes\": 5680522991, \"heuristic_bytes\": 8964111237, \"reason\": \"Estimate: weight bytes x 1.2 + 2 GiB; excludes context-dependent KV cache and runtime requirements. RAM capacity is not available RAM. No speed or reliability prediction.\"}, {\"model\": \"qwen3.5:9b\", \"classification\": \"weights_plus_margin_in_total_vram_only\", \"weight_bytes\": 6594474711, \"heuristic_bytes\": 10060853301, \"reason\": \"Estimate: weight bytes x 1.2 + 2 GiB; excludes context-dependent KV cache and runtime requirements. RAM capacity is not available RAM. No speed or reliability prediction.\"}, {\"model\": \"nomic-embed-text:latest\", \"classification\": \"weights_plus_margin_in_free_vram\", \"weight_bytes\": 274302450, \"heuristic_bytes\": 2476646588, \"reason\": \"Estimate: weight bytes x 1.2 + 2 GiB; excludes context-dependent KV cache and runtime requirements. RAM capacity is not available RAM. No speed or reliability prediction.\"}], \"tested_configurations\": [{\"id\": \"maintainer-phase3\", \"provenance\": \"maintainer measured\", \"gpu_name\": \"NVIDIA GeForce RTX 5060 Ti\", \"gpu_total_mib\": 16311, \"os\": \"Windows 11\", \"cpu\": null, \"ram_bytes\": null, \"backend\": \"Ollama\", \"backend_version\": null, \"model\": \"qwen3.5:9b\", \"quantization\": null, \"attempts\": 3, \"max_turns\": 25, \"context_budget_tokens\": 24000, \"implementation_successes\": 32, \"implementation_runs\": 35, \"blocked_guardrail_successes\": 5, \"blocked_guardrail_runs\": 5, \"full_gpu_runs\": 40, \"evidence\": \"eval/results-retries-gpu.json\", \"hardware_evidence\": \"eval/gpu-hardware.txt\", \"limits\": \"Historical evidence does not record CPU, RAM, backend version or quantization. These remain unknown; a matching model name may refer to different weights.\", \"matching_fields\": [\"gpu_name\", \"installed_model_name\", \"backend_kind\"], \"comparison\": \"Shared fields only; not a reproduced benchmark on this machine.\"}], \"limits\": [\"Read-only; no model loading, downloads, installation or uploads.\", \"Inventory describes the machine running Hermes, which may be WSL or a container.\", \"Unknown fields remain unknown; memory fit does not establish speed, coding quality or tool-calling support. Inventory can include embedding models.\"]}", "duration_ms": 351, "is_error": false, "timestamp": 1794053588256}
+{"type": "text", "text": "\n\nDet", "timestamp": 1794053589731}
+{"type": "text", "text": "ected", "timestamp": 1794053589753}
+{"type": "text", "text": " hardware", "timestamp": 1794053589771}
+{"type": "text", "text": ":", "timestamp": 1794053592873}
+{"type": "text", "text": " AMD", "timestamp": 1794053592875}
+{"type": "text", "text": " Ryzen", "timestamp": 1794053592876}
+{"type": "text", "text": " 5", "timestamp": 1794053592877}
+{"type": "text", "text": " 7", "timestamp": 1794053592877}
+{"type": "text", "text": "5", "timestamp": 1794053592877}
+{"type": "text", "text": "0", "timestamp": 1794053592878}
+{"type": "text", "text": "0", "timestamp": 1794053592888}
+{"type": "text", "text": "F", "timestamp": 1794053592888}
+{"type": "text", "text": " 6", "timestamp": 1794053592889}
+{"type": "text", "text": "-Core", "timestamp": 1794053592889}
+{"type": "text", "text": " CPU", "timestamp": 1794053592889}
+{"type": "text", "text": ",", "timestamp": 1794053592889}
+{"type": "text", "text": " 8", "timestamp": 1794053592889}
+{"type": "text", "text": " GB", "timestamp": 1794053592889}
+{"type": "text", "text": " RAM", "timestamp": 1794053592889}
+{"type": "text", "text": " (", "timestamp": 1794053592889}
+{"type": "text", "text": "WS", "timestamp": 1794053592890}
+{"type": "text", "text": "L", "timestamp": 1794053592890}
+{"type": "text", "text": "2", "timestamp": 1794053592890}
+{"type": "text", "text": " Linux", "timestamp": 1794053592890}
+{"type": "text", "text": "),", "timestamp": 1794053592890}
+{"type": "text", "text": " NVIDIA", "timestamp": 1794053592890}
+{"type": "text", "text": " GeForce", "timestamp": 1794053592890}
+{"type": "text", "text": " RTX", "timestamp": 1794053592890}
+{"type": "text", "text": " 5", "timestamp": 1794053592890}
+{"type": "text", "text": "0", "timestamp": 1794053592890}
+{"type": "text", "text": "6", "timestamp": 1794053592890}
+{"type": "text", "text": "0", "timestamp": 1794053592890}
+{"type": "text", "text": " Ti", "timestamp": 1794053592890}
+{"type": "text", "text": " with", "timestamp": 1794053592890}
+{"type": "text", "text": " ~", "timestamp": 1794053592890}
+{"type": "text", "text": "6", "timestamp": 1794053592890}
+{"type": "text", "text": " GB", "timestamp": 1794053592890}
+{"type": "text", "text": " free", "timestamp": 1794053592890}
+{"type": "text", "text": " VR", "timestamp": 1794053592890}
+{"type": "text", "text": "AM", "timestamp": 1794053592890}
+{"type": "text", "text": " (", "timestamp": 1794053592890}
+{"type": "text", "text": "1", "timestamp": 1794053592890}
+{"type": "text", "text": "6", "timestamp": 1794053592890}
+{"type": "text", "text": " GB", "timestamp": 1794053592890}
+{"type": "text", "text": " total", "timestamp": 1794053592890}
+{"type": "text", "text": ").", "timestamp": 1794053592890}
+{"type": "text", "text": " Backend", "timestamp": 1794053592890}
+{"type": "text", "text": " is", "timestamp": 1794053592890}
+{"type": "text", "text": " O", "timestamp": 1794053592890}
+{"type": "text", "text": "ll", "timestamp": 1794053592890}
+{"type": "text", "text": "ama", "timestamp": 1794053592890}
+{"type": "text", "text": " v", "timestamp": 1794053592890}
+{"type": "text", "text": "0", "timestamp": 1794053592891}
+{"type": "text", "text": ".", "timestamp": 1794053592891}
+{"type": "text", "text": "1", "timestamp": 1794053592891}
+{"type": "text", "text": "7", "timestamp": 1794053592891}
+{"type": "text", "text": ".", "timestamp": 1794053592891}
+{"type": "text", "text": "6", "timestamp": 1794053592891}
+{"type": "text", "text": " reachable", "timestamp": 1794053592891}
+{"type": "text", "text": " over", "timestamp": 1794053592891}
+{"type": "text", "text": " private", "timestamp": 1794053592891}
+{"type": "text", "text": " network", "timestamp": 1794053592891}
+{"type": "text", "text": ".", "timestamp": 1794053592891}
+{"type": "text", "text": " Tested", "timestamp": 1794053592891}
+{"type": "text", "text": " model", "timestamp": 1794053592891}
+{"type": "text", "text": " `", "timestamp": 1794053592891}
+{"type": "text", "text": "q", "timestamp": 1794053592891}
+{"type": "text", "text": "wen", "timestamp": 1794053592891}
+{"type": "text", "text": "3", "timestamp": 1794053592891}
+{"type": "text", "text": ".", "timestamp": 1794053592891}
+{"type": "text", "text": "5", "timestamp": 1794053592891}
+{"type": "text", "text": ":", "timestamp": 1794053592891}
+{"type": "text", "text": "9", "timestamp": 1794053592891}
+{"type": "text", "text": "b", "timestamp": 1794053592891}
+{"type": "text", "text": "`", "timestamp": 1794053592891}
+{"type": "text", "text": " Q", "timestamp": 1794053592891}
+{"type": "text", "text": "4", "timestamp": 1794053592891}
+{"type": "text", "text": "_K", "timestamp": 1794053592891}
+{"type": "text", "text": "_M", "timestamp": 1794053592891}
+{"type": "text", "text": " weighs", "timestamp": 1794053592891}
+{"type": "text", "text": " 6", "timestamp": 1794053592891}
+{"type": "text", "text": ".", "timestamp": 1794053592891}
+{"type": "text", "text": "3", "timestamp": 1794053592891}
+{"type": "text", "text": " GB", "timestamp": 1794053592891}
+{"type": "text", "text": ";", "timestamp": 1794053592891}
+{"type": "text", "text": " the", "timestamp": 1794053592891}
+{"type": "text", "text": " estimate", "timestamp": 1794053592891}
+{"type": "text", "text": " needs", "timestamp": 1794053592891}
+{"type": "text", "text": " ~", "timestamp": 1794053592891}
+{"type": "text", "text": "1", "timestamp": 1794053592891}
+{"type": "text", "text": "0", "timestamp": 1794053592891}
+{"type": "text", "text": " GB", "timestamp": 1794053592891}
+{"type": "text", "text": " VR", "timestamp": 1794053592891}
+{"type": "text", "text": "AM", "timestamp": 1794053592892}
+{"type": "text", "text": " (", "timestamp": 1794053592892}
+{"type": "text", "text": "weights", "timestamp": 1794053592892}
+{"type": "text", "text": "×", "timestamp": 1794053592892}
+{"type": "text", "text": "1", "timestamp": 1794053592892}
+{"type": "text", "text": ".", "timestamp": 1794053592892}
+{"type": "text", "text": "2", "timestamp": 1794053592892}
+{"type": "text", "text": "+", "timestamp": 1794053592892}
+{"type": "text", "text": "2", "timestamp": 1794053592892}
+{"type": "text", "text": " Gi", "timestamp": 1794053592892}
+{"type": "text", "text": "B", "timestamp": 1794053592892}
+{"type": "text", "text": "),", "timestamp": 1794053592892}
+{"type": "text", "text": " but", "timestamp": 1794053592892}
+{"type": "text", "text": " it", "timestamp": 1794053592892}
+{"type": "text", "text": "'s", "timestamp": 1794053592892}
+{"type": "text", "text": " already", "timestamp": 1794053592892}
+{"type": "text", "text": " fully", "timestamp": 1794053592892}
+{"type": "text", "text": " loaded", "timestamp": 1794053592892}
+{"type": "text", "text": " in", "timestamp": 1794053592892}
+{"type": "text", "text": " VR", "timestamp": 1794053592892}
+{"type": "text", "text": "AM", "timestamp": 1794053592892}
+{"type": "text", "text": " (~", "timestamp": 1794053592892}
+{"type": "text", "text": "9", "timestamp": 1794053592892}
+{"type": "text", "text": ".", "timestamp": 1794053592892}
+{"type": "text", "text": "9", "timestamp": 1794053592892}
+{"type": "text", "text": "7", "timestamp": 1794053592892}
+{"type": "text", "text": " GB", "timestamp": 1794053592892}
+{"type": "text", "text": " used", "timestamp": 1794053592892}
+{"type": "text", "text": "),", "timestamp": 1794053592892}
+{"type": "text", "text": " so", "timestamp": 1794053592892}
+{"type": "text", "text": " capacity", "timestamp": 1794053592892}
+{"type": "text", "text": " fits", "timestamp": 1794053592892}
+{"type": "text", "text": " within", "timestamp": 1794053592892}
+{"type": "text", "text": " current", "timestamp": 1794053592892}
+{"type": "text", "text": " free", "timestamp": 1794053592892}
+{"type": "text", "text": " budget", "timestamp": 1794053592892}
+{"type": "text", "text": " if", "timestamp": 1794053592892}
+{"type": "text", "text": " not", "timestamp": 1794053592892}
+{"type": "text", "text": " at", "timestamp": 1794053592892}
+{"type": "text", "text": " saturation", "timestamp": 1794053592892}
+{"type": "text", "text": ".", "timestamp": 1794053592892}
+{"type": "text", "text": " Host", "timestamp": 1794053592892}
+{"type": "text", "text": " uncertainty", "timestamp": 1794053592892}
+{"type": "text", "text": ":", "timestamp": 1794053592892}
+{"type": "text", "text": " this", "timestamp": 1794053592892}
+{"type": "text", "text": " API", "timestamp": 1794053592892}
+{"type": "text", "text": " hits", "timestamp": 1794053592892}
+{"type": "text", "text": " a", "timestamp": 1794053592892}
+{"type": "text", "text": " private", "timestamp": 1794053592892}
+{"type": "text", "text": " network", "timestamp": 1794053592892}
+{"type": "text", "text": ",", "timestamp": 1794053592892}
+{"type": "text", "text": " so", "timestamp": 1794053592892}
+{"type": "text", "text": " confirm", "timestamp": 1794053592892}
+{"type": "text", "text": " its", "timestamp": 1794053592892}
+{"type": "text", "text": " GPU", "timestamp": 1794053592892}
+{"type": "text", "text": " and", "timestamp": 1794053592892}
+{"type": "text", "text": " model", "timestamp": 1794053592892}
+{"type": "text", "text": " weights", "timestamp": 1794053592892}
+{"type": "text", "text": " actually", "timestamp": 1794053592892}
+{"type": "text", "text": " live", "timestamp": 1794053592892}
+{"type": "text", "text": " here", "timestamp": 1794053592892}
+{"type": "text", "text": " before", "timestamp": 1794053592892}
+{"type": "text", "text": " treating", "timestamp": 1794053592892}
+{"type": "text", "text": " this", "timestamp": 1794053592892}
+{"type": "text", "text": " inventory", "timestamp": 1794053592892}
+{"type": "text", "text": " as", "timestamp": 1794053592892}
+{"type": "text", "text": " the", "timestamp": 1794053592892}
+{"type": "text", "text": " same", "timestamp": 1794053592892}
+{"type": "text", "text": " machine", "timestamp": 1794053592892}
+{"type": "text", "text": " you", "timestamp": 1794053592892}
+{"type": "text", "text": "'re", "timestamp": 1794053592892}
+{"type": "text", "text": " about", "timestamp": 1794053592892}
+{"type": "text", "text": " to", "timestamp": 1794053592892}
+{"type": "text", "text": " benchmark", "timestamp": 1794053592892}
+{"type": "text", "text": " against", "timestamp": 1794053592892}
+{"type": "text", "text": ".", "timestamp": 1794053592892}
+{"type": "result", "session_id": "local-59f6887bf4c005d59c6eed65c7bddb01f1c8c7010ca54a8cbc85319911961bfc", "exit_code": 0, "text": "Detected hardware: AMD Ryzen 5 7500F 6-Core CPU, 8 GB RAM (WSL2 Linux), NVIDIA GeForce RTX 5060 Ti with ~6 GB free VRAM (16 GB total). Backend is Ollama v0.17.6 reachable over private network. Tested model `qwen3.5:9b` Q4_K_M weighs 6.3 GB; the estimate needs ~10 GB VRAM (weights×1.2+2 GiB), but it's already fully loaded in VRAM (~9.97 GB used), so capacity fits within current free budget if not at saturation. Host uncertainty: this API hits a private network, so confirm its GPU and model weights actually live here before treating this inventory as the same machine you're about to benchmark against.", "tokens": {"input": 13532, "output": 202, "total": 13734, "cache_read": 0, "cache_write": 0}, "duration_ms": 10293, "timestamp": 1794053593481}
+{"type": "system", "subtype": "init", "model": "qwen3.5:9b", "session_id": "", "timestamp": 1794053735550}
+{"type": "text", "text": "The", "timestamp": 1794053739737}
+{"type": "text", "text": " exact", "timestamp": 1794053739758}
+{"type": "text", "text": " `", "timestamp": 1794053739776}
+{"type": "text", "text": "q", "timestamp": 1794053739795}
+{"type": "text", "text": "wen", "timestamp": 1794053739814}
+{"type": "text", "text": "3", "timestamp": 1794053739831}
+{"type": "text", "text": ".", "timestamp": 1794053739850}
+{"type": "text", "text": "5", "timestamp": 1794053739868}
+{"type": "text", "text": ":", "timestamp": 1794053743180}
+{"type": "text", "text": "9", "timestamp": 1794053743186}
+{"type": "text", "text": "b", "timestamp": 1794053743191}
+{"type": "text", "text": "`", "timestamp": 1794053743195}
+{"type": "text", "text": " estimate", "timestamp": 1794053743195}
+{"type": "text", "text": " classification", "timestamp": 1794053743196}
+{"type": "text", "text": " from", "timestamp": 1794053743196}
+{"type": "text", "text": " the", "timestamp": 1794053743196}
+{"type": "text", "text": " tool", "timestamp": 1794053743196}
+{"type": "text", "text": " result", "timestamp": 1794053743196}
+{"type": "text", "text": " is", "timestamp": 1794053743196}
+{"type": "text", "text": " `\"", "timestamp": 1794053743196}
+{"type": "text", "text": "weights", "timestamp": 1794053743196}
+{"type": "text", "text": "_plus", "timestamp": 1794053743196}
+{"type": "text", "text": "_margin", "timestamp": 1794053743196}
+{"type": "text", "text": "_in", "timestamp": 1794053743196}
+{"type": "text", "text": "_total", "timestamp": 1794053743196}
+{"type": "text", "text": "_v", "timestamp": 1794053743196}
+{"type": "text", "text": "ram", "timestamp": 1794053743196}
+{"type": "text", "text": "_only", "timestamp": 1794053743196}
+{"type": "text", "text": "\"", "timestamp": 1794053743197}
+{"type": "text", "text": "`.", "timestamp": 1794053743197}
+{"type": "text", "text": " Total", "timestamp": 1794053743197}
+{"type": "text", "text": "-", "timestamp": 1794053743197}
+{"type": "text", "text": "VR", "timestamp": 1794053743197}
+{"type": "text", "text": "AM", "timestamp": 1794053743197}
+{"type": "text", "text": "-only", "timestamp": 1794053743197}
+{"type": "text", "text": " means", "timestamp": 1794053743197}
+{"type": "text", "text": " the", "timestamp": 1794053743197}
+{"type": "text", "text": " fit", "timestamp": 1794053743197}
+{"type": "text", "text": " assumes", "timestamp": 1794053743197}
+{"type": "text", "text": " total", "timestamp": 1794053743197}
+{"type": "text", "text": " GPU", "timestamp": 1794053743197}
+{"type": "text", "text": " memory", "timestamp": 1794053743197}
+{"type": "text", "text": " as", "timestamp": 1794053743198}
+{"type": "text", "text": " a", "timestamp": 1794053743198}
+{"type": "text", "text": " cap", "timestamp": 1794053743198}
+{"type": "text", "text": ",", "timestamp": 1794053743198}
+{"type": "text", "text": " which", "timestamp": 1794053743198}
+{"type": "text", "text": " here", "timestamp": 1794053743198}
+{"type": "text", "text": " needs", "timestamp": 1794053743198}
+{"type": "text", "text": " ~", "timestamp": 1794053743198}
+{"type": "text", "text": "1", "timestamp": 1794053743198}
+{"type": "text", "text": "0", "timestamp": 1794053743198}
+{"type": "text", "text": " GB", "timestamp": 1794053743198}
+{"type": "text", "text": " but", "timestamp": 1794053743198}
+{"type": "text", "text": " only", "timestamp": 1794053743198}
+{"type": "text", "text": " ~", "timestamp": 1794053743198}
+{"type": "text", "text": "6", "timestamp": 1794053743198}
+{"type": "text", "text": ".", "timestamp": 1794053743198}
+{"type": "text", "text": "2", "timestamp": 1794053743198}
+{"type": "text", "text": "7", "timestamp": 1794053743198}
+{"type": "text", "text": " GB", "timestamp": 1794053743198}
+{"type": "text", "text": " free", "timestamp": 1794053743198}
+{"type": "text", "text": " VR", "timestamp": 1794053743198}
+{"type": "text", "text": "AM", "timestamp": 1794053743198}
+{"type": "text", "text": " remains", "timestamp": 1794053743198}
+{"type": "text", "text": "—", "timestamp": 1794053743198}
+{"type": "text", "text": "so", "timestamp": 1794053743198}
+{"type": "text", "text": " it", "timestamp": 1794053743198}
+{"type": "text", "text": " doesn", "timestamp": 1794053743198}
+{"type": "text", "text": "'t", "timestamp": 1794053743198}
+{"type": "text", "text": " fit", "timestamp": 1794053743198}
+{"type": "text", "text": " the", "timestamp": 1794053743198}
+{"type": "text", "text": " observed", "timestamp": 1794053743198}
+{"type": "text", "text": " free", "timestamp": 1794053743199}
+{"type": "text", "text": " budget", "timestamp": 1794053743199}
+{"type": "text", "text": ".", "timestamp": 1794053743199}
+{"type": "text", "text": " The", "timestamp": 1794053743199}
+{"type": "text", "text": " fact", "timestamp": 1794053743199}
+{"type": "text", "text": " that", "timestamp": 1794053743199}
+{"type": "text", "text": " this", "timestamp": 1794053743199}
+{"type": "text", "text": " model", "timestamp": 1794053743199}
+{"type": "text", "text": " already", "timestamp": 1794053743199}
+{"type": "text", "text": " lives", "timestamp": 1794053743199}
+{"type": "text", "text": " in", "timestamp": 1794053743199}
+{"type": "text", "text": " VR", "timestamp": 1794053743199}
+{"type": "text", "text": "AM", "timestamp": 1794053743199}
+{"type": "text", "text": " (~", "timestamp": 1794053743199}
+{"type": "text", "text": "9", "timestamp": 1794053743199}
+{"type": "text", "text": ".", "timestamp": 1794053743199}
+{"type": "text", "text": "9", "timestamp": 1794053743199}
+{"type": "text", "text": "7", "timestamp": 1794053743199}
+{"type": "text", "text": " GB", "timestamp": 1794053743199}
+{"type": "text", "text": " used", "timestamp": 1794053743199}
+{"type": "text", "text": ")", "timestamp": 1794053743199}
+{"type": "text", "text": " does", "timestamp": 1794053743199}
+{"type": "text", "text": " not", "timestamp": 1794053743199}
+{"type": "text", "text": " change", "timestamp": 1794053743199}
+{"type": "text", "text": " the", "timestamp": 1794053743199}
+{"type": "text", "text": " estimate", "timestamp": 1794053743199}
+{"type": "text", "text": ":", "timestamp": 1794053743199}
+{"type": "text", "text": " capacity", "timestamp": 1794053743199}
+{"type": "text", "text": " alone", "timestamp": 1794053743199}
+{"type": "text", "text": " does", "timestamp": 1794053743199}
+{"type": "text", "text": " not", "timestamp": 1794053743199}
+{"type": "text", "text": " guarantee", "timestamp": 1794053743200}
+{"type": "text", "text": " head", "timestamp": 1794053743200}
+{"type": "text", "text": "room", "timestamp": 1794053743200}
+{"type": "text", "text": " once", "timestamp": 1794053743200}
+{"type": "text", "text": " other", "timestamp": 1794053743200}
+{"type": "text", "text": " processes", "timestamp": 1794053743200}
+{"type": "text", "text": " or", "timestamp": 1794053743200}
+{"type": "text", "text": " future", "timestamp": 1794053743200}
+{"type": "text", "text": " loads", "timestamp": 1794053743200}
+{"type": "text", "text": " touch", "timestamp": 1794053743200}
+{"type": "text", "text": " memory", "timestamp": 1794053743200}
+{"type": "text", "text": ".", "timestamp": 1794053743200}
+{"type": "text", "text": " Historical", "timestamp": 1794053743200}
+{"type": "text", "text": " implementation", "timestamp": 1794053743200}
+{"type": "text", "text": " successes", "timestamp": 1794053743200}
+{"type": "text", "text": " are", "timestamp": 1794053743200}
+{"type": "text", "text": " 3", "timestamp": 1794053743200}
+{"type": "text", "text": "2", "timestamp": 1794053743200}
+{"type": "text", "text": ",", "timestamp": 1794053743200}
+{"type": "text", "text": " blocked", "timestamp": 1794053743200}
+{"type": "text", "text": " guard", "timestamp": 1794053743200}
+{"type": "text", "text": "rail", "timestamp": 1794053743200}
+{"type": "text", "text": " run", "timestamp": 1794053743200}
+{"type": "text", "text": " count", "timestamp": 1794053743200}
+{"type": "text", "text": " is", "timestamp": 1794053743200}
+{"type": "text", "text": " 5", "timestamp": 1794053743200}
+{"type": "text", "text": ",", "timestamp": 1794053743200}
+{"type": "text", "text": " both", "timestamp": 1794053743200}
+{"type": "text", "text": " from", "timestamp": 1794053743200}
+{"type": "text", "text": " `", "timestamp": 1794053743200}
+{"type": "text", "text": "maint", "timestamp": 1794053743200}
+{"type": "text", "text": "ainer", "timestamp": 1794053743200}
+{"type": "text", "text": "-phase", "timestamp": 1794053743200}
+{"type": "text", "text": "3", "timestamp": 1794053743200}
+{"type": "text", "text": "`;", "timestamp": 1794053743200}
+{"type": "text", "text": " historical", "timestamp": 1794053743200}
+{"type": "text", "text": " quant", "timestamp": 1794053743200}
+{"type": "text", "text": "ization", "timestamp": 1794053743200}
+{"type": "text", "text": " remains", "timestamp": 1794053743200}
+{"type": "text", "text": " unknown", "timestamp": 1794053743200}
+{"type": "text", "text": " and", "timestamp": 1794053743200}
+{"type": "text", "text": " cannot", "timestamp": 1794053743200}
+{"type": "text", "text": " be", "timestamp": 1794053743200}
+{"type": "text", "text": " inferred", "timestamp": 1794053743200}
+{"type": "text", "text": " for", "timestamp": 1794053743200}
+{"type": "text", "text": " this", "timestamp": 1794053743200}
+{"type": "text", "text": " host", "timestamp": 1794053743200}
+{"type": "text", "text": "'s", "timestamp": 1794053743200}
+{"type": "text", "text": " current", "timestamp": 1794053743200}
+{"type": "text", "text": " Q", "timestamp": 1794053743200}
+{"type": "text", "text": "4", "timestamp": 1794053743200}
+{"type": "text", "text": "_K", "timestamp": 1794053743200}
+{"type": "text", "text": "_M", "timestamp": 1794053743200}
+{"type": "text", "text": " build", "timestamp": 1794053743200}
+{"type": "text", "text": ".", "timestamp": 1794053743200}
+{"type": "text", "text": " Host", "timestamp": 1794053743200}
+{"type": "text", "text": " uncertainty", "timestamp": 1794053743200}
+{"type": "text", "text": ":", "timestamp": 1794053743200}
+{"type": "text", "text": " this", "timestamp": 1794053743200}
+{"type": "text", "text": " API", "timestamp": 1794053743200}
+{"type": "text", "text": " uses", "timestamp": 1794053743200}
+{"type": "text", "text": " a", "timestamp": 1794053743200}
+{"type": "text", "text": " private", "timestamp": 1794053743200}
+{"type": "text", "text": "-network", "timestamp": 1794053743200}
+{"type": "text", "text": " address", "timestamp": 1794053743200}
+{"type": "text", "text": ",", "timestamp": 1794053743200}
+{"type": "text", "text": " so", "timestamp": 1794053743200}
+{"type": "text", "text": " confirm", "timestamp": 1794053743200}
+{"type": "text", "text": " its", "timestamp": 1794053743200}
+{"type": "text", "text": " hardware", "timestamp": 1794053743200}
+{"type": "text", "text": " matches", "timestamp": 1794053743200}
+{"type": "text", "text": " yours", "timestamp": 1794053743200}
+{"type": "text", "text": " before", "timestamp": 1794053743200}
+{"type": "text", "text": " running", "timestamp": 1794053743200}
+{"type": "text", "text": " a", "timestamp": 1794053743200}
+{"type": "text", "text": " benchmark", "timestamp": 1794053743200}
+{"type": "text", "text": " against", "timestamp": 1794053743200}
+{"type": "text", "text": " the", "timestamp": 1794053743200}
+{"type": "text", "text": " inventory", "timestamp": 1794053743201}
+{"type": "text", "text": ".", "timestamp": 1794053743201}
+{"type": "result", "session_id": "local-59f6887bf4c005d59c6eed65c7bddb01f1c8c7010ca54a8cbc85319911961bfc", "exit_code": 0, "text": "The exact `qwen3.5:9b` estimate classification from the tool result is `\"weights_plus_margin_in_total_vram_only\"`. Total-VRAM-only means the fit assumes total GPU memory as a cap, which here needs ~10 GB but only ~6.27 GB free VRAM remains—so it doesn't fit the observed free budget. The fact that this model already lives in VRAM (~9.97 GB used) does not change the estimate: capacity alone does not guarantee [capacity margin] once other processes or future loads touch memory. Historical implementation successes are 32, blocked guardrail run count is 5, both from `maintainer-phase3`; historical quantization remains unknown and cannot be inferred for this host's current Q4_K_M build. Host uncertainty: this API uses a private-network address, so confirm its hardware matches yours before running a benchmark against the inventory.", "tokens": {"input": 7683, "output": 187, "total": 7870, "cache_read": 0, "cache_write": 0}, "duration_ms": 7685, "timestamp": 1794053743236}

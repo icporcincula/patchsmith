@@ -143,3 +143,18 @@ The command and skill are registered through the SDK, not unsupported manifest f
 Planned hardware compatibility and contributor benchmark work is recorded in [implementation notes](docs/IMPLEMENTATION.md); it is not implemented yet.
 
 Phase 4's real skill session used Hermes skill preloading and omitted model and endpoint arguments from the coding call. Its proposal passed two independent tests in a separate copy and preserved the source checkout. Automatic skill selection failed in the first take; the successful session needed a follow-up to display the exact diff instead of a prose summary. Both takes are retained in `eval/`. Skill instructions guide the main model; they do not enforce its response formatting.
+
+## Hardware compatibility and community evidence
+
+`inspect_hardware({})` reads the plugin host's CPU, RAM, GPU/VRAM and the configured endpoint's model inventory. Preload the companion skill with Hermes `-s patchsmith:hardware`. The response separates historical tested configurations from conservative memory estimates and keeps unavailable fields unknown. It never loads, installs or downloads a model, and uploads nothing. A private-network model server may be a different machine from Hermes; the response flags this uncertainty.
+
+The current tested registry links the measured RTX 5060 Ti / qwen3.5:9b / Ollama configuration to its raw evidence, including failures. Matching a GPU or model name does not reproduce that result. Weight-memory estimates exclude context-dependent runtime memory and do not predict speed, coding reliability or tool-calling support. Other installed models, including embedding models, are inventory only.
+
+A reproducible contributor command exports a versioned summary and retains raw results/transcripts:
+
+```sh
+python -B eval/benchmark.py --model qwen3.5:9b --runs 5 --attempts 3 --require-gpu --out benchmark-output
+python -B eval/benchmark.py --validate benchmark-output/report.json
+```
+
+See [benchmark guidance](benchmarks/README.md) for CPU/partial-offload runs, report fields and the pull-request contribution process. Contributor results remain labelled unverified until reproduced. No public repository or submissions are created by the plugin.

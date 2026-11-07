@@ -3,6 +3,7 @@
 import json
 from pathlib import Path
 
+from .hardware import inspect_hardware
 from .ledger import status_command
 from .jobs import start, task_status
 
@@ -84,6 +85,15 @@ STATUS_SCHEMA = {
 }
 
 
+HARDWARE_SCHEMA = {
+    "name": "inspect_hardware",
+    "description": "Read CPU, RAM, GPU/VRAM and configured local model inventory; compare tested evidence and conservative weight-memory estimates. No downloads or uploads.",
+    "parameters": {"type": "object", "properties": {"endpoint": {
+        "type": "string", "description": "Optional configured local API base; omit or leave empty to use PS_ENDPOINT."}},
+        "additionalProperties": False},
+}
+
+
 def register(ctx) -> None:
     ctx.register_tool(
         name="implement_task", toolset="patchsmith", schema=SCHEMA,
@@ -99,3 +109,7 @@ def register(ctx) -> None:
                          description="Show recent Patchsmith runs and estimated local tokens.", args_hint="status")
     ctx.register_skill("delegate", Path(__file__).parent / "skills" / "delegate" / "SKILL.md",
                        description="Delegate a bounded, test-verified coding change to the configured local Patchsmith model.")
+
+    ctx.register_tool(name="inspect_hardware", toolset="patchsmith", schema=HARDWARE_SCHEMA, handler=inspect_hardware)
+    ctx.register_skill("hardware", Path(__file__).parent / "skills" / "hardware" / "SKILL.md",
+                       description="Inspect local hardware, distinguish tested configurations from memory estimates, and prepare reproducible contributor benchmarks.")

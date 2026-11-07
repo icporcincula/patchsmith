@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "provenance": "contributor supplied; not independently reproduced",
+  "suite": {
+    "name": "patchsmith-synthetic-v1",
+    "fixtures_sha256": "4304bf15842074ea15255d72465a8214b79e7405f78733d0d1433f8c41466ecb",
+    "requested_runs": {
+      "bug1": 1,
+      "blocked": 1
+    }
+  },
+  "hardware": {
+    "os": "Windows",
+    "os_release": "11",
+    "architecture": "AMD64",
+    "cpu": {
+      "name": "AMD Ryzen 5 7500F 6-Core Processor             ",
+      "logical_cores": 12
+    },
+    "ram_bytes": 33946230784,
+    "gpus": [
+      {
+        "name": "Virtual Display Driver",
+        "total_bytes": null,
+        "free_bytes": null,
+        "source": "Windows display controller"
+      },
+      {
+        "name": "Virtual Display Driver",
+        "total_bytes": null,
+        "free_bytes": null,
+        "source": "Windows display controller"
+      },
+      {
+        "name": "NVIDIA GeForce RTX 5060 Ti",
+        "total_bytes": 17103323136,
+        "free_bytes": 15850274816,
+        "driver_version": "610.88",
+        "source": "nvidia-smi"
+      }
+    ],
+    "warnings": []
+  },
+  "backend": {
+    "kind": "Ollama",
+    "version": "0.17.6",
+    "host_association": "loopback"
+  },
+  "model": {
+    "name": "qwen3.5:9b",
+    "quantization": "Q4_K_M",
+    "weight_bytes": 6594474711
+  },
+  "budgets": {
+    "attempts": 1,
+    "max_turns": 25,
+    "context_budget_tokens": 24000
+  },
+  "gpu_required": true,
+  "runner_exit": 0,
+  "complete": true,
+  "rows": [
+    {
+      "fixture": "bug1",
+      "run": 1,
+      "status": "done",
+      "turns": 5,
+      "seconds": 9.625,
+      "tokens_est": 5670,
+      "files_changed_count": 1,
+      "baseline_exit": 1,
+      "independent_exit": 0,
+      "implementation_success": true,
+      "expected_outcome": true,
+      "full_gpu": true
+    },
+    {
+      "fixture": "blocked",
+      "run": 1,
+      "status": "blocked",
+      "turns": 5,
+      "seconds": 12.78100000001723,
+      "tokens_est": 6228,
+      "files_changed_count": 0,
+      "baseline_exit": 1,
+      "independent_exit": 1,
+      "implementation_success": false,
+      "expected_outcome": true,
+      "full_gpu": true
+    }
+  ],
+  "limits": [
+    "No endpoint, task text, source, test output or local paths in this summary.",
+    "Raw results and transcripts are separate: review before publication.",
+    "Unknown quantization or backend versions remain unknown. Non-required GPU offload is unmeasured."
+  ]
+}
