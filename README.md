@@ -158,3 +158,7 @@ python -B eval/benchmark.py --validate benchmark-output/report.json
 ```
 
 See [benchmark guidance](benchmarks/README.md) for CPU/partial-offload runs, report fields and the pull-request contribution process. Contributor results remain labelled unverified until reproduced. No public repository or submissions are created by the plugin.
+
+## Source publication
+
+See [publishing instructions](docs/PUBLISHING.md) for connecting the local repository to an empty remote and pinning the catalog entry to a pushed source commit.

@@ -4,4 +4,13 @@ __pycache__/
 .pytest_cache/
 *.py[cod]
 .venv/
+/video/
 /EXTENSION_PLAN.md
+
+# Local credentials and development environments
+.env
+.env.*
+!.env.example
+venv/
+.coverage
+htmlcov/

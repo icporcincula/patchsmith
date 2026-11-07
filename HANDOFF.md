@@ -12,7 +12,7 @@
 - Hermes may hide tools behind tool_search. The earlier passing local-model session used `hermes config set tools.tool_search.enabled off`.
 - WSL reaches Ollama on Windows through its gateway address. Configure `PS_ENDPOINT` in `~/.hermes/.env`; the existing plugin-owned settings were renamed in place without exposing their values.
 - `PS_MODEL`, `PS_MAX_TURNS`, `PS_CTX_BUDGET`, and `PS_TEST_COMMAND` are optional. The benchmark used default budgets and explicitly selected `qwen3.5:9b`.
-- Phase 2 adds isolated `mode="propose"` and guarded `apply_patch`. Default `mode="apply"` retains direct edits. Phase 3 adds bounded retries and factual handbacks; native status and skill integration remain later phases.
+- Phase 2 adds isolated `mode="propose"` and guarded `apply_patch`. Default `mode="apply"` retains direct edits. Phase 3 adds bounded retries and factual handbacks; Phase 4 provides native status and skills.
 
 ## User publication steps after Phase 1
 
@@ -38,11 +38,15 @@ Known bounds: ordinary text patches only; Git proposals need an initial commit; 
 
 `attempts=1..3` shares total turns and cumulative tokens across fresh contexts. Intermediate failures roll back even with `keep_partial=true`; only the final failure can retain edits. Optional `fallback_model` uses the same local endpoint on the final allowed attempt only. Failures return a factual `handback` plus per-attempt records. Configured tests must pass for completion.
 
-32/35 implementation runs succeeded on the first attempt; 32/35 succeeded within three attempts. 5/5 protected-test requests ended blocked with red tests and no edits. 40/40 runs retained full GPU residency. See `eval/results-retries-gpu.table.md`; no stronger reliability claim is supported. Windows suite: 73 passed, 1 skipped. Clean-copy Hermes validation and doctor passed. Native status and skill support remain future work.
+32/35 implementation runs succeeded on the first attempt; 32/35 succeeded within three attempts. 5/5 protected-test requests ended blocked with red tests and no edits. 40/40 runs retained full GPU residency. See `eval/results-retries-gpu.table.md`; no stronger reliability claim is supported. Windows suite: 73 passed, 1 skipped. Clean-copy Hermes validation and doctor passed. Native status and skill support were added in Phase 4.
 
 
-Phase 4 adds `patchsmith:delegate`, `/patchsmith status`, private summary records under `~/.patchsmith/runs`, and optional process-local background calls with `task_status`. Keep Hermes open for background work; handles do not survive a restart. The hardware compatibility feature and contributor benchmark format are planned in `docs/IMPLEMENTATION.md` and remain unimplemented.
+Phase 4 adds `patchsmith:delegate`, `/patchsmith status`, private summary records under `~/.patchsmith/runs`, and optional process-local background calls with `task_status`. Keep Hermes open for background work; handles do not survive a restart. The additional hardware phase below implements hardware inspection and contributor benchmark reports.
 
 ## Additional hardware phase
 
 Adds inspect_hardware (four declared tools total), patchsmith:hardware, benchmarks/tested.json, and the reproducible eval/benchmark.py command documented in benchmarks/README.md. Hardware matching and memory estimates make no new reliability claims. No public publication or model installation occurs. Next planned work remains final delivery preparation; optional speed/context work is separate.
+
+## Local repository and remote handoff
+
+The local Git repository uses `main` and preserves all implementation commits and phase tags. `docs/PUBLISHING.md` gives the commands for connecting an empty remote, pushing source, and filling the catalog placeholders. Local secrets, private plans, generated state and the video workspace are ignored. No remote or public submission has been created.
