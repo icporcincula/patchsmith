@@ -1,0 +1,10 @@
+{
+  "baseline_commit": "ca3512d89be91bc4c4334882a23c259445cbe23d",
+  "patch_applies_to_fresh_clone": true,
+  "all_candidate_file_hashes_match": true,
+  "files": [
+    "loop.py",
+    "context.py",
+    "tests/test_context.py"
+  ]
+}

@@ -2,7 +2,7 @@
 
 ## Current scope
 
-Phases 0 through 4 and the additional hardware/community-benchmark phase are complete. Phase 4 adds a Hermes delegation skill, recent-run status, and a local token ledger. Phase 5 remains optional and must be measured before keeping performance changes. Final delivery preparation follows the latest green phase.
+Phases 0 through 4 and the additional hardware/community-benchmark phase are complete. Phase 4 adds a Hermes delegation skill, recent-run status, and a local token ledger. Phase 5 is complete; its measured candidate was reverted after a fixture success regression. Final delivery preparation follows the latest green phase.
 
 ## Additional phase: hardware compatibility and community benchmarks
 
@@ -52,4 +52,29 @@ A fresh local clone at bd99a6a contained 175 tracked files matching their commit
 
 Remaining required delivery work: connect the owner's empty remote once its URL is available, publish the source, complete repository/catalog URLs and the full source SHA, align final release documentation, retake and review the <=90-second demo with separate captions and voice disclosure, rerun the clean-clone offline/Hermes gates, and prepare SUBMISSION.md. Catalog submission, public posting and the form remain owner steps. No final video retake or submission draft is complete yet.
 
-Phase 5 speed/context work remains an optional measured experiment. The completed feature set is ready for final delivery preparation without adding it.
+Phase 5 speed/context measurements are complete. The candidate did not meet the keep rule; final delivery preparation is next.
+
+
+## Phase 5: measured context experiment
+
+Phase 5 is complete. The repo-map and failure-digest candidate was reverted. Implementation successes: 33/35 before, 32/35 after. Overall median turns: 6.0 before, 5.0 after; overall median seconds: 16.8125 before, 22.125000000029104 after. Both cohorts retained all 40 runs and recorded full GPU residency. Protected-test outcomes remain separate from implementation successes.
+
+Same qwen3.5:9b model digest, quantization, loaded context, local Ollama 0.17.6 endpoint, eight fixtures, five runs each, one attempt, 25 total turns and 24000 cumulative estimated tokens. One sequential cohort per version; stochastic responses and order/thermal effects are uncontrolled. Offline fake-model tests briefly overlapped the baseline. No extra GPU model workload was started. Small synthetic fixtures do not establish gains on large repositories.
+
+| fixture | expected before | expected after | median turns before | median turns after | median secs before | median secs after |
+|---|---|---|---|---|---|---|
+| bug1 | 5 | 5 | 5 | 5 | 9.51600000000326 | 11.0 |
+| bug2 | 5 | 5 | 6 | 7 | 14.905999999959022 | 20.20299999997951 |
+| feature | 3 | 2 | 8 | 8 | 43.32799999997951 | 95.51500000001397 |
+| multifile | 5 | 5 | 7 | 5 | 21.34399999998277 | 22.03100000001723 |
+| refactor | 5 | 5 | 6 | 5 | 19.10899999999674 | 22.57799999997951 |
+| offbyone | 5 | 5 | 7 | 6 | 19.96799999999348 | 24.71899999998277 |
+| javascript | 5 | 5 | 5 | 5 | 16.81300000002375 | 24.67200000002049 |
+| blocked | 5 | 5 | 5 | 4 | 12.01600000000326 | 10.76600000000326 |
+
+The candidate added a depth-limited, git-visible map with at most 100 entries, 2000 display characters, six symbols per file and 128 KiB of source reads. Failure digests extracted unittest/pytest/Node failures and assertions, preserved exit status and original test output, and remained inside existing output/token limits. Candidate tests: 106 passed, 2 skipped in 47.83s. The map followed the existing path jail and visibility rules; source was never imported or executed.
+
+The candidate is reverted. Reproduction and comparison are in eval/phase5-candidate.patch, eval/phase5-reproduction.json and eval/phase5_compare.py. Public evidence omits disposable Git base identifiers, transient transcript paths and incidental start/check/residency-expiry timestamps. Relative links to the released transcripts remain in the result files. Every run, failure, outcome and numeric measurement is retained. Untouched originals and candidate source are preserved privately at C:/tmp/patchsmith-phase5-originals/experiment. The saved candidate patch reproduces all measured source hashes in a fresh baseline clone.
+
+
+Final retained-runtime gate: 99 passed, 1 skipped in 44.05s. Clean-copy Hermes validate --install-deps and doctor --ci passed with four tools, safe security scan and matching declarations. An immutable local reinstall verified runtime bytes against source. All 80 runs and numeric measurements match the untouched originals after the disclosed identifier/path/timestamp omissions. The active loop is byte-identical to the pre-experiment source; candidate-only module and tests were removed. No publication occurred.

@@ -1,0 +1,31 @@
+{
+  "baseline_commit": "ca3512d89be91bc4c4334882a23c259445cbe23d",
+  "baseline_runtime_loaded_before_edits": true,
+  "candidate_sha256": {
+    "loop.py": "5b0039b58bd4a9c9b66271c31984705b37e466cd80ae74647aa8d8284525299c",
+    "context.py": "5ce1771cd3abc01a3968e752291ec28152677d1a150d8d7eec72066259dbedfd",
+    "tests/test_context.py": "2aa1bf60d2eca91d0d84e1d0862625d9737a7d161b564616ee9877603fc63cd9"
+  },
+  "protocol": {
+    "model": "qwen3.5:9b",
+    "backend": "Ollama 0.17.6",
+    "runs_per_fixture": 5,
+    "fixtures": 8,
+    "attempts": 1,
+    "max_turns": 25,
+    "total_token_budget": 24000,
+    "require_gpu": true,
+    "order": "complete baseline cohort, then complete candidate cohort; no overlapping GPU benchmarks",
+    "keep_rule": "all 40 runs per cohort; no per-fixture expected-outcome reduction; lower overall median turns or seconds",
+    "limitations": [
+      "One sequential cohort per version; stochastic model responses and thermal/order effects are uncontrolled.",
+      "Offline fake-model tests briefly overlapped the baseline; no extra GPU model workload was started.",
+      "Fixtures are small synthetic checkouts; results do not establish gains on large repositories."
+    ]
+  },
+  "candidate_tests": {
+    "passed": 106,
+    "skipped": 2,
+    "seconds": 47.83
+  }
+}

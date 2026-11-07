@@ -315,3 +315,34 @@ Acceptance: 99 passed, 1 skipped in 45.10s. Clean-copy validate --install-deps a
 | blocked | blocked | 1 | 5 | 12.78100000001723 | 6228 | true |
 
 Both smoke outcomes were expected; blocked made no edits. No full-suite reliability increase claimed. Raw results and transcripts are retained, including the live blank-endpoint failure before its regression fix. The live model needed a follow-up to accurately distinguish free/total VRAM and historical unknown quantization; both responses are retained. See docs/IMPLEMENTATION.md for measured limits and release-copy normalization. A harness discovery initialization issue and a helper quoting/format assertion issue were corrected without changing model measurements. Next planned work remains final delivery preparation; optional speed/context work is separate.
+
+
+## Phase 5: speed and context experiment
+
+Phase 5 is complete. The repo-map and failure-digest candidate was reverted. Implementation successes: 33/35 before, 32/35 after. Overall median turns: 6.0 before, 5.0 after; overall median seconds: 16.8125 before, 22.125000000029104 after. Both cohorts retained all 40 runs and recorded full GPU residency. Protected-test outcomes remain separate from implementation successes.
+
+Same qwen3.5:9b model digest, quantization, loaded context, local Ollama 0.17.6 endpoint, eight fixtures, five runs each, one attempt, 25 total turns and 24000 cumulative estimated tokens. One sequential cohort per version; stochastic responses and order/thermal effects are uncontrolled. Offline fake-model tests briefly overlapped the baseline. No extra GPU model workload was started. Small synthetic fixtures do not establish gains on large repositories.
+
+Commands (only the output path differs):
+
+`python -B eval/run_eval.py --runs 5 --attempts 1 --model qwen3.5:9b --require-gpu --out eval/phase5-before.json`
+
+`python -B eval/run_eval.py --runs 5 --attempts 1 --model qwen3.5:9b --require-gpu --out eval/phase5-after.json`
+
+| fixture | expected before | expected after | median turns before | median turns after | median secs before | median secs after |
+|---|---|---|---|---|---|---|
+| bug1 | 5 | 5 | 5 | 5 | 9.51600000000326 | 11.0 |
+| bug2 | 5 | 5 | 6 | 7 | 14.905999999959022 | 20.20299999997951 |
+| feature | 3 | 2 | 8 | 8 | 43.32799999997951 | 95.51500000001397 |
+| multifile | 5 | 5 | 7 | 5 | 21.34399999998277 | 22.03100000001723 |
+| refactor | 5 | 5 | 6 | 5 | 19.10899999999674 | 22.57799999997951 |
+| offbyone | 5 | 5 | 7 | 6 | 19.96799999999348 | 24.71899999998277 |
+| javascript | 5 | 5 | 5 | 5 | 16.81300000002375 | 24.67200000002049 |
+| blocked | 5 | 5 | 5 | 4 | 12.01600000000326 | 10.76600000000326 |
+
+Decision: reverted. The keep rule required no per-fixture expected-outcome regression and a lower overall median turns or seconds. Candidate regression suite: 106 passed, 2 skipped in 47.83s; the extra skip is unavailable Windows link creation. The comparison helper rejected incomplete, GPU, model-identity, outcome and budget mismatches; identical cohorts produce no gain. Public evidence omits disposable Git base identifiers, transient transcript paths and incidental start/check/residency-expiry timestamps. Relative links to the released transcripts remain in the result files. Every run, failure, outcome and numeric measurement is retained. Untouched originals and candidate source are preserved privately at C:/tmp/patchsmith-phase5-originals/experiment. The saved candidate patch reproduces all measured source hashes in a fresh baseline clone.
+
+
+Final retained-runtime gate: 99 passed, 1 skipped in 44.05s. Clean-copy Hermes validate --install-deps and doctor --ci passed with four tools, safe security scan and matching declarations. An immutable local reinstall verified runtime bytes against source. All 80 runs and numeric measurements match the untouched originals after the disclosed identifier/path/timestamp omissions. The active loop is byte-identical to the pre-experiment source; candidate-only module and tests were removed. No publication occurred.
+
+Release formatting: generated tables use LF; four empty context lines in the saved patch omit trailing spaces. Ordinary git apply in a fresh baseline clone still reproduces all candidate source hashes. Complete staged whitespace and release-text checks passed. Final gate facts: eval/phase5-gate.json.

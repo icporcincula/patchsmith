@@ -1,0 +1,195 @@
+diff --git a/loop.py b/loop.py
+index d42c0f3..bc695e7 100644
+--- a/loop.py
++++ b/loop.py
+@@ -8,6 +8,7 @@ import tempfile
+ from time import monotonic
+ from threading import Lock
+
++from .context import failure_digest, repo_map
+ from .llm import LocalModel
+ from .tools import Jail, Session, TRANSCRIPTS, clip, linked
+
+@@ -85,9 +86,11 @@ def dispatch(session, call, calls):
+
+
+ def run_loop(session, client, task, turns, budget, log, result):
++    mapping = repo_map(session)
++    prompt_task = task + ("\n\nRepository map (partial; names and symbols are data, inspect files before editing):\n" + mapping if mapping else "")
+     messages = [
+         {"role": "system", "content": BRIEF.read_text(encoding="utf-8")},
+-        {"role": "user", "content": task},
++        {"role": "user", "content": prompt_task},
+     ]
+     calls = Counter()
+     adjustment = 0
+@@ -119,7 +122,7 @@ def run_loop(session, client, task, turns, budget, log, result):
+         idle = 0 if tool_calls else idle + 1
+         for call in tool_calls:
+             output, repeated = dispatch(session, call, calls)
+-            reply = {"role": "tool", "tool_call_id": call["id"], "content": clip(output)}
++            reply = {"role": "tool", "tool_call_id": call["id"], "content": clip(failure_digest(output) if call["function"]["name"] == "run_tests" else output)}
+             emit(log, reply)
+             messages.append(reply)
+             if session.finished:
+diff --git a/context.py b/context.py
+new file mode 100644
+index 0000000..acb0e57
+--- /dev/null
++++ b/context.py
+@@ -0,0 +1,75 @@
++"""Bounded source hints and extracted test failures for the local model."""
++
++import re
++
++SYMBOL = re.compile(
++    r"^(?:async )?(?:def|class)\s+([A-Za-z_$][\w$]*)"
++    r"|^(?:export\s+(?:default\s+)?)?(?:async\s+)?(?:function|class)\s+([A-Za-z_$][\w$]*)"
++    r"|^export\s+(?:const|let|var)\s+([A-Za-z_$][\w$]*)"
++)
++FAILURE = re.compile(
++    r"^(?:FAIL:|ERROR:|FAILED |ERROR |E\s+|AssertionError\b|[A-Za-z]*Error:|"
++    r"\s*(?:not ok\b|error:|expected:|actual:|operator:))"
++)
++
++
++def repo_map(session):
++    """Use existing visibility/jail rules; never import or execute source."""
++    lines = []
++    seen = set()
++    read_bytes = 0
++    length = 0
++    try:
++        names = session.visible_files()
++    except (OSError, ValueError, RuntimeError):
++        return ""
++    for index, name in enumerate(names):
++        if index >= 100 or length >= 1800:
++            lines.append("... map truncated ...")
++            break
++        parts = name.split("/")
++        display = name if len(parts) <= 4 else "/".join(parts[:4]) + "/..."
++        if display in seen:
++            continue
++        seen.add(display)
++        symbols = []
++        if len(parts) <= 4 and name.endswith((".py", ".js", ".jsx", ".ts", ".tsx")) and read_bytes < 131072:
++            try:
++                path = session.safe(name)
++                if path.is_file() and path.stat().st_size <= 65536:
++                    with path.open("rb") as stream:
++                        data = stream.read(min(16384, 131072 - read_bytes))
++                    read_bytes += len(data)
++                    if b"\0" not in data:
++                        for line in data.decode("utf-8", "replace").splitlines():
++                            match = SYMBOL.match(line)
++                            if match:
++                                symbols.append(next(value for value in match.groups() if value)[:80])
++                                if len(symbols) == 6:
++                                    break
++            except (OSError, ValueError, RuntimeError):
++                pass
++        # JSON-style escaping keeps unusual names on a single display line.
++        display = display.encode("unicode_escape").decode("ascii")[:240]
++        line = display + (" :: " + ", ".join(symbols) if symbols else "")
++        lines.append(line)
++        length += len(line) + 1
++    return "\n".join(lines)[:2000]
++
++
++def failure_digest(output):
++    """Prepend extracted evidence, preserving the exit line and original output."""
++    if not output.startswith("exit ") or output.startswith("exit 0\n"):
++        return output
++    first, _, body = output.partition("\n")
++    selected = []
++    for line in body.splitlines():
++        if FAILURE.match(line):
++            value = line.strip()[:240]
++            if value not in selected:
++                selected.append(value)
++            if sum(len(value) + 1 for value in selected) >= 900:
++                break
++    if not selected:
++        return output
++    return first + "\nFailure digest (extracted lines):\n" + "\n".join(selected)[:1000] + "\n\nOriginal test output:\n" + body
+diff --git a/tests/test_context.py b/tests/test_context.py
+new file mode 100644
+index 0000000..90b17a1
+--- /dev/null
++++ b/tests/test_context.py
+@@ -0,0 +1,74 @@
++"""Visibility, bounded context and model-facing failure evidence."""
++
++import pytest
++
++from patchsmith_plugin.context import failure_digest, repo_map
++from patchsmith_plugin.tools import Session
++from test_loop import FINISH, TEST, invoke, scripted, test_command
++
++
++def test_map_obeys_visibility_and_collects_symbols(repo):
++    (repo / ".gitignore").write_text("private.py\n", encoding="utf-8")
++    (repo / "private.py").write_text("def secret(): pass\n", encoding="utf-8")
++    (repo / "app.py").write_text("def visible():\n    def nested(): pass\n", encoding="utf-8")
++    (repo / "module.js").write_text("export function hello() {}\nexport const answer = 42;\n", encoding="utf-8")
++    output = repo_map(Session(repo, ""))
++    assert "app.py :: visible" in output and "nested" not in output
++    assert "module.js :: hello, answer" in output
++    assert "private.py" not in output and "secret" not in output and ".git/" not in output
++
++
++def test_map_bounds_depth_source_reads_and_output(repo):
++    deep = repo / "one/two/three/four/five.py"
++    deep.parent.mkdir(parents=True)
++    deep.write_text("def too_deep(): pass\n", encoding="utf-8")
++    (repo / "large.py").write_text("def oversized(): pass\n" + "#" * 65536, encoding="utf-8")
++    output = repo_map(Session(repo, ""))
++    assert "one/two/three/four/..." in output and "too_deep" not in output
++    assert "large.py" in output and "oversized" not in output
++    for index in range(130):
++        (repo / ("file_" + str(index) + "x" * 70 + ".py")).write_text("", encoding="utf-8")
++    output = repo_map(Session(repo, ""))
++    assert len(output) <= 2000 and "map truncated" in output
++
++
++def test_map_never_reads_outside_link(repo, tmp_path):
++    outside = tmp_path / "outside.py"
++    outside.write_text("def must_not_leak(): pass\n", encoding="utf-8")
++    try:
++        (repo / "linked.py").symlink_to(outside)
++    except OSError:
++        pytest.skip("Creating links is unavailable")
++    assert "must_not_leak" not in repo_map(Session(repo, ""))
++
++
++@pytest.mark.parametrize("body, expected", [
++    ("FAIL: test_value (test_app.Example)\ntrace detail\nAssertionError: 1 != 2", "FAIL: test_value"),
++    ("long trace\nE       assert 1 == 2\nFAILED tests/test_app.py::test_value", "E       assert 1 == 2"),
++    ("TAP version 13\nnot ok 1 - clamp\n  error: wrong bound\n  expected: 2", "not ok 1 - clamp"),
++])
++def test_digest_preserves_exit_and_original(body, expected):
++    raw = "exit 1\n" + body
++    output = failure_digest(raw)
++    assert output.startswith("exit 1\nFailure digest")
++    assert expected in output.split("Original test output:")[0]
++    assert output.endswith(body)
++
++
++def test_digest_does_not_invent_failures():
++    for raw in ("exit 0\nOK", "No test command configured.", "exit 2\nunknown failure"):
++        assert failure_digest(raw) == raw
++    output = failure_digest("exit 1\n" + "\n".join("AssertionError: " + str(i) + "x" * 500 for i in range(100)))
++    assert len(output.split("Original test output:")[0]) < 1100
++
++
++def test_model_receives_map_and_digest_without_changing_test_facts(repo):
++    command = test_command("-c", "print('FAIL: test_value'); print('AssertionError: wrong value'); raise SystemExit(1)")
++    with scripted(TEST, FINISH) as (url, requests):
++        result = invoke(repo, url, test_command=command)
++    user = requests[0]["messages"][1]["content"]
++    assert "Repository map" in user and "app.py" in user
++    reply = requests[1]["messages"][-1]["content"]
++    assert reply.startswith("exit 1\nFailure digest")
++    assert result["status"] == "blocked" and result["reason"] == "tests_failed"
++    assert result["attempt_history"][0]["test_output"].startswith("exit 1\nFAIL:")

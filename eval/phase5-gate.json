@@ -1,0 +1,30 @@
+{
+  "phase": "5",
+  "decision": "reverted",
+  "before_implementation_successes": 33,
+  "after_implementation_successes": 32,
+  "implementation_runs_per_cohort": 35,
+  "guardrail_expected_before": 5,
+  "guardrail_expected_after": 5,
+  "full_gpu_runs": 80,
+  "total_runs": 80,
+  "retained_runtime_tests": {
+    "passed": 99,
+    "skipped": 1,
+    "seconds": 44.05
+  },
+  "candidate_tests": {
+    "passed": 106,
+    "skipped": 2,
+    "seconds": 47.83
+  },
+  "hermes_clean_validate": true,
+  "hermes_doctor_ci": true,
+  "declared_and_registered_tools": 4,
+  "raw_json_and_transcript_files_verified": 85,
+  "runtime_loop_restored_byte_identical": true,
+  "candidate_patch_fresh_clone_hash_match": true,
+  "complete_staged_whitespace_check": true,
+  "release_text_filter_matches": 0,
+  "publication_performed": false
+}

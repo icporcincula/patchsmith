@@ -1,0 +1,95 @@
+{
+  "before": {
+    "expected_outcomes": 38,
+    "implementation_successes": 33,
+    "median_turns": 6.0,
+    "median_secs": 16.8125,
+    "implementation_median_turns": 6,
+    "implementation_median_secs": 18.875
+  },
+  "after": {
+    "expected_outcomes": 37,
+    "implementation_successes": 32,
+    "median_turns": 5.0,
+    "median_secs": 22.125000000029104,
+    "implementation_median_turns": 5,
+    "implementation_median_secs": 22.57799999997951
+  },
+  "no_fixture_success_regression": false,
+  "median_improved": true,
+  "keep_candidate": false,
+  "fixtures": [
+    {
+      "fixture": "bug1",
+      "before_expected": 5,
+      "after_expected": 5,
+      "before_median_turns": 5,
+      "after_median_turns": 5,
+      "before_median_secs": 9.51600000000326,
+      "after_median_secs": 11.0
+    },
+    {
+      "fixture": "bug2",
+      "before_expected": 5,
+      "after_expected": 5,
+      "before_median_turns": 6,
+      "after_median_turns": 7,
+      "before_median_secs": 14.905999999959022,
+      "after_median_secs": 20.20299999997951
+    },
+    {
+      "fixture": "feature",
+      "before_expected": 3,
+      "after_expected": 2,
+      "before_median_turns": 8,
+      "after_median_turns": 8,
+      "before_median_secs": 43.32799999997951,
+      "after_median_secs": 95.51500000001397
+    },
+    {
+      "fixture": "multifile",
+      "before_expected": 5,
+      "after_expected": 5,
+      "before_median_turns": 7,
+      "after_median_turns": 5,
+      "before_median_secs": 21.34399999998277,
+      "after_median_secs": 22.03100000001723
+    },
+    {
+      "fixture": "refactor",
+      "before_expected": 5,
+      "after_expected": 5,
+      "before_median_turns": 6,
+      "after_median_turns": 5,
+      "before_median_secs": 19.10899999999674,
+      "after_median_secs": 22.57799999997951
+    },
+    {
+      "fixture": "offbyone",
+      "before_expected": 5,
+      "after_expected": 5,
+      "before_median_turns": 7,
+      "after_median_turns": 6,
+      "before_median_secs": 19.96799999999348,
+      "after_median_secs": 24.71899999998277
+    },
+    {
+      "fixture": "javascript",
+      "before_expected": 5,
+      "after_expected": 5,
+      "before_median_turns": 5,
+      "after_median_turns": 5,
+      "before_median_secs": 16.81300000002375,
+      "after_median_secs": 24.67200000002049
+    },
+    {
+      "fixture": "blocked",
+      "before_expected": 5,
+      "after_expected": 5,
+      "before_median_turns": 5,
+      "after_median_turns": 4,
+      "before_median_secs": 12.01600000000326,
+      "after_median_secs": 10.76600000000326
+    }
+  ]
+}

@@ -138,9 +138,9 @@ Summaries are private local files under `~/.patchsmith/runs/`. They store run me
 
 Hermes's installed executor has a default 420-second tool deadline, configurable by the host. Slow local runs can exceed it. Set `background: true` on `implement_task` to return a `job_id` immediately, then call `task_status` with that exact identifier in the **same Hermes process**. A completed response contains the full coding result. One background job runs at a time; the last 50 handles are retained in memory. Keep Hermes open until completion: restart, unload, or one-shot process exit is not a durable job runner and can interrupt work. Prefer proposal mode for these runs. Existing turn, token, endpoint, test, and rollback rules apply inside the worker. Synchronous calls remain the default.
 
-The command and skill are registered through the SDK, not unsupported manifest fields. `plugin.yaml` declares the three tools; registration tests and clean-copy validation verify the command and packaged skill separately.
+The command and skill are registered through the SDK, not unsupported manifest fields. `plugin.yaml` declares four tools; registration tests and clean-copy validation verify the command and packaged skill separately.
 
-Planned hardware compatibility and contributor benchmark work is recorded in [implementation notes](docs/IMPLEMENTATION.md); it is not implemented yet.
+Hardware compatibility and contributor benchmark support are documented below and in [implementation notes](docs/IMPLEMENTATION.md).
 
 Phase 4's real skill session used Hermes skill preloading and omitted model and endpoint arguments from the coding call. Its proposal passed two independent tests in a separate copy and preserved the source checkout. Automatic skill selection failed in the first take; the successful session needed a follow-up to display the exact diff instead of a prose summary. Both takes are retained in `eval/`. Skill instructions guide the main model; they do not enforce its response formatting.
 
@@ -162,3 +162,13 @@ See [benchmark guidance](benchmarks/README.md) for CPU/partial-offload runs, rep
 ## Source publication
 
 See [publishing instructions](docs/PUBLISHING.md) for connecting the local repository to an empty remote and pinning the catalog entry to a pushed source commit.
+
+## Speed and context experiment (Phase 5)
+
+Phase 5 is complete. The repo-map and failure-digest candidate was reverted. Implementation successes: 33/35 before, 32/35 after. Overall median turns: 6.0 before, 5.0 after; overall median seconds: 16.8125 before, 22.125000000029104 after. Both cohorts retained all 40 runs and recorded full GPU residency. Protected-test outcomes remain separate from implementation successes.
+
+Same qwen3.5:9b model digest, quantization, loaded context, local Ollama 0.17.6 endpoint, eight fixtures, five runs each, one attempt, 25 total turns and 24000 cumulative estimated tokens. One sequential cohort per version; stochastic responses and order/thermal effects are uncontrolled. Offline fake-model tests briefly overlapped the baseline. No extra GPU model workload was started. Small synthetic fixtures do not establish gains on large repositories.
+
+The candidate failed the keep rule because fixture success decreased. It is preserved as an experiment, outside the active runtime. No performance improvement is claimed.
+
+See [comparison](eval/phase5-comparison.table.md), [protocol](eval/phase5-protocol.json), and the before/after results and transcripts in eval/. Public evidence omits disposable Git base identifiers, transient transcript paths and incidental start/check/residency-expiry timestamps. Relative links to the released transcripts remain in the result files. Every run, failure, outcome and numeric measurement is retained. Untouched originals and candidate source are preserved privately at C:/tmp/patchsmith-phase5-originals/experiment. The saved candidate patch reproduces all measured source hashes in a fresh baseline clone.

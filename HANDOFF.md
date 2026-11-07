@@ -45,8 +45,15 @@ Phase 4 adds `patchsmith:delegate`, `/patchsmith status`, private summary record
 
 ## Additional hardware phase
 
-Adds inspect_hardware (four declared tools total), patchsmith:hardware, benchmarks/tested.json, and the reproducible eval/benchmark.py command documented in benchmarks/README.md. Hardware matching and memory estimates make no new reliability claims. No public publication or model installation occurs. Next planned work remains final delivery preparation; optional speed/context work is separate.
+Adds inspect_hardware (four declared tools total), patchsmith:hardware, benchmarks/tested.json, and the reproducible eval/benchmark.py command documented in benchmarks/README.md. Hardware matching and memory estimates make no new reliability claims. No public publication or model installation occurs. Phase 5 is now complete; final delivery preparation is next.
 
 ## Local repository and remote handoff
 
 The local Git repository uses `main` and preserves all implementation commits and phase tags. `docs/PUBLISHING.md` gives the commands for connecting an empty remote, pushing source, and filling the catalog placeholders. Local secrets, private plans, generated state and the video workspace are ignored. No remote or public submission has been created.
+
+
+## Phase 5 outcome
+
+Phase 5 is complete. The repo-map and failure-digest candidate was reverted. Implementation successes: 33/35 before, 32/35 after. Overall median turns: 6.0 before, 5.0 after; overall median seconds: 16.8125 before, 22.125000000029104 after. Both cohorts retained all 40 runs and recorded full GPU residency. Protected-test outcomes remain separate from implementation successes.
+
+The candidate patch is an experimental artifact; the active runtime retains the previously validated behavior. Final delivery preparation is next. See eval/phase5-comparison.table.md and docs/IMPLEMENTATION.md for the protocol and limits. No remote or public submission has been created.
