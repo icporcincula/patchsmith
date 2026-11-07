@@ -1,0 +1,2 @@
+name, memory.total [MiB], driver_version
+NVIDIA GeForce RTX 5060 Ti, 16311 MiB, 610.88

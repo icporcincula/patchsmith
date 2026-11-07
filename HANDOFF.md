@@ -1,20 +1,24 @@
-# Handoff
+# Patchsmith handoff
 
-## What works (verified)
-- C1 validate + doctor green; C2 offline tests 25 passed / 1 skipped (Windows, Python 3.12.7).
-- C3/C5: qwen3.5:9b via Ollama, bug1 5/5 and bug2 5/5 done with independently re-run tests green (eval/results.table.md).
-- C4: Hermes (WSL) loads the installed plugin; a one-shot `hermes chat` session called `implement_task` and the bug1 fixture went green (eval/hermes-session-bug1.txt).
+## Green increments
 
-## Caveats
-- Only 2 small seeded bugs x 5 runs; extra bugs from PLAN C5 not added. Numbers were measured on CPU (GPU memory was held by other processes): ~3.5-4 min per run.
-- Hermes defers plugin tools behind tool_search by default. A local 9B agent never found `implement_task` that way (first attempt failed, 8 wasted calls). The passing session used `hermes config set tools.tool_search.enabled off`. Mention this in the demo setup.
-- WSL has no pytest offline; the Hermes fixture session used `python3 -m unittest -q`. Fixtures are unittest-style so both runners work.
-- The failure path (endpoint down, bad workdir) is covered by offline tests, not re-run against Hermes.
-- `/patchsmith status` slash command not built (cut per plan).
+- Phase 0: renamed the plugin/toolset, configuration and transcript directory to Patchsmith. The tool remains `implement_task`; the source directory remains unchanged. Five Hermes environment settings now use `PS_` with no legacy fallback.
+- Phase 1: eight fixtures, five GPU runs each, with independent test reruns and preserved transcripts. 35/35 implementation runs returned done with independently green tests; 5/5 protected-test requests returned blocked with tests still red and no files changed.
+- The exact generated table is in `eval/results.table.md`; raw GPU evidence is in `eval/results-gpu.json`. Older CPU evidence remains archived. Only Ollama has been measured.
+- Original in-Hermes invocation evidence remains in `eval/hermes-session-bug1.txt`; this is historical evidence from before the rename.
 
-## Manual steps for the user
-1. Ollama on Windows listens on all interfaces already; WSL reaches it at the gateway IP (`ip route`, was 172.22.208.1). Put `PS_ENDPOINT=http://<gateway>:11434/v1` in `~/.hermes/.env`.
-2. Free GPU memory before recording the demo (inference was CPU-only).
-3. Create the public GitHub repo (needs your explicit go-ahead), push, put the 40-char SHA in `catalog-entry.yaml`, replace `<USER>`.
-4. Fork NousResearch/hermes-agent, add `plugin-catalog/patchsmith.yaml`, open the PR. PLAN.md is gitignored; do not push it.
-5. Demo + X post + form (deadline 5PM EST Nov 11).
+## Operational notes
+
+- Hermes may hide tools behind tool_search. The earlier passing local-model session used `hermes config set tools.tool_search.enabled off`.
+- WSL reaches Ollama on Windows through its gateway address. Configure `PS_ENDPOINT` in `~/.hermes/.env`; the existing plugin-owned settings were renamed in place without exposing their values.
+- `PS_MODEL`, `PS_MAX_TURNS`, `PS_CTX_BUDGET`, and `PS_TEST_COMMAND` are optional. The benchmark used default budgets and explicitly selected `qwen3.5:9b`.
+- The current plugin still edits in place. Propose/review/apply, retries, native status and skill integration remain later phases of the extension plan.
+
+## User publication steps after Phase 1
+
+1. Create the Patchsmith repository and push the green code when ready. The directory rename is yours to do.
+2. Replace `<USER>` and the SHA placeholder in `catalog-entry.yaml` with the public repository and exact 40-character commit.
+3. Add the catalog entry to a fork of NousResearch/hermes-agent and open the catalog PR. The same PR can receive later green revisions.
+4. Retake the demo after the chosen feature phases. Confirm the contest allows synthesized narration before posting.
+
+No repository, push, PR, post, or submission was created by this implementation.

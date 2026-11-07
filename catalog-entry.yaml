@@ -4,7 +4,7 @@ sha: 0000000000000000000000000000000000000000
 title: Patchsmith
 description: >-
   Adds one tool, `implement_task`, that hands a single well-specified coding task to a local
-  model (Ollama, llama.cpp or any OpenAI-compatible local server) and returns the resulting
+  model served through Ollama (the measured backend) and returns the resulting
   diff. The local model works inside a fixed toolset with no shell (read, grep, glob, git
   status/diff, write/edit, run the configured test command, finish) under hard turn and
   context budgets, with a path jail, read-only test files, an auto-finish when tests go

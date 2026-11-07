@@ -1,0 +1,2067 @@
+{
+  "metadata": {
+    "started_at": "2026-11-07T06:01:56.142173+00:00",
+    "command": "eval/run_eval.py --runs 5 --model qwen3.5:9b --require-gpu --out eval/results-gpu.json",
+    "model": "qwen3.5:9b",
+    "endpoint": "http://127.0.0.1:11434/v1",
+    "python": "3.12.7 (tags/v3.12.7:0b05ead, Oct  1 2024, 03:06:41) [MSC v.1941 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "require_gpu": true,
+    "counts": {
+      "bug1": 5,
+      "bug2": 5,
+      "feature": 5,
+      "multifile": 5,
+      "refactor": 5,
+      "offbyone": 5,
+      "javascript": 5,
+      "blocked": 5
+    },
+    "budgets": {
+      "max_turns": "25",
+      "context_budget_tokens": "24000"
+    }
+  },
+  "rows": [
+    {
+      "fixture": "bug1",
+      "run": 1,
+      "status": "done",
+      "reason": "auto_finish",
+      "note": "Tests passed after the final edit.",
+      "turns": 6,
+      "tokens_est": 6855,
+      "secs": 11.03200000000652,
+      "green": true,
+      "independent_tests": {
+        "returncode": 0,
+        "output": "----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nOK\n",
+        "secs": 0.10899999999674037
+      },
+      "baseline_tests": {
+        "returncode": 1,
+        "output": "======================================================================\nFAIL: test_best_score (test_scorer.ScorerTest.test_best_score)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-bug1-hsg6i_13\\test_scorer.py\", line 8, in test_best_score\n    self.assertEqual(best_score([3, 9, 4]), 9)\nAssertionError: 3 != 9\n\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nFAILED (failures=1)\n",
+        "secs": 0.125
+      },
+      "files_changed": [
+        "scorer.py"
+      ],
+      "diff": "--- a/scorer.py\n+++ b/scorer.py\n@@ -1,3 +1,3 @@\n def best_score(scores):\n     \"\"\"Return the highest score in the list.\"\"\"\n-    return min(scores)\n+    return max(scores)\n",
+      "gpu": {
+        "checked_at": "2026-11-07T06:02:07.618252+00:00",
+        "full_gpu": true,
+        "ollama_model": {
+          "name": "qwen3.5:9b",
+          "model": "qwen3.5:9b",
+          "size": 9975378560,
+          "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "9.7B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-11-07T14:07:07.4814568+08:00",
+          "size_vram": 9975378560,
+          "context_length": 65536
+        }
+      },
+      "test_command": "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -B -m unittest discover -q",
+      "transcript_path": "eval/results-gpu.transcripts/bug1-1.jsonl",
+      "expected_outcome": true
+    },
+    {
+      "fixture": "bug1",
+      "run": 2,
+      "status": "done",
+      "reason": "auto_finish",
+      "note": "Tests passed after the final edit.",
+      "turns": 6,
+      "tokens_est": 6854,
+      "secs": 10.578000000008615,
+      "green": true,
+      "independent_tests": {
+        "returncode": 0,
+        "output": "----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nOK\n",
+        "secs": 0.10899999999674037
+      },
+      "baseline_tests": {
+        "returncode": 1,
+        "output": "======================================================================\nFAIL: test_best_score (test_scorer.ScorerTest.test_best_score)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-bug1-auab21qa\\test_scorer.py\", line 8, in test_best_score\n    self.assertEqual(best_score([3, 9, 4]), 9)\nAssertionError: 3 != 9\n\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nFAILED (failures=1)\n",
+        "secs": 0.10999999998603016
+      },
+      "files_changed": [
+        "scorer.py"
+      ],
+      "diff": "--- a/scorer.py\n+++ b/scorer.py\n@@ -1,3 +1,3 @@\n def best_score(scores):\n     \"\"\"Return the highest score in the list.\"\"\"\n-    return min(scores)\n+    return max(scores)\n",
+      "gpu": {
+        "checked_at": "2026-11-07T06:02:18.589629+00:00",
+        "full_gpu": true,
+        "ollama_model": {
+          "name": "qwen3.5:9b",
+          "model": "qwen3.5:9b",
+          "size": 9975378560,
+          "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "9.7B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-11-07T14:07:18.4708219+08:00",
+          "size_vram": 9975378560,
+          "context_length": 65536
+        }
+      },
+      "test_command": "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -B -m unittest discover -q",
+      "transcript_path": "eval/results-gpu.transcripts/bug1-2.jsonl",
+      "expected_outcome": true
+    },
+    {
+      "fixture": "bug1",
+      "run": 3,
+      "status": "done",
+      "reason": null,
+      "note": "Fixed best_score() by changing min(scores) to max(scores). Tests pass.",
+      "turns": 6,
+      "tokens_est": 6866,
+      "secs": 10.796999999991385,
+      "green": true,
+      "independent_tests": {
+        "returncode": 0,
+        "output": "----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nOK\n",
+        "secs": 0.10999999998603016
+      },
+      "baseline_tests": {
+        "returncode": 1,
+        "output": "======================================================================\nFAIL: test_best_score (test_scorer.ScorerTest.test_best_score)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-bug1-v3v4wicb\\test_scorer.py\", line 8, in test_best_score\n    self.assertEqual(best_score([3, 9, 4]), 9)\nAssertionError: 3 != 9\n\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nFAILED (failures=1)\n",
+        "secs": 0.125
+      },
+      "files_changed": [
+        "scorer.py"
+      ],
+      "diff": "--- a/scorer.py\n+++ b/scorer.py\n@@ -1,3 +1,3 @@\n def best_score(scores):\n     \"\"\"Return the highest score in the list.\"\"\"\n-    return min(scores)\n+    return max(scores)\n",
+      "gpu": {
+        "checked_at": "2026-11-07T06:02:29.797442+00:00",
+        "full_gpu": true,
+        "ollama_model": {
+          "name": "qwen3.5:9b",
+          "model": "qwen3.5:9b",
+          "size": 9975378560,
+          "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "9.7B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-11-07T14:07:29.7429464+08:00",
+          "size_vram": 9975378560,
+          "context_length": 65536
+        }
+      },
+      "test_command": "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -B -m unittest discover -q",
+      "transcript_path": "eval/results-gpu.transcripts/bug1-3.jsonl",
+      "expected_outcome": true
+    },
+    {
+      "fixture": "bug1",
+      "run": 4,
+      "status": "done",
+      "reason": "auto_finish",
+      "note": "Tests passed after the final edit.",
+      "turns": 5,
+      "tokens_est": 5696,
+      "secs": 9.76600000000326,
+      "green": true,
+      "independent_tests": {
+        "returncode": 0,
+        "output": "----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nOK\n",
+        "secs": 0.125
+      },
+      "baseline_tests": {
+        "returncode": 1,
+        "output": "======================================================================\nFAIL: test_best_score (test_scorer.ScorerTest.test_best_score)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-bug1-26nf15hq\\test_scorer.py\", line 8, in test_best_score\n    self.assertEqual(best_score([3, 9, 4]), 9)\nAssertionError: 3 != 9\n\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nFAILED (failures=1)\n",
+        "secs": 0.10899999999674037
+      },
+      "files_changed": [
+        "scorer.py"
+      ],
+      "diff": "--- a/scorer.py\n+++ b/scorer.py\n@@ -1,3 +1,3 @@\n def best_score(scores):\n     \"\"\"Return the highest score in the list.\"\"\"\n-    return min(scores)\n+    return max(scores)\n",
+      "gpu": {
+        "checked_at": "2026-11-07T06:02:39.979415+00:00",
+        "full_gpu": true,
+        "ollama_model": {
+          "name": "qwen3.5:9b",
+          "model": "qwen3.5:9b",
+          "size": 9975378560,
+          "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "9.7B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-11-07T14:07:39.9084129+08:00",
+          "size_vram": 9975378560,
+          "context_length": 65536
+        }
+      },
+      "test_command": "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -B -m unittest discover -q",
+      "transcript_path": "eval/results-gpu.transcripts/bug1-4.jsonl",
+      "expected_outcome": true
+    },
+    {
+      "fixture": "bug1",
+      "run": 5,
+      "status": "done",
+      "reason": "auto_finish",
+      "note": "Tests passed after the final edit.",
+      "turns": 6,
+      "tokens_est": 6873,
+      "secs": 10.969000000011874,
+      "green": true,
+      "independent_tests": {
+        "returncode": 0,
+        "output": "----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nOK\n",
+        "secs": 0.11000000001513399
+      },
+      "baseline_tests": {
+        "returncode": 1,
+        "output": "======================================================================\nFAIL: test_best_score (test_scorer.ScorerTest.test_best_score)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-bug1-be3t51w_\\test_scorer.py\", line 8, in test_best_score\n    self.assertEqual(best_score([3, 9, 4]), 9)\nAssertionError: 3 != 9\n\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nFAILED (failures=1)\n",
+        "secs": 0.10899999999674037
+      },
+      "files_changed": [
+        "scorer.py"
+      ],
+      "diff": "--- a/scorer.py\n+++ b/scorer.py\n@@ -1,3 +1,3 @@\n def best_score(scores):\n     \"\"\"Return the highest score in the list.\"\"\"\n-    return min(scores)\n+    return max(scores)\n",
+      "gpu": {
+        "checked_at": "2026-11-07T06:02:51.356186+00:00",
+        "full_gpu": true,
+        "ollama_model": {
+          "name": "qwen3.5:9b",
+          "model": "qwen3.5:9b",
+          "size": 9975378560,
+          "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "9.7B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-11-07T14:07:51.2290513+08:00",
+          "size_vram": 9975378560,
+          "context_length": 65536
+        }
+      },
+      "test_command": "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -B -m unittest discover -q",
+      "transcript_path": "eval/results-gpu.transcripts/bug1-5.jsonl",
+      "expected_outcome": true
+    },
+    {
+      "fixture": "bug2",
+      "run": 1,
+      "status": "done",
+      "reason": "auto_finish",
+      "note": "Tests passed after the final edit.",
+      "turns": 6,
+      "tokens_est": 7426,
+      "secs": 14.89100000000326,
+      "green": true,
+      "independent_tests": {
+        "returncode": 0,
+        "output": "----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "secs": 0.1090000000258442
+      },
+      "baseline_tests": {
+        "returncode": 1,
+        "output": "======================================================================\nFAIL: test_podium (test_report.ReportTest.test_podium)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-bug2-7fkqfty7\\test_report.py\", line 15, in test_podium\n    self.assertEqual(podium(PLAYERS), [\"bo\", \"cy\", \"ann\"])\nAssertionError: Lists differ: ['di', 'ann', 'cy'] != ['bo', 'cy', 'ann']\n\nFirst differing element 0:\n'di'\n'bo'\n\n- ['di', 'ann', 'cy']\n+ ['bo', 'cy', 'ann']\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "secs": 0.10899999999674037
+      },
+      "files_changed": [
+        "ranking.py"
+      ],
+      "diff": "--- a/ranking.py\n+++ b/ranking.py\n@@ -1,3 +1,3 @@\n def rank(players):\n     \"\"\"Return player names ordered from highest points to lowest.\"\"\"\n-    return [p[\"name\"] for p in sorted(players, key=lambda p: p[\"points\"])]\n+    return [p[\"name\"] for p in sorted(players, key=lambda p: p[\"points\"], reverse=True)]\n",
+      "gpu": {
+        "checked_at": "2026-11-07T06:03:06.660579+00:00",
+        "full_gpu": true,
+        "ollama_model": {
+          "name": "qwen3.5:9b",
+          "model": "qwen3.5:9b",
+          "size": 9975378560,
+          "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "9.7B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-11-07T14:08:06.5935843+08:00",
+          "size_vram": 9975378560,
+          "context_length": 65536
+        }
+      },
+      "test_command": "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -B -m unittest discover -q",
+      "transcript_path": "eval/results-gpu.transcripts/bug2-1.jsonl",
+      "expected_outcome": true
+    },
+    {
+      "fixture": "bug2",
+      "run": 2,
+      "status": "done",
+      "reason": "auto_finish",
+      "note": "Tests passed after the final edit.",
+      "turns": 6,
+      "tokens_est": 7439,
+      "secs": 15.125,
+      "green": true,
+      "independent_tests": {
+        "returncode": 0,
+        "output": "----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "secs": 0.125
+      },
+      "baseline_tests": {
+        "returncode": 1,
+        "output": "======================================================================\nFAIL: test_podium (test_report.ReportTest.test_podium)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-bug2-a4cqy4rx\\test_report.py\", line 15, in test_podium\n    self.assertEqual(podium(PLAYERS), [\"bo\", \"cy\", \"ann\"])\nAssertionError: Lists differ: ['di', 'ann', 'cy'] != ['bo', 'cy', 'ann']\n\nFirst differing element 0:\n'di'\n'bo'\n\n- ['di', 'ann', 'cy']\n+ ['bo', 'cy', 'ann']\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "secs": 0.10999999998603016
+      },
+      "files_changed": [
+        "ranking.py"
+      ],
+      "diff": "--- a/ranking.py\n+++ b/ranking.py\n@@ -1,3 +1,3 @@\n def rank(players):\n     \"\"\"Return player names ordered from highest points to lowest.\"\"\"\n-    return [p[\"name\"] for p in sorted(players, key=lambda p: p[\"points\"])]\n+    return [p[\"name\"] for p in sorted(players, key=lambda p: p[\"points\"], reverse=True)]\n",
+      "gpu": {
+        "checked_at": "2026-11-07T06:03:22.169438+00:00",
+        "full_gpu": true,
+        "ollama_model": {
+          "name": "qwen3.5:9b",
+          "model": "qwen3.5:9b",
+          "size": 9975378560,
+          "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "9.7B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-11-07T14:08:22.1151332+08:00",
+          "size_vram": 9975378560,
+          "context_length": 65536
+        }
+      },
+      "test_command": "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -B -m unittest discover -q",
+      "transcript_path": "eval/results-gpu.transcripts/bug2-2.jsonl",
+      "expected_outcome": true
+    },
+    {
+      "fixture": "bug2",
+      "run": 3,
+      "status": "done",
+      "reason": "auto_finish",
+      "note": "Tests passed after the final edit.",
+      "turns": 6,
+      "tokens_est": 7439,
+      "secs": 15.10999999998603,
+      "green": true,
+      "independent_tests": {
+        "returncode": 0,
+        "output": "----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "secs": 0.10899999999674037
+      },
+      "baseline_tests": {
+        "returncode": 1,
+        "output": "======================================================================\nFAIL: test_podium (test_report.ReportTest.test_podium)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-bug2-xsper817\\test_report.py\", line 15, in test_podium\n    self.assertEqual(podium(PLAYERS), [\"bo\", \"cy\", \"ann\"])\nAssertionError: Lists differ: ['di', 'ann', 'cy'] != ['bo', 'cy', 'ann']\n\nFirst differing element 0:\n'di'\n'bo'\n\n- ['di', 'ann', 'cy']\n+ ['bo', 'cy', 'ann']\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "secs": 0.10899999999674037
+      },
+      "files_changed": [
+        "ranking.py"
+      ],
+      "diff": "--- a/ranking.py\n+++ b/ranking.py\n@@ -1,3 +1,3 @@\n def rank(players):\n     \"\"\"Return player names ordered from highest points to lowest.\"\"\"\n-    return [p[\"name\"] for p in sorted(players, key=lambda p: p[\"points\"])]\n+    return [p[\"name\"] for p in sorted(players, key=lambda p: p[\"points\"], reverse=True)]\n",
+      "gpu": {
+        "checked_at": "2026-11-07T06:03:37.689644+00:00",
+        "full_gpu": true,
+        "ollama_model": {
+          "name": "qwen3.5:9b",
+          "model": "qwen3.5:9b",
+          "size": 9975378560,
+          "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "9.7B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-11-07T14:08:37.6207327+08:00",
+          "size_vram": 9975378560,
+          "context_length": 65536
+        }
+      },
+      "test_command": "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -B -m unittest discover -q",
+      "transcript_path": "eval/results-gpu.transcripts/bug2-3.jsonl",
+      "expected_outcome": true
+    },
+    {
+      "fixture": "bug2",
+      "run": 4,
+      "status": "done",
+      "reason": "auto_finish",
+      "note": "Tests passed after the final edit.",
+      "turns": 6,
+      "tokens_est": 7450,
+      "secs": 15.34299999999348,
+      "green": true,
+      "independent_tests": {
+        "returncode": 0,
+        "output": "----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "secs": 0.10899999999674037
+      },
+      "baseline_tests": {
+        "returncode": 1,
+        "output": "======================================================================\nFAIL: test_podium (test_report.ReportTest.test_podium)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-bug2-c9zdb3y4\\test_report.py\", line 15, in test_podium\n    self.assertEqual(podium(PLAYERS), [\"bo\", \"cy\", \"ann\"])\nAssertionError: Lists differ: ['di', 'ann', 'cy'] != ['bo', 'cy', 'ann']\n\nFirst differing element 0:\n'di'\n'bo'\n\n- ['di', 'ann', 'cy']\n+ ['bo', 'cy', 'ann']\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "secs": 0.125
+      },
+      "files_changed": [
+        "ranking.py"
+      ],
+      "diff": "--- a/ranking.py\n+++ b/ranking.py\n@@ -1,3 +1,3 @@\n def rank(players):\n     \"\"\"Return player names ordered from highest points to lowest.\"\"\"\n-    return [p[\"name\"] for p in sorted(players, key=lambda p: p[\"points\"])]\n+    return [p[\"name\"] for p in sorted(players, key=lambda p: p[\"points\"], reverse=True)]\n",
+      "gpu": {
+        "checked_at": "2026-11-07T06:03:53.455294+00:00",
+        "full_gpu": true,
+        "ollama_model": {
+          "name": "qwen3.5:9b",
+          "model": "qwen3.5:9b",
+          "size": 9975378560,
+          "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "9.7B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-11-07T14:08:53.3795244+08:00",
+          "size_vram": 9975378560,
+          "context_length": 65536
+        }
+      },
+      "test_command": "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -B -m unittest discover -q",
+      "transcript_path": "eval/results-gpu.transcripts/bug2-4.jsonl",
+      "expected_outcome": true
+    },
+    {
+      "fixture": "bug2",
+      "run": 5,
+      "status": "done",
+      "reason": "auto_finish",
+      "note": "Tests passed after the final edit.",
+      "turns": 6,
+      "tokens_est": 7432,
+      "secs": 14.969000000011874,
+      "green": true,
+      "independent_tests": {
+        "returncode": 0,
+        "output": "----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "secs": 0.10899999999674037
+      },
+      "baseline_tests": {
+        "returncode": 1,
+        "output": "======================================================================\nFAIL: test_podium (test_report.ReportTest.test_podium)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-bug2-fl6tbakm\\test_report.py\", line 15, in test_podium\n    self.assertEqual(podium(PLAYERS), [\"bo\", \"cy\", \"ann\"])\nAssertionError: Lists differ: ['di', 'ann', 'cy'] != ['bo', 'cy', 'ann']\n\nFirst differing element 0:\n'di'\n'bo'\n\n- ['di', 'ann', 'cy']\n+ ['bo', 'cy', 'ann']\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "secs": 0.10899999999674037
+      },
+      "files_changed": [
+        "ranking.py"
+      ],
+      "diff": "--- a/ranking.py\n+++ b/ranking.py\n@@ -1,3 +1,3 @@\n def rank(players):\n     \"\"\"Return player names ordered from highest points to lowest.\"\"\"\n-    return [p[\"name\"] for p in sorted(players, key=lambda p: p[\"points\"])]\n+    return [p[\"name\"] for p in sorted(players, key=lambda p: p[\"points\"], reverse=True)]\n",
+      "gpu": {
+        "checked_at": "2026-11-07T06:04:08.835955+00:00",
+        "full_gpu": true,
+        "ollama_model": {
+          "name": "qwen3.5:9b",
+          "model": "qwen3.5:9b",
+          "size": 9975378560,
+          "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "9.7B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-11-07T14:09:08.781696+08:00",
+          "size_vram": 9975378560,
+          "context_length": 65536
+        }
+      },
+      "test_command": "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -B -m unittest discover -q",
+      "transcript_path": "eval/results-gpu.transcripts/bug2-5.jsonl",
+      "expected_outcome": true
+    },
+    {
+      "fixture": "feature",
+      "run": 1,
+      "status": "done",
+      "reason": "auto_finish",
+      "note": "Tests passed after the final edit.",
+      "turns": 7,
+      "tokens_est": 12450,
+      "secs": 65.28200000000652,
+      "green": true,
+      "independent_tests": {
+        "returncode": 0,
+        "output": "----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\n",
+        "secs": 0.1090000000258442
+      },
+      "baseline_tests": {
+        "returncode": 1,
+        "output": "======================================================================\nERROR: test_ascii_only (test_labels.LabelsTest.test_ascii_only)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-feature-ofeaqs2c\\test_labels.py\", line 12, in test_ascii_only\n    self.assertEqual(slugify(\"caf\u00e9 42\"), \"caf-42\")\n                     ^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-feature-ofeaqs2c\\labels.py\", line 2, in slugify\n    raise NotImplementedError(\"Implement the label specification.\")\nNotImplementedError: Implement the label specification.\n\n======================================================================\nERROR: test_empty (test_labels.LabelsTest.test_empty)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-feature-ofeaqs2c\\test_labels.py\", line 10, in test_empty\n    self.assertEqual(slugify(\" ! \"), \"\")\n                     ^^^^^^^^^^^^^^\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-feature-ofeaqs2c\\labels.py\", line 2, in slugify\n    raise NotImplementedError(\"Implement the label specification.\")\nNotImplementedError: Implement the label specification.\n\n======================================================================\nERROR: test_separators (test_labels.LabelsTest.test_separators)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-feature-ofeaqs2c\\test_labels.py\", line 8, in test_separators\n    self.assertEqual(slugify(\"one___two -- three\"), \"one-two-three\")\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-feature-ofeaqs2c\\labels.py\", line 2, in slugify\n    raise NotImplementedError(\"Implement the label specification.\")\nNotImplementedError: Implement the label specification.\n\n======================================================================\nERROR: test_words (test_labels.LabelsTest.test_words)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-feature-ofeaqs2c\\test_labels.py\", line 6, in test_words\n    self.assertEqual(slugify(\"  Hello, WORLD!  \"), \"hello-world\")\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-feature-ofeaqs2c\\labels.py\", line 2, in slugify\n    raise NotImplementedError(\"Implement the label specification.\")\nNotImplementedError: Implement the label specification.\n\n----------------------------------------------------------------------\nRan 4 tests in 0.002s\n\nFAILED (errors=4)\n",
+        "secs": 0.125
+      },
+      "files_changed": [
+        "labels.py"
+      ],
+      "diff": "--- a/labels.py\n+++ b/labels.py\n@@ -1,2 +1,25 @@\n def slugify(text):\n-    raise NotImplementedError(\"Implement the label specification.\")\n+    # Lowercase the input\n+    text = text.lower()\n+    \n+    # Replace each run of non-ASCII a-z and 0-9 with one hyphen\n+    result = []\n+    for char in text:\n+        if 'a' <= char <= 'z' or '0' <= char <= '9':\n+            result.append(char)\n+        else:\n+            # Only add hyphen if we're not already adding one (to collapse runs)\n+            if not result or result[-1] != '-':\n+                result.append('-')\n+    \n+    # Strip leading/trailing hyphens\n+    while result and result[0] == '-':\n+        result.pop(0)\n+    while result and result[-1] == '-':\n+        result.pop()\n+    \n+    # Return empty string if no ASCII letters or digits\n+    if not result:\n+        return \"\"\n+    \n+    return ''.join(result)\n",
+      "gpu": {
+        "checked_at": "2026-11-07T06:05:14.530176+00:00",
+        "full_gpu": true,
+        "ollama_model": {
+          "name": "qwen3.5:9b",
+          "model": "qwen3.5:9b",
+          "size": 9975378560,
+          "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "9.7B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-11-07T14:10:14.4588243+08:00",
+          "size_vram": 9975378560,
+          "context_length": 65536
+        }
+      },
+      "test_command": "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -B -m unittest discover -q",
+      "transcript_path": "eval/results-gpu.transcripts/feature-1.jsonl",
+      "expected_outcome": true
+    },
+    {
+      "fixture": "feature",
+      "run": 2,
+      "status": "done",
+      "reason": "auto_finish",
+      "note": "Tests passed after the final edit.",
+      "turns": 9,
+      "tokens_est": 20674,
+      "secs": 84.10900000002584,
+      "green": true,
+      "independent_tests": {
+        "returncode": 0,
+        "output": "----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\n",
+        "secs": 0.1090000000258442
+      },
+      "baseline_tests": {
+        "returncode": 1,
+        "output": "======================================================================\nERROR: test_ascii_only (test_labels.LabelsTest.test_ascii_only)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-feature-cmjpqn_k\\test_labels.py\", line 12, in test_ascii_only\n    self.assertEqual(slugify(\"caf\u00e9 42\"), \"caf-42\")\n                     ^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-feature-cmjpqn_k\\labels.py\", line 2, in slugify\n    raise NotImplementedError(\"Implement the label specification.\")\nNotImplementedError: Implement the label specification.\n\n======================================================================\nERROR: test_empty (test_labels.LabelsTest.test_empty)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-feature-cmjpqn_k\\test_labels.py\", line 10, in test_empty\n    self.assertEqual(slugify(\" ! \"), \"\")\n                     ^^^^^^^^^^^^^^\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-feature-cmjpqn_k\\labels.py\", line 2, in slugify\n    raise NotImplementedError(\"Implement the label specification.\")\nNotImplementedError: Implement the label specification.\n\n======================================================================\nERROR: test_separators (test_labels.LabelsTest.test_separators)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-feature-cmjpqn_k\\test_labels.py\", line 8, in test_separators\n    self.assertEqual(slugify(\"one___two -- three\"), \"one-two-three\")\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-feature-cmjpqn_k\\labels.py\", line 2, in slugify\n    raise NotImplementedError(\"Implement the label specification.\")\nNotImplementedError: Implement the label specification.\n\n======================================================================\nERROR: test_words (test_labels.LabelsTest.test_words)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-feature-cmjpqn_k\\test_labels.py\", line 6, in test_words\n    self.assertEqual(slugify(\"  Hello, WORLD!  \"), \"hello-world\")\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-feature-cmjpqn_k\\labels.py\", line 2, in slugify\n    raise NotImplementedError(\"Implement the label specification.\")\nNotImplementedError: Implement the label specification.\n\n----------------------------------------------------------------------\nRan 4 tests in 0.001s\n\nFAILED (errors=4)\n",
+        "secs": 0.125
+      },
+      "files_changed": [
+        "labels.py"
+      ],
+      "diff": "--- a/labels.py\n+++ b/labels.py\n@@ -1,2 +1,28 @@\n def slugify(text):\n-    raise NotImplementedError(\"Implement the label specification.\")\n+    # Lowercase the input\n+    text = text.lower()\n+    \n+    # Check if there are any ASCII letters or digits\n+    has_ascii = any(('a' <= c <= 'z') or ('0' <= c <= '9') for c in text)\n+    if not has_ascii:\n+        return \"\"\n+    \n+    result = []\n+    \n+    for char in text:\n+        if ('a' <= char <= 'z') or ('0' <= char <= '9'):\n+            # Alphanumeric character - add it directly\n+            result.append(char)\n+        else:\n+            # Non-alphanumeric - replace run with single hyphen\n+            # Only add hyphen if we haven't just added one (i.e., previous was alphanumeric)\n+            if not result or result[-1] != '-':\n+                result.append('-')\n+    \n+    # Strip leading/trailing hyphens\n+    while result and result[0] == '-':\n+        result.pop(0)\n+    while result and result[-1] == '-':\n+        result.pop()\n+    \n+    return ''.join(result)\n",
+      "gpu": {
+        "checked_at": "2026-11-07T06:06:39.030032+00:00",
+        "full_gpu": true,
+        "ollama_model": {
+          "name": "qwen3.5:9b",
+          "model": "qwen3.5:9b",
+          "size": 9975378560,
+          "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "9.7B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-11-07T14:11:38.9749671+08:00",
+          "size_vram": 9975378560,
+          "context_length": 65536
+        }
+      },
+      "test_command": "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -B -m unittest discover -q",
+      "transcript_path": "eval/results-gpu.transcripts/feature-2.jsonl",
+      "expected_outcome": true
+    },
+    {
+      "fixture": "feature",
+      "run": 3,
+      "status": "done",
+      "reason": "auto_finish",
+      "note": "Tests passed after the final edit.",
+      "turns": 6,
+      "tokens_est": 9068,
+      "secs": 27.703999999997905,
+      "green": true,
+      "independent_tests": {
+        "returncode": 0,
+        "output": "----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\n",
+        "secs": 0.10999999998603016
+      },
+      "baseline_tests": {
+        "returncode": 1,
+        "output": "======================================================================\nERROR: test_ascii_only (test_labels.LabelsTest.test_ascii_only)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-feature-b90e4hwr\\test_labels.py\", line 12, in test_ascii_only\n    self.assertEqual(slugify(\"caf\u00e9 42\"), \"caf-42\")\n                     ^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-feature-b90e4hwr\\labels.py\", line 2, in slugify\n    raise NotImplementedError(\"Implement the label specification.\")\nNotImplementedError: Implement the label specification.\n\n======================================================================\nERROR: test_empty (test_labels.LabelsTest.test_empty)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-feature-b90e4hwr\\test_labels.py\", line 10, in test_empty\n    self.assertEqual(slugify(\" ! \"), \"\")\n                     ^^^^^^^^^^^^^^\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-feature-b90e4hwr\\labels.py\", line 2, in slugify\n    raise NotImplementedError(\"Implement the label specification.\")\nNotImplementedError: Implement the label specification.\n\n======================================================================\nERROR: test_separators (test_labels.LabelsTest.test_separators)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-feature-b90e4hwr\\test_labels.py\", line 8, in test_separators\n    self.assertEqual(slugify(\"one___two -- three\"), \"one-two-three\")\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-feature-b90e4hwr\\labels.py\", line 2, in slugify\n    raise NotImplementedError(\"Implement the label specification.\")\nNotImplementedError: Implement the label specification.\n\n======================================================================\nERROR: test_words (test_labels.LabelsTest.test_words)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-feature-b90e4hwr\\test_labels.py\", line 6, in test_words\n    self.assertEqual(slugify(\"  Hello, WORLD!  \"), \"hello-world\")\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-feature-b90e4hwr\\labels.py\", line 2, in slugify\n    raise NotImplementedError(\"Implement the label specification.\")\nNotImplementedError: Implement the label specification.\n\n----------------------------------------------------------------------\nRan 4 tests in 0.001s\n\nFAILED (errors=4)\n",
+        "secs": 0.125
+      },
+      "files_changed": [
+        "labels.py"
+      ],
+      "diff": "--- a/labels.py\n+++ b/labels.py\n@@ -1,2 +1,28 @@\n def slugify(text):\n-    raise NotImplementedError(\"Implement the label specification.\")\n+    # Lowercase the input\n+    text = text.lower()\n+    \n+    # Check if there are any ASCII letters or digits\n+    has_ascii = any(c.isalnum() and c.isascii() for c in text)\n+    if not has_ascii:\n+        return \"\"\n+    \n+    # Replace each run of non-ASCII-alphanumeric characters with a hyphen\n+    result = []\n+    prev_was_hyphen = False\n+    \n+    for char in text:\n+        if char.isalnum() and char.isascii():\n+            # ASCII letter or digit - add it\n+            result.append(char)\n+            prev_was_hyphen = False\n+        else:\n+            # Non-ASCII-alphanumeric character\n+            if not prev_was_hyphen:\n+                result.append('-')\n+                prev_was_hyphen = True\n+    \n+    # Join and strip leading/trailing hyphens\n+    slug = ''.join(result).strip('-')\n+    \n+    return slug\n",
+      "gpu": {
+        "checked_at": "2026-11-07T06:07:07.148614+00:00",
+        "full_gpu": true,
+        "ollama_model": {
+          "name": "qwen3.5:9b",
+          "model": "qwen3.5:9b",
+          "size": 9975378560,
+          "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "9.7B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-11-07T14:12:07.0793466+08:00",
+          "size_vram": 9975378560,
+          "context_length": 65536
+        }
+      },
+      "test_command": "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -B -m unittest discover -q",
+      "transcript_path": "eval/results-gpu.transcripts/feature-3.jsonl",
+      "expected_outcome": true
+    },
+    {
+      "fixture": "feature",
+      "run": 4,
+      "status": "done",
+      "reason": "auto_finish",
+      "note": "Tests passed after the final edit.",
+      "turns": 12,
+      "tokens_est": 29824,
+      "secs": 120.79700000002049,
+      "green": true,
+      "independent_tests": {
+        "returncode": 0,
+        "output": "----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\n",
+        "secs": 0.10899999999674037
+      },
+      "baseline_tests": {
+        "returncode": 1,
+        "output": "======================================================================\nERROR: test_ascii_only (test_labels.LabelsTest.test_ascii_only)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-feature-or3xii7t\\test_labels.py\", line 12, in test_ascii_only\n    self.assertEqual(slugify(\"caf\u00e9 42\"), \"caf-42\")\n                     ^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-feature-or3xii7t\\labels.py\", line 2, in slugify\n    raise NotImplementedError(\"Implement the label specification.\")\nNotImplementedError: Implement the label specification.\n\n======================================================================\nERROR: test_empty (test_labels.LabelsTest.test_empty)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-feature-or3xii7t\\test_labels.py\", line 10, in test_empty\n    self.assertEqual(slugify(\" ! \"), \"\")\n                     ^^^^^^^^^^^^^^\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-feature-or3xii7t\\labels.py\", line 2, in slugify\n    raise NotImplementedError(\"Implement the label specification.\")\nNotImplementedError: Implement the label specification.\n\n======================================================================\nERROR: test_separators (test_labels.LabelsTest.test_separators)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-feature-or3xii7t\\test_labels.py\", line 8, in test_separators\n    self.assertEqual(slugify(\"one___two -- three\"), \"one-two-three\")\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-feature-or3xii7t\\labels.py\", line 2, in slugify\n    raise NotImplementedError(\"Implement the label specification.\")\nNotImplementedError: Implement the label specification.\n\n======================================================================\nERROR: test_words (test_labels.LabelsTest.test_words)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-feature-or3xii7t\\test_labels.py\", line 6, in test_words\n    self.assertEqual(slugify(\"  Hello, WORLD!  \"), \"hello-world\")\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-feature-or3xii7t\\labels.py\", line 2, in slugify\n    raise NotImplementedError(\"Implement the label specification.\")\nNotImplementedError: Implement the label specification.\n\n----------------------------------------------------------------------\nRan 4 tests in 0.001s\n\nFAILED (errors=4)\n",
+        "secs": 0.125
+      },
+      "files_changed": [
+        "labels.py"
+      ],
+      "diff": "--- a/labels.py\n+++ b/labels.py\n@@ -1,2 +1,17 @@\n def slugify(text):\n-    raise NotImplementedError(\"Implement the label specification.\")\n+    import re\n+    \n+    # Lowercase the input\n+    text = text.lower()\n+    \n+    # Replace runs of non-alphanumeric characters with single hyphen\n+    slug = re.sub(r'[^a-z0-9]+', '-', text)\n+    \n+    # Strip leading/trailing hyphens\n+    slug = slug.strip('-')\n+    \n+    # Return empty string if there are no ASCII letters or digits\n+    if not any(c.isalnum() for c in slug):\n+        return \"\"\n+    \n+    return slug\n",
+      "gpu": {
+        "checked_at": "2026-11-07T06:09:08.368320+00:00",
+        "full_gpu": true,
+        "ollama_model": {
+          "name": "qwen3.5:9b",
+          "model": "qwen3.5:9b",
+          "size": 9975378560,
+          "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "9.7B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-11-07T14:14:08.2966339+08:00",
+          "size_vram": 9975378560,
+          "context_length": 65536
+        }
+      },
+      "test_command": "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -B -m unittest discover -q",
+      "transcript_path": "eval/results-gpu.transcripts/feature-4.jsonl",
+      "expected_outcome": true
+    },
+    {
+      "fixture": "feature",
+      "run": 5,
+      "status": "done",
+      "reason": "auto_finish",
+      "note": "Tests passed after the final edit.",
+      "turns": 12,
+      "tokens_est": 30703,
+      "secs": 124.34299999999348,
+      "green": true,
+      "independent_tests": {
+        "returncode": 0,
+        "output": "----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\n",
+        "secs": 0.10899999999674037
+      },
+      "baseline_tests": {
+        "returncode": 1,
+        "output": "======================================================================\nERROR: test_ascii_only (test_labels.LabelsTest.test_ascii_only)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-feature-w_wuj7jp\\test_labels.py\", line 12, in test_ascii_only\n    self.assertEqual(slugify(\"caf\u00e9 42\"), \"caf-42\")\n                     ^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-feature-w_wuj7jp\\labels.py\", line 2, in slugify\n    raise NotImplementedError(\"Implement the label specification.\")\nNotImplementedError: Implement the label specification.\n\n======================================================================\nERROR: test_empty (test_labels.LabelsTest.test_empty)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-feature-w_wuj7jp\\test_labels.py\", line 10, in test_empty\n    self.assertEqual(slugify(\" ! \"), \"\")\n                     ^^^^^^^^^^^^^^\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-feature-w_wuj7jp\\labels.py\", line 2, in slugify\n    raise NotImplementedError(\"Implement the label specification.\")\nNotImplementedError: Implement the label specification.\n\n======================================================================\nERROR: test_separators (test_labels.LabelsTest.test_separators)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-feature-w_wuj7jp\\test_labels.py\", line 8, in test_separators\n    self.assertEqual(slugify(\"one___two -- three\"), \"one-two-three\")\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-feature-w_wuj7jp\\labels.py\", line 2, in slugify\n    raise NotImplementedError(\"Implement the label specification.\")\nNotImplementedError: Implement the label specification.\n\n======================================================================\nERROR: test_words (test_labels.LabelsTest.test_words)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-feature-w_wuj7jp\\test_labels.py\", line 6, in test_words\n    self.assertEqual(slugify(\"  Hello, WORLD!  \"), \"hello-world\")\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-feature-w_wuj7jp\\labels.py\", line 2, in slugify\n    raise NotImplementedError(\"Implement the label specification.\")\nNotImplementedError: Implement the label specification.\n\n----------------------------------------------------------------------\nRan 4 tests in 0.001s\n\nFAILED (errors=4)\n",
+        "secs": 0.10999999998603016
+      },
+      "files_changed": [
+        "labels.py"
+      ],
+      "diff": "--- a/labels.py\n+++ b/labels.py\n@@ -1,2 +1,28 @@\n def slugify(text):\n-    raise NotImplementedError(\"Implement the label specification.\")\n+    # Lowercase the input\n+    text = text.lower()\n+    \n+    # Check if there are any ASCII letters or digits\n+    has_ascii = any(c.isalnum() and c.isascii() for c in text)\n+    if not has_ascii:\n+        return \"\"\n+    \n+    # Replace runs of non-alphanumeric characters with hyphens\n+    result = []\n+    prev_was_hyphen = False\n+    \n+    for char in text:\n+        if 'a' <= char <= 'z' or '0' <= char <= '9':\n+            result.append(char)\n+            prev_was_hyphen = False\n+        else:\n+            if not prev_was_hyphen:\n+                result.append('-')\n+            prev_was_hyphen = True\n+    \n+    slug = ''.join(result)\n+    \n+    # Strip leading/trailing hyphens\n+    slug = slug.strip('-')\n+    \n+    return slug\n",
+      "gpu": {
+        "checked_at": "2026-11-07T06:11:13.129488+00:00",
+        "full_gpu": true,
+        "ollama_model": {
+          "name": "qwen3.5:9b",
+          "model": "qwen3.5:9b",
+          "size": 9975378560,
+          "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "9.7B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-11-07T14:16:13.0481754+08:00",
+          "size_vram": 9975378560,
+          "context_length": 65536
+        }
+      },
+      "test_command": "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -B -m unittest discover -q",
+      "transcript_path": "eval/results-gpu.transcripts/feature-5.jsonl",
+      "expected_outcome": true
+    },
+    {
+      "fixture": "multifile",
+      "run": 1,
+      "status": "done",
+      "reason": "auto_finish",
+      "note": "Tests passed after the final edit.",
+      "turns": 7,
+      "tokens_est": 9251,
+      "secs": 21.73499999998603,
+      "green": true,
+      "independent_tests": {
+        "returncode": 0,
+        "output": "----------------------------------------------------------------------\nRan 3 tests in 0.000s\n\nOK\n",
+        "secs": 0.10999999998603016
+      },
+      "baseline_tests": {
+        "returncode": 1,
+        "output": "======================================================================\nFAIL: test_empty (test_invoice.InvoiceTest.test_empty)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-multifile-wo8k8s4d\\test_invoice.py\", line 13, in test_empty\n    self.assertEqual(invoice_cents([], 75), 75)\nAssertionError: -75 != 75\n\n======================================================================\nFAIL: test_quantity (test_invoice.InvoiceTest.test_quantity)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-multifile-wo8k8s4d\\test_invoice.py\", line 9, in test_quantity\n    self.assertEqual(subtotal_cents(ITEMS), 475)\nAssertionError: 175 != 475\n\n======================================================================\nFAIL: test_shipping (test_invoice.InvoiceTest.test_shipping)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-multifile-wo8k8s4d\\test_invoice.py\", line 11, in test_shipping\n    self.assertEqual(invoice_cents(ITEMS, 75), 550)\nAssertionError: 100 != 550\n\n----------------------------------------------------------------------\nRan 3 tests in 0.001s\n\nFAILED (failures=3)\n",
+        "secs": 0.125
+      },
+      "files_changed": [
+        "invoice.py",
+        "pricing.py"
+      ],
+      "diff": "--- a/invoice.py\n+++ b/invoice.py\n@@ -1,4 +1,4 @@\n from pricing import subtotal_cents\n \n def invoice_cents(items, shipping_cents):\n-    return subtotal_cents(items) - shipping_cents\n+    return subtotal_cents(items) + shipping_cents\n--- a/pricing.py\n+++ b/pricing.py\n@@ -1,2 +1,2 @@\n def subtotal_cents(items):\n-    return sum(item[\"price_cents\"] for item in items)\n+    return sum(item[\"price_cents\"] * item[\"quantity\"] for item in items)\n",
+      "gpu": {
+        "checked_at": "2026-11-07T06:11:35.274442+00:00",
+        "full_gpu": true,
+        "ollama_model": {
+          "name": "qwen3.5:9b",
+          "model": "qwen3.5:9b",
+          "size": 9975378560,
+          "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "9.7B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-11-07T14:16:35.2212686+08:00",
+          "size_vram": 9975378560,
+          "context_length": 65536
+        }
+      },
+      "test_command": "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -B -m unittest discover -q",
+      "transcript_path": "eval/results-gpu.transcripts/multifile-1.jsonl",
+      "expected_outcome": true
+    },
+    {
+      "fixture": "multifile",
+      "run": 2,
+      "status": "done",
+      "reason": "auto_finish",
+      "note": "Tests passed after the final edit.",
+      "turns": 7,
+      "tokens_est": 9267,
+      "secs": 22.062000000005355,
+      "green": true,
+      "independent_tests": {
+        "returncode": 0,
+        "output": "----------------------------------------------------------------------\nRan 3 tests in 0.000s\n\nOK\n",
+        "secs": 0.10999999998603016
+      },
+      "baseline_tests": {
+        "returncode": 1,
+        "output": "======================================================================\nFAIL: test_empty (test_invoice.InvoiceTest.test_empty)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-multifile-pqxbjiu2\\test_invoice.py\", line 13, in test_empty\n    self.assertEqual(invoice_cents([], 75), 75)\nAssertionError: -75 != 75\n\n======================================================================\nFAIL: test_quantity (test_invoice.InvoiceTest.test_quantity)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-multifile-pqxbjiu2\\test_invoice.py\", line 9, in test_quantity\n    self.assertEqual(subtotal_cents(ITEMS), 475)\nAssertionError: 175 != 475\n\n======================================================================\nFAIL: test_shipping (test_invoice.InvoiceTest.test_shipping)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-multifile-pqxbjiu2\\test_invoice.py\", line 11, in test_shipping\n    self.assertEqual(invoice_cents(ITEMS, 75), 550)\nAssertionError: 100 != 550\n\n----------------------------------------------------------------------\nRan 3 tests in 0.000s\n\nFAILED (failures=3)\n",
+        "secs": 0.10999999998603016
+      },
+      "files_changed": [
+        "invoice.py",
+        "pricing.py"
+      ],
+      "diff": "--- a/invoice.py\n+++ b/invoice.py\n@@ -1,4 +1,4 @@\n from pricing import subtotal_cents\n \n def invoice_cents(items, shipping_cents):\n-    return subtotal_cents(items) - shipping_cents\n+    return subtotal_cents(items) + shipping_cents\n--- a/pricing.py\n+++ b/pricing.py\n@@ -1,2 +1,2 @@\n def subtotal_cents(items):\n-    return sum(item[\"price_cents\"] for item in items)\n+    return sum(item[\"price_cents\"] * item[\"quantity\"] for item in items)\n",
+      "gpu": {
+        "checked_at": "2026-11-07T06:11:57.767217+00:00",
+        "full_gpu": true,
+        "ollama_model": {
+          "name": "qwen3.5:9b",
+          "model": "qwen3.5:9b",
+          "size": 9975378560,
+          "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "9.7B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-11-07T14:16:57.685828+08:00",
+          "size_vram": 9975378560,
+          "context_length": 65536
+        }
+      },
+      "test_command": "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -B -m unittest discover -q",
+      "transcript_path": "eval/results-gpu.transcripts/multifile-2.jsonl",
+      "expected_outcome": true
+    },
+    {
+      "fixture": "multifile",
+      "run": 3,
+      "status": "done",
+      "reason": "auto_finish",
+      "note": "Tests passed after the final edit.",
+      "turns": 7,
+      "tokens_est": 9946,
+      "secs": 21.453000000008615,
+      "green": true,
+      "independent_tests": {
+        "returncode": 0,
+        "output": "----------------------------------------------------------------------\nRan 3 tests in 0.000s\n\nOK\n",
+        "secs": 0.10899999999674037
+      },
+      "baseline_tests": {
+        "returncode": 1,
+        "output": "======================================================================\nFAIL: test_empty (test_invoice.InvoiceTest.test_empty)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-multifile-d0ipbn_z\\test_invoice.py\", line 13, in test_empty\n    self.assertEqual(invoice_cents([], 75), 75)\nAssertionError: -75 != 75\n\n======================================================================\nFAIL: test_quantity (test_invoice.InvoiceTest.test_quantity)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-multifile-d0ipbn_z\\test_invoice.py\", line 9, in test_quantity\n    self.assertEqual(subtotal_cents(ITEMS), 475)\nAssertionError: 175 != 475\n\n======================================================================\nFAIL: test_shipping (test_invoice.InvoiceTest.test_shipping)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-multifile-d0ipbn_z\\test_invoice.py\", line 11, in test_shipping\n    self.assertEqual(invoice_cents(ITEMS, 75), 550)\nAssertionError: 100 != 550\n\n----------------------------------------------------------------------\nRan 3 tests in 0.000s\n\nFAILED (failures=3)\n",
+        "secs": 0.125
+      },
+      "files_changed": [
+        "invoice.py",
+        "pricing.py"
+      ],
+      "diff": "--- a/invoice.py\n+++ b/invoice.py\n@@ -1,4 +1,4 @@\n from pricing import subtotal_cents\n \n def invoice_cents(items, shipping_cents):\n-    return subtotal_cents(items) - shipping_cents\n+    return subtotal_cents(items) + shipping_cents\n--- a/pricing.py\n+++ b/pricing.py\n@@ -1,2 +1,2 @@\n def subtotal_cents(items):\n-    return sum(item[\"price_cents\"] for item in items)\n+    return sum(item[\"price_cents\"] * item[\"quantity\"] for item in items)\n",
+      "gpu": {
+        "checked_at": "2026-11-07T06:12:19.631981+00:00",
+        "full_gpu": true,
+        "ollama_model": {
+          "name": "qwen3.5:9b",
+          "model": "qwen3.5:9b",
+          "size": 9975378560,
+          "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "9.7B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-11-07T14:17:19.5619584+08:00",
+          "size_vram": 9975378560,
+          "context_length": 65536
+        }
+      },
+      "test_command": "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -B -m unittest discover -q",
+      "transcript_path": "eval/results-gpu.transcripts/multifile-3.jsonl",
+      "expected_outcome": true
+    },
+    {
+      "fixture": "multifile",
+      "run": 4,
+      "status": "done",
+      "reason": "auto_finish",
+      "note": "Tests passed after the final edit.",
+      "turns": 7,
+      "tokens_est": 9363,
+      "secs": 23.796999999991385,
+      "green": true,
+      "independent_tests": {
+        "returncode": 0,
+        "output": "----------------------------------------------------------------------\nRan 3 tests in 0.000s\n\nOK\n",
+        "secs": 0.11000000001513399
+      },
+      "baseline_tests": {
+        "returncode": 1,
+        "output": "======================================================================\nFAIL: test_empty (test_invoice.InvoiceTest.test_empty)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-multifile-ljj5l8zf\\test_invoice.py\", line 13, in test_empty\n    self.assertEqual(invoice_cents([], 75), 75)\nAssertionError: -75 != 75\n\n======================================================================\nFAIL: test_quantity (test_invoice.InvoiceTest.test_quantity)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-multifile-ljj5l8zf\\test_invoice.py\", line 9, in test_quantity\n    self.assertEqual(subtotal_cents(ITEMS), 475)\nAssertionError: 175 != 475\n\n======================================================================\nFAIL: test_shipping (test_invoice.InvoiceTest.test_shipping)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-multifile-ljj5l8zf\\test_invoice.py\", line 11, in test_shipping\n    self.assertEqual(invoice_cents(ITEMS, 75), 550)\nAssertionError: 100 != 550\n\n----------------------------------------------------------------------\nRan 3 tests in 0.001s\n\nFAILED (failures=3)\n",
+        "secs": 0.1090000000258442
+      },
+      "files_changed": [
+        "invoice.py",
+        "pricing.py"
+      ],
+      "diff": "--- a/invoice.py\n+++ b/invoice.py\n@@ -1,4 +1,4 @@\n from pricing import subtotal_cents\n \n def invoice_cents(items, shipping_cents):\n-    return subtotal_cents(items) - shipping_cents\n+    return subtotal_cents(items) + shipping_cents\n--- a/pricing.py\n+++ b/pricing.py\n@@ -1,2 +1,2 @@\n def subtotal_cents(items):\n-    return sum(item[\"price_cents\"] for item in items)\n+    return sum(item[\"price_cents\"] * item[\"quantity\"] for item in items)\n",
+      "gpu": {
+        "checked_at": "2026-11-07T06:12:43.847773+00:00",
+        "full_gpu": true,
+        "ollama_model": {
+          "name": "qwen3.5:9b",
+          "model": "qwen3.5:9b",
+          "size": 9975378560,
+          "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "9.7B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-11-07T14:17:43.7629683+08:00",
+          "size_vram": 9975378560,
+          "context_length": 65536
+        }
+      },
+      "test_command": "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -B -m unittest discover -q",
+      "transcript_path": "eval/results-gpu.transcripts/multifile-4.jsonl",
+      "expected_outcome": true
+    },
+    {
+      "fixture": "multifile",
+      "run": 5,
+      "status": "done",
+      "reason": "auto_finish",
+      "note": "Tests passed after the final edit.",
+      "turns": 7,
+      "tokens_est": 9265,
+      "secs": 22.0,
+      "green": true,
+      "independent_tests": {
+        "returncode": 0,
+        "output": "----------------------------------------------------------------------\nRan 3 tests in 0.000s\n\nOK\n",
+        "secs": 0.10899999999674037
+      },
+      "baseline_tests": {
+        "returncode": 1,
+        "output": "======================================================================\nFAIL: test_empty (test_invoice.InvoiceTest.test_empty)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-multifile-kw3rw91p\\test_invoice.py\", line 13, in test_empty\n    self.assertEqual(invoice_cents([], 75), 75)\nAssertionError: -75 != 75\n\n======================================================================\nFAIL: test_quantity (test_invoice.InvoiceTest.test_quantity)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-multifile-kw3rw91p\\test_invoice.py\", line 9, in test_quantity\n    self.assertEqual(subtotal_cents(ITEMS), 475)\nAssertionError: 175 != 475\n\n======================================================================\nFAIL: test_shipping (test_invoice.InvoiceTest.test_shipping)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-multifile-kw3rw91p\\test_invoice.py\", line 11, in test_shipping\n    self.assertEqual(invoice_cents(ITEMS, 75), 550)\nAssertionError: 100 != 550\n\n----------------------------------------------------------------------\nRan 3 tests in 0.000s\n\nFAILED (failures=3)\n",
+        "secs": 0.10899999999674037
+      },
+      "files_changed": [
+        "invoice.py",
+        "pricing.py"
+      ],
+      "diff": "--- a/invoice.py\n+++ b/invoice.py\n@@ -1,4 +1,4 @@\n from pricing import subtotal_cents\n \n def invoice_cents(items, shipping_cents):\n-    return subtotal_cents(items) - shipping_cents\n+    return subtotal_cents(items) + shipping_cents\n--- a/pricing.py\n+++ b/pricing.py\n@@ -1,2 +1,2 @@\n def subtotal_cents(items):\n-    return sum(item[\"price_cents\"] for item in items)\n+    return sum(item[\"price_cents\"] * item[\"quantity\"] for item in items)\n",
+      "gpu": {
+        "checked_at": "2026-11-07T06:13:06.261121+00:00",
+        "full_gpu": true,
+        "ollama_model": {
+          "name": "qwen3.5:9b",
+          "model": "qwen3.5:9b",
+          "size": 9975378560,
+          "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "9.7B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-11-07T14:18:06.1907067+08:00",
+          "size_vram": 9975378560,
+          "context_length": 65536
+        }
+      },
+      "test_command": "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -B -m unittest discover -q",
+      "transcript_path": "eval/results-gpu.transcripts/multifile-5.jsonl",
+      "expected_outcome": true
+    },
+    {
+      "fixture": "refactor",
+      "run": 1,
+      "status": "done",
+      "reason": "auto_finish",
+      "note": "Tests passed after the final edit.",
+      "turns": 5,
+      "tokens_est": 6814,
+      "secs": 17.062000000005355,
+      "green": true,
+      "independent_tests": {
+        "returncode": 0,
+        "output": "----------------------------------------------------------------------\nRan 3 tests in 0.000s\n\nOK\n",
+        "secs": 0.11000000001513399
+      },
+      "baseline_tests": {
+        "returncode": 1,
+        "output": "======================================================================\nERROR: test_new_name (test_refactor.RefactorTest.test_new_name)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-refactor-lo_jd8fw\\test_refactor.py\", line 7, in test_new_name\n    self.assertEqual(formatting.display_name(\"Ada\", \"Lovelace\"), \"Lovelace, Ada\")\n                     ^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: module 'formatting' has no attribute 'display_name'\n\n======================================================================\nFAIL: test_callers_updated (test_refactor.RefactorTest.test_callers_updated)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-refactor-lo_jd8fw\\test_refactor.py\", line 10, in test_callers_updated\n    self.assertNotIn(\"format_name\", report.__dict__)\nAssertionError: 'format_name' unexpectedly found in {'__name__': 'report', '__doc__': None, '__package__': '', '__loader__': <_frozen_importlib_external.SourceFileLoader object at 0x00000269207A0D40>, '__spec__': ModuleSpec(name='report', loader=<_frozen_importlib_external.SourceFileLoader object at 0x00000269207A0D40>, origin='C:\\\\Users\\\\User\\\\AppData\\\\Local\\\\Temp\\\\ps-refactor-lo_jd8fw\\\\report.py'), '__file__': 'C:\\\\Users\\\\User\\\\AppData\\\\Local\\\\Temp\\\\ps-refactor-lo_jd8fw\\\\report.py', '__cached__': 'C:\\\\Users\\\\User\\\\AppData\\\\Local\\\\Temp\\\\ps-refactor-lo_jd8fw\\\\__pycache__\\\\report.cpython-312.pyc', '__builtins__': {'__name__': 'builtins', '__doc__': \"Built-in functions, types, exceptions, and other objects.\\n\\nThis module provides direct access to all 'built-in'\\nidentifiers of Python; for example, builtins.len is\\nthe full name for the built-in function len().\\n\\nThis module is not normally accessed explicitly by most\\napplications, but can be useful in modules that provide\\nobjects with the same name as a built-in value, but in\\nwhich the built-in of that name is also needed.\", '__package__': '', '__loader__': <class '_frozen_importlib.BuiltinImporter'>, '__spec__': ModuleSpec(name='builtins', loader=<class '_frozen_importlib.BuiltinImporter'>, origin='built-in'), '__build_class__': <built-in function __build_class__>, '__import__': <built-in function __import__>, 'abs': <built-in function abs>, 'all': <built-in function all>, 'any': <built-in function any>, 'ascii': <built-in function ascii>, 'bin': <built-in function bin>, 'breakpoint': <built-in function breakpoint>, 'callable': <built-in function callable>, 'chr': <built-in function chr>, 'compile': <built-in function compile>, 'delattr': <built-in function delattr>, 'dir': <built-in function dir>, 'divmod': <built-in function divmod>, 'eval': <built-in function eval>, 'exec': <built-in function exec>, 'format': <built-in function format>, 'getattr': <built-in function getattr>, 'globals': <built-in function globals>, 'hasattr': <built-in function hasattr>, 'hash': <built-in function hash>, 'hex': <built-in function hex>, 'id': <built-in function id>, 'input': <built-in function input>, 'isinstance': <built-in function isinstance>, 'issubclass': <built-in function issubclass>, 'iter': <built-in function iter>, 'aiter': <built-in function aiter>, 'len': <built-in function len>, 'locals': <built-in function locals>, 'max': <built-in function max>, 'min': <built-in function min>, 'next': <built-in function next>, 'anext': <built-in function anext>, 'oct': <built-in function oct>, 'ord': <built-in function ord>, 'pow': <built-in function pow>, 'print': <built-in function print>, 'repr': <built-in function repr>, 'round': <built-in function round>, 'setattr': <built-in function setattr>, 'sorted': <built-in function sorted>, 'sum': <built-in function sum>, 'vars': <built-in function vars>, 'None': None, 'Ellipsis': Ellipsis, 'NotImplemented': NotImplemented, 'False': False, 'True': True, 'bool': <class 'bool'>, 'memoryview': <class 'memoryview'>, 'bytearray': <class 'bytearray'>, 'bytes': <class 'bytes'>, 'classmethod': <class 'classmethod'>, 'complex': <class 'complex'>, 'dict': <class 'dict'>, 'enumerate': <class 'enumerate'>, 'filter': <class 'filter'>, 'float': <class 'float'>, 'frozenset': <class 'frozenset'>, 'property': <class 'property'>, 'int': <class 'int'>, 'list': <class 'list'>, 'map': <class 'map'>, 'object': <class 'object'>, 'range': <class 'range'>, 'reversed': <class 'reversed'>, 'set': <class 'set'>, 'slice': <class 'slice'>, 'staticmethod': <class 'staticmethod'>, 'str': <class 'str'>, 'super': <class 'super'>, 'tuple': <class 'tuple'>, 'type': <class 'type'>, 'zip': <class 'zip'>, '__debug__': True, 'BaseException': <class 'BaseException'>, 'BaseExceptionGroup': <class 'BaseExceptionGroup'>, 'Exception': <class 'Exception'>, 'GeneratorExit': <class 'GeneratorExit'>, 'KeyboardInterrupt': <class 'KeyboardInterrupt'>, 'SystemExit': <class 'SystemExit'>, 'ArithmeticError': <class 'ArithmeticError'>, 'AssertionError': <class 'AssertionError'>, 'AttributeError': <class 'AttributeError'>, 'BufferError': <class 'BufferError'>, 'EOFError': <class 'EOFError'>, 'ImportError': <class 'ImportError'>, 'LookupError': <class 'LookupError'>, 'MemoryError': <class 'MemoryError'>, 'NameError': <class 'NameError'>, 'OSError': <class 'OSError'>, 'ReferenceError': <class 'ReferenceError'>, 'RuntimeError': <class 'RuntimeError'>, 'StopAsyncIteration': <class 'StopAsyncIteration'>, 'StopIteration': <class 'StopIteration'>, 'SyntaxError': <class 'SyntaxError'>, 'SystemError': <class 'SystemError'>, 'TypeError': <class 'TypeError'>, 'ValueError': <class 'ValueError'>, 'Warning': <class 'Warning'>, 'FloatingPointError': <class 'FloatingPointError'>, 'OverflowError': <class 'OverflowError'>, 'ZeroDivisionError': <class 'ZeroDivisionError'>, 'BytesWarning': <class 'BytesWarning'>, 'DeprecationWarning': <class 'DeprecationWarning'>, 'EncodingWarning': <class 'EncodingWarning'>, 'FutureWarning': <class 'FutureWarning'>, 'ImportWarning': <class 'ImportWarning'>, 'PendingDeprecationWarning': <class 'PendingDeprecationWarning'>, 'ResourceWarning': <class 'ResourceWarning'>, 'RuntimeWarning': <class 'RuntimeWarning'>, 'SyntaxWarning': <class 'SyntaxWarning'>, 'UnicodeWarning': <class 'UnicodeWarning'>, 'UserWarning': <class 'UserWarning'>, 'BlockingIOError': <class 'BlockingIOError'>, 'ChildProcessError': <class 'ChildProcessError'>, 'ConnectionError': <class 'ConnectionError'>, 'FileExistsError': <class 'FileExistsError'>, 'FileNotFoundError': <class 'FileNotFoundError'>, 'InterruptedError': <class 'InterruptedError'>, 'IsADirectoryError': <class 'IsADirectoryError'>, 'NotADirectoryError': <class 'NotADirectoryError'>, 'PermissionError': <class 'PermissionError'>, 'ProcessLookupError': <class 'ProcessLookupError'>, 'TimeoutError': <class 'TimeoutError'>, 'IndentationError': <class 'IndentationError'>, 'IndexError': <class 'IndexError'>, 'KeyError': <class 'KeyError'>, 'ModuleNotFoundError': <class 'ModuleNotFoundError'>, 'NotImplementedError': <class 'NotImplementedError'>, 'RecursionError': <class 'RecursionError'>, 'UnboundLocalError': <class 'UnboundLocalError'>, 'UnicodeError': <class 'UnicodeError'>, 'BrokenPipeError': <class 'BrokenPipeError'>, 'ConnectionAbortedError': <class 'ConnectionAbortedError'>, 'ConnectionRefusedError': <class 'ConnectionRefusedError'>, 'ConnectionResetError': <class 'ConnectionResetError'>, 'TabError': <class 'TabError'>, 'UnicodeDecodeError': <class 'UnicodeDecodeError'>, 'UnicodeEncodeError': <class 'UnicodeEncodeError'>, 'UnicodeTranslateError': <class 'UnicodeTranslateError'>, 'ExceptionGroup': <class 'ExceptionGroup'>, 'EnvironmentError': <class 'OSError'>, 'IOError': <class 'OSError'>, 'WindowsError': <class 'OSError'>, 'open': <built-in function open>, 'quit': Use quit() or Ctrl-Z plus Return to exit, 'exit': Use exit() or Ctrl-Z plus Return to exit, 'copyright': Copyright (c) 2001-2023 Python Software Foundation.\nAll Rights Reserved.\n\nCopyright (c) 2000 BeOpen.com.\nAll Rights Reserved.\n\nCopyright (c) 1995-2001 Corporation for National Research Initiatives.\nAll Rights Reserved.\n\nCopyright (c) 1991-1995 Stichting Mathematisch Centrum, Amsterdam.\nAll Rights Reserved., 'credits':     Thanks to CWI, CNRI, BeOpen.com, Zope Corporation and a cast of thousands\n    for supporting Python development.  See www.python.org for more information., 'license': Type license() to see the full license text, 'help': Type help() for interactive help, or help(object) for help about object.}, 'format_name': <function format_name at 0x000002692079BD80>, 'render_people': <function render_people at 0x00000269207B00E0>}\n\n======================================================================\nFAIL: test_old_name_removed (test_refactor.RefactorTest.test_old_name_removed)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-refactor-lo_jd8fw\\test_refactor.py\", line 12, in test_old_name_removed\n    self.assertFalse(hasattr(formatting, \"format_name\"))\nAssertionError: True is not false\n\n----------------------------------------------------------------------\nRan 3 tests in 0.007s\n\nFAILED (failures=2, errors=1)\n",
+        "secs": 0.125
+      },
+      "files_changed": [
+        "formatting.py",
+        "report.py"
+      ],
+      "diff": "--- a/formatting.py\n+++ b/formatting.py\n@@ -1,2 +1,2 @@\n-def format_name(first, last):\n+def display_name(first, last):\n     return f\"{last}, {first}\"\n--- a/report.py\n+++ b/report.py\n@@ -1,4 +1,4 @@\n-from formatting import format_name\n+from formatting import display_name\n \n def render_people(people):\n-    return [format_name(first, last) for first, last in people]\n+    return [display_name(first, last) for first, last in people]\n",
+      "gpu": {
+        "checked_at": "2026-11-07T06:13:23.728927+00:00",
+        "full_gpu": true,
+        "ollama_model": {
+          "name": "qwen3.5:9b",
+          "model": "qwen3.5:9b",
+          "size": 9975378560,
+          "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "9.7B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-11-07T14:18:23.6715898+08:00",
+          "size_vram": 9975378560,
+          "context_length": 65536
+        }
+      },
+      "test_command": "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -B -m unittest discover -q",
+      "transcript_path": "eval/results-gpu.transcripts/refactor-1.jsonl",
+      "expected_outcome": true
+    },
+    {
+      "fixture": "refactor",
+      "run": 2,
+      "status": "done",
+      "reason": "auto_finish",
+      "note": "Tests passed after the final edit.",
+      "turns": 5,
+      "tokens_est": 6813,
+      "secs": 17.01600000000326,
+      "green": true,
+      "independent_tests": {
+        "returncode": 0,
+        "output": "----------------------------------------------------------------------\nRan 3 tests in 0.000s\n\nOK\n",
+        "secs": 0.125
+      },
+      "baseline_tests": {
+        "returncode": 1,
+        "output": "======================================================================\nERROR: test_new_name (test_refactor.RefactorTest.test_new_name)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-refactor-u0exmex3\\test_refactor.py\", line 7, in test_new_name\n    self.assertEqual(formatting.display_name(\"Ada\", \"Lovelace\"), \"Lovelace, Ada\")\n                     ^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: module 'formatting' has no attribute 'display_name'\n\n======================================================================\nFAIL: test_callers_updated (test_refactor.RefactorTest.test_callers_updated)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-refactor-u0exmex3\\test_refactor.py\", line 10, in test_callers_updated\n    self.assertNotIn(\"format_name\", report.__dict__)\nAssertionError: 'format_name' unexpectedly found in {'__name__': 'report', '__doc__': None, '__package__': '', '__loader__': <_frozen_importlib_external.SourceFileLoader object at 0x0000026BD38D0D40>, '__spec__': ModuleSpec(name='report', loader=<_frozen_importlib_external.SourceFileLoader object at 0x0000026BD38D0D40>, origin='C:\\\\Users\\\\User\\\\AppData\\\\Local\\\\Temp\\\\ps-refactor-u0exmex3\\\\report.py'), '__file__': 'C:\\\\Users\\\\User\\\\AppData\\\\Local\\\\Temp\\\\ps-refactor-u0exmex3\\\\report.py', '__cached__': 'C:\\\\Users\\\\User\\\\AppData\\\\Local\\\\Temp\\\\ps-refactor-u0exmex3\\\\__pycache__\\\\report.cpython-312.pyc', '__builtins__': {'__name__': 'builtins', '__doc__': \"Built-in functions, types, exceptions, and other objects.\\n\\nThis module provides direct access to all 'built-in'\\nidentifiers of Python; for example, builtins.len is\\nthe full name for the built-in function len().\\n\\nThis module is not normally accessed explicitly by most\\napplications, but can be useful in modules that provide\\nobjects with the same name as a built-in value, but in\\nwhich the built-in of that name is also needed.\", '__package__': '', '__loader__': <class '_frozen_importlib.BuiltinImporter'>, '__spec__': ModuleSpec(name='builtins', loader=<class '_frozen_importlib.BuiltinImporter'>, origin='built-in'), '__build_class__': <built-in function __build_class__>, '__import__': <built-in function __import__>, 'abs': <built-in function abs>, 'all': <built-in function all>, 'any': <built-in function any>, 'ascii': <built-in function ascii>, 'bin': <built-in function bin>, 'breakpoint': <built-in function breakpoint>, 'callable': <built-in function callable>, 'chr': <built-in function chr>, 'compile': <built-in function compile>, 'delattr': <built-in function delattr>, 'dir': <built-in function dir>, 'divmod': <built-in function divmod>, 'eval': <built-in function eval>, 'exec': <built-in function exec>, 'format': <built-in function format>, 'getattr': <built-in function getattr>, 'globals': <built-in function globals>, 'hasattr': <built-in function hasattr>, 'hash': <built-in function hash>, 'hex': <built-in function hex>, 'id': <built-in function id>, 'input': <built-in function input>, 'isinstance': <built-in function isinstance>, 'issubclass': <built-in function issubclass>, 'iter': <built-in function iter>, 'aiter': <built-in function aiter>, 'len': <built-in function len>, 'locals': <built-in function locals>, 'max': <built-in function max>, 'min': <built-in function min>, 'next': <built-in function next>, 'anext': <built-in function anext>, 'oct': <built-in function oct>, 'ord': <built-in function ord>, 'pow': <built-in function pow>, 'print': <built-in function print>, 'repr': <built-in function repr>, 'round': <built-in function round>, 'setattr': <built-in function setattr>, 'sorted': <built-in function sorted>, 'sum': <built-in function sum>, 'vars': <built-in function vars>, 'None': None, 'Ellipsis': Ellipsis, 'NotImplemented': NotImplemented, 'False': False, 'True': True, 'bool': <class 'bool'>, 'memoryview': <class 'memoryview'>, 'bytearray': <class 'bytearray'>, 'bytes': <class 'bytes'>, 'classmethod': <class 'classmethod'>, 'complex': <class 'complex'>, 'dict': <class 'dict'>, 'enumerate': <class 'enumerate'>, 'filter': <class 'filter'>, 'float': <class 'float'>, 'frozenset': <class 'frozenset'>, 'property': <class 'property'>, 'int': <class 'int'>, 'list': <class 'list'>, 'map': <class 'map'>, 'object': <class 'object'>, 'range': <class 'range'>, 'reversed': <class 'reversed'>, 'set': <class 'set'>, 'slice': <class 'slice'>, 'staticmethod': <class 'staticmethod'>, 'str': <class 'str'>, 'super': <class 'super'>, 'tuple': <class 'tuple'>, 'type': <class 'type'>, 'zip': <class 'zip'>, '__debug__': True, 'BaseException': <class 'BaseException'>, 'BaseExceptionGroup': <class 'BaseExceptionGroup'>, 'Exception': <class 'Exception'>, 'GeneratorExit': <class 'GeneratorExit'>, 'KeyboardInterrupt': <class 'KeyboardInterrupt'>, 'SystemExit': <class 'SystemExit'>, 'ArithmeticError': <class 'ArithmeticError'>, 'AssertionError': <class 'AssertionError'>, 'AttributeError': <class 'AttributeError'>, 'BufferError': <class 'BufferError'>, 'EOFError': <class 'EOFError'>, 'ImportError': <class 'ImportError'>, 'LookupError': <class 'LookupError'>, 'MemoryError': <class 'MemoryError'>, 'NameError': <class 'NameError'>, 'OSError': <class 'OSError'>, 'ReferenceError': <class 'ReferenceError'>, 'RuntimeError': <class 'RuntimeError'>, 'StopAsyncIteration': <class 'StopAsyncIteration'>, 'StopIteration': <class 'StopIteration'>, 'SyntaxError': <class 'SyntaxError'>, 'SystemError': <class 'SystemError'>, 'TypeError': <class 'TypeError'>, 'ValueError': <class 'ValueError'>, 'Warning': <class 'Warning'>, 'FloatingPointError': <class 'FloatingPointError'>, 'OverflowError': <class 'OverflowError'>, 'ZeroDivisionError': <class 'ZeroDivisionError'>, 'BytesWarning': <class 'BytesWarning'>, 'DeprecationWarning': <class 'DeprecationWarning'>, 'EncodingWarning': <class 'EncodingWarning'>, 'FutureWarning': <class 'FutureWarning'>, 'ImportWarning': <class 'ImportWarning'>, 'PendingDeprecationWarning': <class 'PendingDeprecationWarning'>, 'ResourceWarning': <class 'ResourceWarning'>, 'RuntimeWarning': <class 'RuntimeWarning'>, 'SyntaxWarning': <class 'SyntaxWarning'>, 'UnicodeWarning': <class 'UnicodeWarning'>, 'UserWarning': <class 'UserWarning'>, 'BlockingIOError': <class 'BlockingIOError'>, 'ChildProcessError': <class 'ChildProcessError'>, 'ConnectionError': <class 'ConnectionError'>, 'FileExistsError': <class 'FileExistsError'>, 'FileNotFoundError': <class 'FileNotFoundError'>, 'InterruptedError': <class 'InterruptedError'>, 'IsADirectoryError': <class 'IsADirectoryError'>, 'NotADirectoryError': <class 'NotADirectoryError'>, 'PermissionError': <class 'PermissionError'>, 'ProcessLookupError': <class 'ProcessLookupError'>, 'TimeoutError': <class 'TimeoutError'>, 'IndentationError': <class 'IndentationError'>, 'IndexError': <class 'IndexError'>, 'KeyError': <class 'KeyError'>, 'ModuleNotFoundError': <class 'ModuleNotFoundError'>, 'NotImplementedError': <class 'NotImplementedError'>, 'RecursionError': <class 'RecursionError'>, 'UnboundLocalError': <class 'UnboundLocalError'>, 'UnicodeError': <class 'UnicodeError'>, 'BrokenPipeError': <class 'BrokenPipeError'>, 'ConnectionAbortedError': <class 'ConnectionAbortedError'>, 'ConnectionRefusedError': <class 'ConnectionRefusedError'>, 'ConnectionResetError': <class 'ConnectionResetError'>, 'TabError': <class 'TabError'>, 'UnicodeDecodeError': <class 'UnicodeDecodeError'>, 'UnicodeEncodeError': <class 'UnicodeEncodeError'>, 'UnicodeTranslateError': <class 'UnicodeTranslateError'>, 'ExceptionGroup': <class 'ExceptionGroup'>, 'EnvironmentError': <class 'OSError'>, 'IOError': <class 'OSError'>, 'WindowsError': <class 'OSError'>, 'open': <built-in function open>, 'quit': Use quit() or Ctrl-Z plus Return to exit, 'exit': Use exit() or Ctrl-Z plus Return to exit, 'copyright': Copyright (c) 2001-2023 Python Software Foundation.\nAll Rights Reserved.\n\nCopyright (c) 2000 BeOpen.com.\nAll Rights Reserved.\n\nCopyright (c) 1995-2001 Corporation for National Research Initiatives.\nAll Rights Reserved.\n\nCopyright (c) 1991-1995 Stichting Mathematisch Centrum, Amsterdam.\nAll Rights Reserved., 'credits':     Thanks to CWI, CNRI, BeOpen.com, Zope Corporation and a cast of thousands\n    for supporting Python development.  See www.python.org for more information., 'license': Type license() to see the full license text, 'help': Type help() for interactive help, or help(object) for help about object.}, 'format_name': <function format_name at 0x0000026BD38CBD80>, 'render_people': <function render_people at 0x0000026BD38E00E0>}\n\n======================================================================\nFAIL: test_old_name_removed (test_refactor.RefactorTest.test_old_name_removed)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-refactor-u0exmex3\\test_refactor.py\", line 12, in test_old_name_removed\n    self.assertFalse(hasattr(formatting, \"format_name\"))\nAssertionError: True is not false\n\n----------------------------------------------------------------------\nRan 3 tests in 0.001s\n\nFAILED (failures=2, errors=1)\n",
+        "secs": 0.10899999999674037
+      },
+      "files_changed": [
+        "formatting.py",
+        "report.py"
+      ],
+      "diff": "--- a/formatting.py\n+++ b/formatting.py\n@@ -1,2 +1,2 @@\n-def format_name(first, last):\n+def display_name(first, last):\n     return f\"{last}, {first}\"\n--- a/report.py\n+++ b/report.py\n@@ -1,4 +1,4 @@\n-from formatting import format_name\n+from formatting import display_name\n \n def render_people(people):\n-    return [format_name(first, last) for first, last in people]\n+    return [display_name(first, last) for first, last in people]\n",
+      "gpu": {
+        "checked_at": "2026-11-07T06:13:41.169597+00:00",
+        "full_gpu": true,
+        "ollama_model": {
+          "name": "qwen3.5:9b",
+          "model": "qwen3.5:9b",
+          "size": 9975378560,
+          "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "9.7B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-11-07T14:18:41.0913834+08:00",
+          "size_vram": 9975378560,
+          "context_length": 65536
+        }
+      },
+      "test_command": "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -B -m unittest discover -q",
+      "transcript_path": "eval/results-gpu.transcripts/refactor-2.jsonl",
+      "expected_outcome": true
+    },
+    {
+      "fixture": "refactor",
+      "run": 3,
+      "status": "done",
+      "reason": "auto_finish",
+      "note": "Tests passed after the final edit.",
+      "turns": 5,
+      "tokens_est": 6808,
+      "secs": 16.937999999994645,
+      "green": true,
+      "independent_tests": {
+        "returncode": 0,
+        "output": "----------------------------------------------------------------------\nRan 3 tests in 0.000s\n\nOK\n",
+        "secs": 0.125
+      },
+      "baseline_tests": {
+        "returncode": 1,
+        "output": "======================================================================\nERROR: test_new_name (test_refactor.RefactorTest.test_new_name)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-refactor-lkdwbvy2\\test_refactor.py\", line 7, in test_new_name\n    self.assertEqual(formatting.display_name(\"Ada\", \"Lovelace\"), \"Lovelace, Ada\")\n                     ^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: module 'formatting' has no attribute 'display_name'\n\n======================================================================\nFAIL: test_callers_updated (test_refactor.RefactorTest.test_callers_updated)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-refactor-lkdwbvy2\\test_refactor.py\", line 10, in test_callers_updated\n    self.assertNotIn(\"format_name\", report.__dict__)\nAssertionError: 'format_name' unexpectedly found in {'__name__': 'report', '__doc__': None, '__package__': '', '__loader__': <_frozen_importlib_external.SourceFileLoader object at 0x0000025946394B90>, '__spec__': ModuleSpec(name='report', loader=<_frozen_importlib_external.SourceFileLoader object at 0x0000025946394B90>, origin='C:\\\\Users\\\\User\\\\AppData\\\\Local\\\\Temp\\\\ps-refactor-lkdwbvy2\\\\report.py'), '__file__': 'C:\\\\Users\\\\User\\\\AppData\\\\Local\\\\Temp\\\\ps-refactor-lkdwbvy2\\\\report.py', '__cached__': 'C:\\\\Users\\\\User\\\\AppData\\\\Local\\\\Temp\\\\ps-refactor-lkdwbvy2\\\\__pycache__\\\\report.cpython-312.pyc', '__builtins__': {'__name__': 'builtins', '__doc__': \"Built-in functions, types, exceptions, and other objects.\\n\\nThis module provides direct access to all 'built-in'\\nidentifiers of Python; for example, builtins.len is\\nthe full name for the built-in function len().\\n\\nThis module is not normally accessed explicitly by most\\napplications, but can be useful in modules that provide\\nobjects with the same name as a built-in value, but in\\nwhich the built-in of that name is also needed.\", '__package__': '', '__loader__': <class '_frozen_importlib.BuiltinImporter'>, '__spec__': ModuleSpec(name='builtins', loader=<class '_frozen_importlib.BuiltinImporter'>, origin='built-in'), '__build_class__': <built-in function __build_class__>, '__import__': <built-in function __import__>, 'abs': <built-in function abs>, 'all': <built-in function all>, 'any': <built-in function any>, 'ascii': <built-in function ascii>, 'bin': <built-in function bin>, 'breakpoint': <built-in function breakpoint>, 'callable': <built-in function callable>, 'chr': <built-in function chr>, 'compile': <built-in function compile>, 'delattr': <built-in function delattr>, 'dir': <built-in function dir>, 'divmod': <built-in function divmod>, 'eval': <built-in function eval>, 'exec': <built-in function exec>, 'format': <built-in function format>, 'getattr': <built-in function getattr>, 'globals': <built-in function globals>, 'hasattr': <built-in function hasattr>, 'hash': <built-in function hash>, 'hex': <built-in function hex>, 'id': <built-in function id>, 'input': <built-in function input>, 'isinstance': <built-in function isinstance>, 'issubclass': <built-in function issubclass>, 'iter': <built-in function iter>, 'aiter': <built-in function aiter>, 'len': <built-in function len>, 'locals': <built-in function locals>, 'max': <built-in function max>, 'min': <built-in function min>, 'next': <built-in function next>, 'anext': <built-in function anext>, 'oct': <built-in function oct>, 'ord': <built-in function ord>, 'pow': <built-in function pow>, 'print': <built-in function print>, 'repr': <built-in function repr>, 'round': <built-in function round>, 'setattr': <built-in function setattr>, 'sorted': <built-in function sorted>, 'sum': <built-in function sum>, 'vars': <built-in function vars>, 'None': None, 'Ellipsis': Ellipsis, 'NotImplemented': NotImplemented, 'False': False, 'True': True, 'bool': <class 'bool'>, 'memoryview': <class 'memoryview'>, 'bytearray': <class 'bytearray'>, 'bytes': <class 'bytes'>, 'classmethod': <class 'classmethod'>, 'complex': <class 'complex'>, 'dict': <class 'dict'>, 'enumerate': <class 'enumerate'>, 'filter': <class 'filter'>, 'float': <class 'float'>, 'frozenset': <class 'frozenset'>, 'property': <class 'property'>, 'int': <class 'int'>, 'list': <class 'list'>, 'map': <class 'map'>, 'object': <class 'object'>, 'range': <class 'range'>, 'reversed': <class 'reversed'>, 'set': <class 'set'>, 'slice': <class 'slice'>, 'staticmethod': <class 'staticmethod'>, 'str': <class 'str'>, 'super': <class 'super'>, 'tuple': <class 'tuple'>, 'type': <class 'type'>, 'zip': <class 'zip'>, '__debug__': True, 'BaseException': <class 'BaseException'>, 'BaseExceptionGroup': <class 'BaseExceptionGroup'>, 'Exception': <class 'Exception'>, 'GeneratorExit': <class 'GeneratorExit'>, 'KeyboardInterrupt': <class 'KeyboardInterrupt'>, 'SystemExit': <class 'SystemExit'>, 'ArithmeticError': <class 'ArithmeticError'>, 'AssertionError': <class 'AssertionError'>, 'AttributeError': <class 'AttributeError'>, 'BufferError': <class 'BufferError'>, 'EOFError': <class 'EOFError'>, 'ImportError': <class 'ImportError'>, 'LookupError': <class 'LookupError'>, 'MemoryError': <class 'MemoryError'>, 'NameError': <class 'NameError'>, 'OSError': <class 'OSError'>, 'ReferenceError': <class 'ReferenceError'>, 'RuntimeError': <class 'RuntimeError'>, 'StopAsyncIteration': <class 'StopAsyncIteration'>, 'StopIteration': <class 'StopIteration'>, 'SyntaxError': <class 'SyntaxError'>, 'SystemError': <class 'SystemError'>, 'TypeError': <class 'TypeError'>, 'ValueError': <class 'ValueError'>, 'Warning': <class 'Warning'>, 'FloatingPointError': <class 'FloatingPointError'>, 'OverflowError': <class 'OverflowError'>, 'ZeroDivisionError': <class 'ZeroDivisionError'>, 'BytesWarning': <class 'BytesWarning'>, 'DeprecationWarning': <class 'DeprecationWarning'>, 'EncodingWarning': <class 'EncodingWarning'>, 'FutureWarning': <class 'FutureWarning'>, 'ImportWarning': <class 'ImportWarning'>, 'PendingDeprecationWarning': <class 'PendingDeprecationWarning'>, 'ResourceWarning': <class 'ResourceWarning'>, 'RuntimeWarning': <class 'RuntimeWarning'>, 'SyntaxWarning': <class 'SyntaxWarning'>, 'UnicodeWarning': <class 'UnicodeWarning'>, 'UserWarning': <class 'UserWarning'>, 'BlockingIOError': <class 'BlockingIOError'>, 'ChildProcessError': <class 'ChildProcessError'>, 'ConnectionError': <class 'ConnectionError'>, 'FileExistsError': <class 'FileExistsError'>, 'FileNotFoundError': <class 'FileNotFoundError'>, 'InterruptedError': <class 'InterruptedError'>, 'IsADirectoryError': <class 'IsADirectoryError'>, 'NotADirectoryError': <class 'NotADirectoryError'>, 'PermissionError': <class 'PermissionError'>, 'ProcessLookupError': <class 'ProcessLookupError'>, 'TimeoutError': <class 'TimeoutError'>, 'IndentationError': <class 'IndentationError'>, 'IndexError': <class 'IndexError'>, 'KeyError': <class 'KeyError'>, 'ModuleNotFoundError': <class 'ModuleNotFoundError'>, 'NotImplementedError': <class 'NotImplementedError'>, 'RecursionError': <class 'RecursionError'>, 'UnboundLocalError': <class 'UnboundLocalError'>, 'UnicodeError': <class 'UnicodeError'>, 'BrokenPipeError': <class 'BrokenPipeError'>, 'ConnectionAbortedError': <class 'ConnectionAbortedError'>, 'ConnectionRefusedError': <class 'ConnectionRefusedError'>, 'ConnectionResetError': <class 'ConnectionResetError'>, 'TabError': <class 'TabError'>, 'UnicodeDecodeError': <class 'UnicodeDecodeError'>, 'UnicodeEncodeError': <class 'UnicodeEncodeError'>, 'UnicodeTranslateError': <class 'UnicodeTranslateError'>, 'ExceptionGroup': <class 'ExceptionGroup'>, 'EnvironmentError': <class 'OSError'>, 'IOError': <class 'OSError'>, 'WindowsError': <class 'OSError'>, 'open': <built-in function open>, 'quit': Use quit() or Ctrl-Z plus Return to exit, 'exit': Use exit() or Ctrl-Z plus Return to exit, 'copyright': Copyright (c) 2001-2023 Python Software Foundation.\nAll Rights Reserved.\n\nCopyright (c) 2000 BeOpen.com.\nAll Rights Reserved.\n\nCopyright (c) 1995-2001 Corporation for National Research Initiatives.\nAll Rights Reserved.\n\nCopyright (c) 1991-1995 Stichting Mathematisch Centrum, Amsterdam.\nAll Rights Reserved., 'credits':     Thanks to CWI, CNRI, BeOpen.com, Zope Corporation and a cast of thousands\n    for supporting Python development.  See www.python.org for more information., 'license': Type license() to see the full license text, 'help': Type help() for interactive help, or help(object) for help about object.}, 'format_name': <function format_name at 0x000002594638BD80>, 'render_people': <function render_people at 0x00000259463A00E0>}\n\n======================================================================\nFAIL: test_old_name_removed (test_refactor.RefactorTest.test_old_name_removed)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-refactor-lkdwbvy2\\test_refactor.py\", line 12, in test_old_name_removed\n    self.assertFalse(hasattr(formatting, \"format_name\"))\nAssertionError: True is not false\n\n----------------------------------------------------------------------\nRan 3 tests in 0.001s\n\nFAILED (failures=2, errors=1)\n",
+        "secs": 0.10899999999674037
+      },
+      "files_changed": [
+        "formatting.py",
+        "report.py"
+      ],
+      "diff": "--- a/formatting.py\n+++ b/formatting.py\n@@ -1,2 +1,2 @@\n-def format_name(first, last):\n+def display_name(first, last):\n     return f\"{last}, {first}\"\n--- a/report.py\n+++ b/report.py\n@@ -1,4 +1,4 @@\n-from formatting import format_name\n+from formatting import display_name\n \n def render_people(people):\n-    return [format_name(first, last) for first, last in people]\n+    return [display_name(first, last) for first, last in people]\n",
+      "gpu": {
+        "checked_at": "2026-11-07T06:13:58.523158+00:00",
+        "full_gpu": true,
+        "ollama_model": {
+          "name": "qwen3.5:9b",
+          "model": "qwen3.5:9b",
+          "size": 9975378560,
+          "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "9.7B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-11-07T14:18:58.4529421+08:00",
+          "size_vram": 9975378560,
+          "context_length": 65536
+        }
+      },
+      "test_command": "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -B -m unittest discover -q",
+      "transcript_path": "eval/results-gpu.transcripts/refactor-3.jsonl",
+      "expected_outcome": true
+    },
+    {
+      "fixture": "refactor",
+      "run": 4,
+      "status": "done",
+      "reason": "auto_finish",
+      "note": "Tests passed after the final edit.",
+      "turns": 5,
+      "tokens_est": 6812,
+      "secs": 16.98499999998603,
+      "green": true,
+      "independent_tests": {
+        "returncode": 0,
+        "output": "----------------------------------------------------------------------\nRan 3 tests in 0.000s\n\nOK\n",
+        "secs": 0.10999999998603016
+      },
+      "baseline_tests": {
+        "returncode": 1,
+        "output": "======================================================================\nERROR: test_new_name (test_refactor.RefactorTest.test_new_name)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-refactor-fnuprdik\\test_refactor.py\", line 7, in test_new_name\n    self.assertEqual(formatting.display_name(\"Ada\", \"Lovelace\"), \"Lovelace, Ada\")\n                     ^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: module 'formatting' has no attribute 'display_name'\n\n======================================================================\nFAIL: test_callers_updated (test_refactor.RefactorTest.test_callers_updated)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-refactor-fnuprdik\\test_refactor.py\", line 10, in test_callers_updated\n    self.assertNotIn(\"format_name\", report.__dict__)\nAssertionError: 'format_name' unexpectedly found in {'__name__': 'report', '__doc__': None, '__package__': '', '__loader__': <_frozen_importlib_external.SourceFileLoader object at 0x0000029056B90D40>, '__spec__': ModuleSpec(name='report', loader=<_frozen_importlib_external.SourceFileLoader object at 0x0000029056B90D40>, origin='C:\\\\Users\\\\User\\\\AppData\\\\Local\\\\Temp\\\\ps-refactor-fnuprdik\\\\report.py'), '__file__': 'C:\\\\Users\\\\User\\\\AppData\\\\Local\\\\Temp\\\\ps-refactor-fnuprdik\\\\report.py', '__cached__': 'C:\\\\Users\\\\User\\\\AppData\\\\Local\\\\Temp\\\\ps-refactor-fnuprdik\\\\__pycache__\\\\report.cpython-312.pyc', '__builtins__': {'__name__': 'builtins', '__doc__': \"Built-in functions, types, exceptions, and other objects.\\n\\nThis module provides direct access to all 'built-in'\\nidentifiers of Python; for example, builtins.len is\\nthe full name for the built-in function len().\\n\\nThis module is not normally accessed explicitly by most\\napplications, but can be useful in modules that provide\\nobjects with the same name as a built-in value, but in\\nwhich the built-in of that name is also needed.\", '__package__': '', '__loader__': <class '_frozen_importlib.BuiltinImporter'>, '__spec__': ModuleSpec(name='builtins', loader=<class '_frozen_importlib.BuiltinImporter'>, origin='built-in'), '__build_class__': <built-in function __build_class__>, '__import__': <built-in function __import__>, 'abs': <built-in function abs>, 'all': <built-in function all>, 'any': <built-in function any>, 'ascii': <built-in function ascii>, 'bin': <built-in function bin>, 'breakpoint': <built-in function breakpoint>, 'callable': <built-in function callable>, 'chr': <built-in function chr>, 'compile': <built-in function compile>, 'delattr': <built-in function delattr>, 'dir': <built-in function dir>, 'divmod': <built-in function divmod>, 'eval': <built-in function eval>, 'exec': <built-in function exec>, 'format': <built-in function format>, 'getattr': <built-in function getattr>, 'globals': <built-in function globals>, 'hasattr': <built-in function hasattr>, 'hash': <built-in function hash>, 'hex': <built-in function hex>, 'id': <built-in function id>, 'input': <built-in function input>, 'isinstance': <built-in function isinstance>, 'issubclass': <built-in function issubclass>, 'iter': <built-in function iter>, 'aiter': <built-in function aiter>, 'len': <built-in function len>, 'locals': <built-in function locals>, 'max': <built-in function max>, 'min': <built-in function min>, 'next': <built-in function next>, 'anext': <built-in function anext>, 'oct': <built-in function oct>, 'ord': <built-in function ord>, 'pow': <built-in function pow>, 'print': <built-in function print>, 'repr': <built-in function repr>, 'round': <built-in function round>, 'setattr': <built-in function setattr>, 'sorted': <built-in function sorted>, 'sum': <built-in function sum>, 'vars': <built-in function vars>, 'None': None, 'Ellipsis': Ellipsis, 'NotImplemented': NotImplemented, 'False': False, 'True': True, 'bool': <class 'bool'>, 'memoryview': <class 'memoryview'>, 'bytearray': <class 'bytearray'>, 'bytes': <class 'bytes'>, 'classmethod': <class 'classmethod'>, 'complex': <class 'complex'>, 'dict': <class 'dict'>, 'enumerate': <class 'enumerate'>, 'filter': <class 'filter'>, 'float': <class 'float'>, 'frozenset': <class 'frozenset'>, 'property': <class 'property'>, 'int': <class 'int'>, 'list': <class 'list'>, 'map': <class 'map'>, 'object': <class 'object'>, 'range': <class 'range'>, 'reversed': <class 'reversed'>, 'set': <class 'set'>, 'slice': <class 'slice'>, 'staticmethod': <class 'staticmethod'>, 'str': <class 'str'>, 'super': <class 'super'>, 'tuple': <class 'tuple'>, 'type': <class 'type'>, 'zip': <class 'zip'>, '__debug__': True, 'BaseException': <class 'BaseException'>, 'BaseExceptionGroup': <class 'BaseExceptionGroup'>, 'Exception': <class 'Exception'>, 'GeneratorExit': <class 'GeneratorExit'>, 'KeyboardInterrupt': <class 'KeyboardInterrupt'>, 'SystemExit': <class 'SystemExit'>, 'ArithmeticError': <class 'ArithmeticError'>, 'AssertionError': <class 'AssertionError'>, 'AttributeError': <class 'AttributeError'>, 'BufferError': <class 'BufferError'>, 'EOFError': <class 'EOFError'>, 'ImportError': <class 'ImportError'>, 'LookupError': <class 'LookupError'>, 'MemoryError': <class 'MemoryError'>, 'NameError': <class 'NameError'>, 'OSError': <class 'OSError'>, 'ReferenceError': <class 'ReferenceError'>, 'RuntimeError': <class 'RuntimeError'>, 'StopAsyncIteration': <class 'StopAsyncIteration'>, 'StopIteration': <class 'StopIteration'>, 'SyntaxError': <class 'SyntaxError'>, 'SystemError': <class 'SystemError'>, 'TypeError': <class 'TypeError'>, 'ValueError': <class 'ValueError'>, 'Warning': <class 'Warning'>, 'FloatingPointError': <class 'FloatingPointError'>, 'OverflowError': <class 'OverflowError'>, 'ZeroDivisionError': <class 'ZeroDivisionError'>, 'BytesWarning': <class 'BytesWarning'>, 'DeprecationWarning': <class 'DeprecationWarning'>, 'EncodingWarning': <class 'EncodingWarning'>, 'FutureWarning': <class 'FutureWarning'>, 'ImportWarning': <class 'ImportWarning'>, 'PendingDeprecationWarning': <class 'PendingDeprecationWarning'>, 'ResourceWarning': <class 'ResourceWarning'>, 'RuntimeWarning': <class 'RuntimeWarning'>, 'SyntaxWarning': <class 'SyntaxWarning'>, 'UnicodeWarning': <class 'UnicodeWarning'>, 'UserWarning': <class 'UserWarning'>, 'BlockingIOError': <class 'BlockingIOError'>, 'ChildProcessError': <class 'ChildProcessError'>, 'ConnectionError': <class 'ConnectionError'>, 'FileExistsError': <class 'FileExistsError'>, 'FileNotFoundError': <class 'FileNotFoundError'>, 'InterruptedError': <class 'InterruptedError'>, 'IsADirectoryError': <class 'IsADirectoryError'>, 'NotADirectoryError': <class 'NotADirectoryError'>, 'PermissionError': <class 'PermissionError'>, 'ProcessLookupError': <class 'ProcessLookupError'>, 'TimeoutError': <class 'TimeoutError'>, 'IndentationError': <class 'IndentationError'>, 'IndexError': <class 'IndexError'>, 'KeyError': <class 'KeyError'>, 'ModuleNotFoundError': <class 'ModuleNotFoundError'>, 'NotImplementedError': <class 'NotImplementedError'>, 'RecursionError': <class 'RecursionError'>, 'UnboundLocalError': <class 'UnboundLocalError'>, 'UnicodeError': <class 'UnicodeError'>, 'BrokenPipeError': <class 'BrokenPipeError'>, 'ConnectionAbortedError': <class 'ConnectionAbortedError'>, 'ConnectionRefusedError': <class 'ConnectionRefusedError'>, 'ConnectionResetError': <class 'ConnectionResetError'>, 'TabError': <class 'TabError'>, 'UnicodeDecodeError': <class 'UnicodeDecodeError'>, 'UnicodeEncodeError': <class 'UnicodeEncodeError'>, 'UnicodeTranslateError': <class 'UnicodeTranslateError'>, 'ExceptionGroup': <class 'ExceptionGroup'>, 'EnvironmentError': <class 'OSError'>, 'IOError': <class 'OSError'>, 'WindowsError': <class 'OSError'>, 'open': <built-in function open>, 'quit': Use quit() or Ctrl-Z plus Return to exit, 'exit': Use exit() or Ctrl-Z plus Return to exit, 'copyright': Copyright (c) 2001-2023 Python Software Foundation.\nAll Rights Reserved.\n\nCopyright (c) 2000 BeOpen.com.\nAll Rights Reserved.\n\nCopyright (c) 1995-2001 Corporation for National Research Initiatives.\nAll Rights Reserved.\n\nCopyright (c) 1991-1995 Stichting Mathematisch Centrum, Amsterdam.\nAll Rights Reserved., 'credits':     Thanks to CWI, CNRI, BeOpen.com, Zope Corporation and a cast of thousands\n    for supporting Python development.  See www.python.org for more information., 'license': Type license() to see the full license text, 'help': Type help() for interactive help, or help(object) for help about object.}, 'format_name': <function format_name at 0x0000029056B8BD80>, 'render_people': <function render_people at 0x0000029056BA00E0>}\n\n======================================================================\nFAIL: test_old_name_removed (test_refactor.RefactorTest.test_old_name_removed)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-refactor-fnuprdik\\test_refactor.py\", line 12, in test_old_name_removed\n    self.assertFalse(hasattr(formatting, \"format_name\"))\nAssertionError: True is not false\n\n----------------------------------------------------------------------\nRan 3 tests in 0.001s\n\nFAILED (failures=2, errors=1)\n",
+        "secs": 0.125
+      },
+      "files_changed": [
+        "formatting.py",
+        "report.py"
+      ],
+      "diff": "--- a/formatting.py\n+++ b/formatting.py\n@@ -1,2 +1,2 @@\n-def format_name(first, last):\n+def display_name(first, last):\n     return f\"{last}, {first}\"\n--- a/report.py\n+++ b/report.py\n@@ -1,4 +1,4 @@\n-from formatting import format_name\n+from formatting import display_name\n \n def render_people(people):\n-    return [format_name(first, last) for first, last in people]\n+    return [display_name(first, last) for first, last in people]\n",
+      "gpu": {
+        "checked_at": "2026-11-07T06:14:15.921469+00:00",
+        "full_gpu": true,
+        "ollama_model": {
+          "name": "qwen3.5:9b",
+          "model": "qwen3.5:9b",
+          "size": 9975378560,
+          "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "9.7B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-11-07T14:19:15.8650275+08:00",
+          "size_vram": 9975378560,
+          "context_length": 65536
+        }
+      },
+      "test_command": "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -B -m unittest discover -q",
+      "transcript_path": "eval/results-gpu.transcripts/refactor-4.jsonl",
+      "expected_outcome": true
+    },
+    {
+      "fixture": "refactor",
+      "run": 5,
+      "status": "done",
+      "reason": "auto_finish",
+      "note": "Tests passed after the final edit.",
+      "turns": 5,
+      "tokens_est": 6808,
+      "secs": 16.905999999988126,
+      "green": true,
+      "independent_tests": {
+        "returncode": 0,
+        "output": "----------------------------------------------------------------------\nRan 3 tests in 0.000s\n\nOK\n",
+        "secs": 0.10899999999674037
+      },
+      "baseline_tests": {
+        "returncode": 1,
+        "output": "======================================================================\nERROR: test_new_name (test_refactor.RefactorTest.test_new_name)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-refactor-ehm0bryk\\test_refactor.py\", line 7, in test_new_name\n    self.assertEqual(formatting.display_name(\"Ada\", \"Lovelace\"), \"Lovelace, Ada\")\n                     ^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: module 'formatting' has no attribute 'display_name'\n\n======================================================================\nFAIL: test_callers_updated (test_refactor.RefactorTest.test_callers_updated)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-refactor-ehm0bryk\\test_refactor.py\", line 10, in test_callers_updated\n    self.assertNotIn(\"format_name\", report.__dict__)\nAssertionError: 'format_name' unexpectedly found in {'__name__': 'report', '__doc__': None, '__package__': '', '__loader__': <_frozen_importlib_external.SourceFileLoader object at 0x00000249554C0D40>, '__spec__': ModuleSpec(name='report', loader=<_frozen_importlib_external.SourceFileLoader object at 0x00000249554C0D40>, origin='C:\\\\Users\\\\User\\\\AppData\\\\Local\\\\Temp\\\\ps-refactor-ehm0bryk\\\\report.py'), '__file__': 'C:\\\\Users\\\\User\\\\AppData\\\\Local\\\\Temp\\\\ps-refactor-ehm0bryk\\\\report.py', '__cached__': 'C:\\\\Users\\\\User\\\\AppData\\\\Local\\\\Temp\\\\ps-refactor-ehm0bryk\\\\__pycache__\\\\report.cpython-312.pyc', '__builtins__': {'__name__': 'builtins', '__doc__': \"Built-in functions, types, exceptions, and other objects.\\n\\nThis module provides direct access to all 'built-in'\\nidentifiers of Python; for example, builtins.len is\\nthe full name for the built-in function len().\\n\\nThis module is not normally accessed explicitly by most\\napplications, but can be useful in modules that provide\\nobjects with the same name as a built-in value, but in\\nwhich the built-in of that name is also needed.\", '__package__': '', '__loader__': <class '_frozen_importlib.BuiltinImporter'>, '__spec__': ModuleSpec(name='builtins', loader=<class '_frozen_importlib.BuiltinImporter'>, origin='built-in'), '__build_class__': <built-in function __build_class__>, '__import__': <built-in function __import__>, 'abs': <built-in function abs>, 'all': <built-in function all>, 'any': <built-in function any>, 'ascii': <built-in function ascii>, 'bin': <built-in function bin>, 'breakpoint': <built-in function breakpoint>, 'callable': <built-in function callable>, 'chr': <built-in function chr>, 'compile': <built-in function compile>, 'delattr': <built-in function delattr>, 'dir': <built-in function dir>, 'divmod': <built-in function divmod>, 'eval': <built-in function eval>, 'exec': <built-in function exec>, 'format': <built-in function format>, 'getattr': <built-in function getattr>, 'globals': <built-in function globals>, 'hasattr': <built-in function hasattr>, 'hash': <built-in function hash>, 'hex': <built-in function hex>, 'id': <built-in function id>, 'input': <built-in function input>, 'isinstance': <built-in function isinstance>, 'issubclass': <built-in function issubclass>, 'iter': <built-in function iter>, 'aiter': <built-in function aiter>, 'len': <built-in function len>, 'locals': <built-in function locals>, 'max': <built-in function max>, 'min': <built-in function min>, 'next': <built-in function next>, 'anext': <built-in function anext>, 'oct': <built-in function oct>, 'ord': <built-in function ord>, 'pow': <built-in function pow>, 'print': <built-in function print>, 'repr': <built-in function repr>, 'round': <built-in function round>, 'setattr': <built-in function setattr>, 'sorted': <built-in function sorted>, 'sum': <built-in function sum>, 'vars': <built-in function vars>, 'None': None, 'Ellipsis': Ellipsis, 'NotImplemented': NotImplemented, 'False': False, 'True': True, 'bool': <class 'bool'>, 'memoryview': <class 'memoryview'>, 'bytearray': <class 'bytearray'>, 'bytes': <class 'bytes'>, 'classmethod': <class 'classmethod'>, 'complex': <class 'complex'>, 'dict': <class 'dict'>, 'enumerate': <class 'enumerate'>, 'filter': <class 'filter'>, 'float': <class 'float'>, 'frozenset': <class 'frozenset'>, 'property': <class 'property'>, 'int': <class 'int'>, 'list': <class 'list'>, 'map': <class 'map'>, 'object': <class 'object'>, 'range': <class 'range'>, 'reversed': <class 'reversed'>, 'set': <class 'set'>, 'slice': <class 'slice'>, 'staticmethod': <class 'staticmethod'>, 'str': <class 'str'>, 'super': <class 'super'>, 'tuple': <class 'tuple'>, 'type': <class 'type'>, 'zip': <class 'zip'>, '__debug__': True, 'BaseException': <class 'BaseException'>, 'BaseExceptionGroup': <class 'BaseExceptionGroup'>, 'Exception': <class 'Exception'>, 'GeneratorExit': <class 'GeneratorExit'>, 'KeyboardInterrupt': <class 'KeyboardInterrupt'>, 'SystemExit': <class 'SystemExit'>, 'ArithmeticError': <class 'ArithmeticError'>, 'AssertionError': <class 'AssertionError'>, 'AttributeError': <class 'AttributeError'>, 'BufferError': <class 'BufferError'>, 'EOFError': <class 'EOFError'>, 'ImportError': <class 'ImportError'>, 'LookupError': <class 'LookupError'>, 'MemoryError': <class 'MemoryError'>, 'NameError': <class 'NameError'>, 'OSError': <class 'OSError'>, 'ReferenceError': <class 'ReferenceError'>, 'RuntimeError': <class 'RuntimeError'>, 'StopAsyncIteration': <class 'StopAsyncIteration'>, 'StopIteration': <class 'StopIteration'>, 'SyntaxError': <class 'SyntaxError'>, 'SystemError': <class 'SystemError'>, 'TypeError': <class 'TypeError'>, 'ValueError': <class 'ValueError'>, 'Warning': <class 'Warning'>, 'FloatingPointError': <class 'FloatingPointError'>, 'OverflowError': <class 'OverflowError'>, 'ZeroDivisionError': <class 'ZeroDivisionError'>, 'BytesWarning': <class 'BytesWarning'>, 'DeprecationWarning': <class 'DeprecationWarning'>, 'EncodingWarning': <class 'EncodingWarning'>, 'FutureWarning': <class 'FutureWarning'>, 'ImportWarning': <class 'ImportWarning'>, 'PendingDeprecationWarning': <class 'PendingDeprecationWarning'>, 'ResourceWarning': <class 'ResourceWarning'>, 'RuntimeWarning': <class 'RuntimeWarning'>, 'SyntaxWarning': <class 'SyntaxWarning'>, 'UnicodeWarning': <class 'UnicodeWarning'>, 'UserWarning': <class 'UserWarning'>, 'BlockingIOError': <class 'BlockingIOError'>, 'ChildProcessError': <class 'ChildProcessError'>, 'ConnectionError': <class 'ConnectionError'>, 'FileExistsError': <class 'FileExistsError'>, 'FileNotFoundError': <class 'FileNotFoundError'>, 'InterruptedError': <class 'InterruptedError'>, 'IsADirectoryError': <class 'IsADirectoryError'>, 'NotADirectoryError': <class 'NotADirectoryError'>, 'PermissionError': <class 'PermissionError'>, 'ProcessLookupError': <class 'ProcessLookupError'>, 'TimeoutError': <class 'TimeoutError'>, 'IndentationError': <class 'IndentationError'>, 'IndexError': <class 'IndexError'>, 'KeyError': <class 'KeyError'>, 'ModuleNotFoundError': <class 'ModuleNotFoundError'>, 'NotImplementedError': <class 'NotImplementedError'>, 'RecursionError': <class 'RecursionError'>, 'UnboundLocalError': <class 'UnboundLocalError'>, 'UnicodeError': <class 'UnicodeError'>, 'BrokenPipeError': <class 'BrokenPipeError'>, 'ConnectionAbortedError': <class 'ConnectionAbortedError'>, 'ConnectionRefusedError': <class 'ConnectionRefusedError'>, 'ConnectionResetError': <class 'ConnectionResetError'>, 'TabError': <class 'TabError'>, 'UnicodeDecodeError': <class 'UnicodeDecodeError'>, 'UnicodeEncodeError': <class 'UnicodeEncodeError'>, 'UnicodeTranslateError': <class 'UnicodeTranslateError'>, 'ExceptionGroup': <class 'ExceptionGroup'>, 'EnvironmentError': <class 'OSError'>, 'IOError': <class 'OSError'>, 'WindowsError': <class 'OSError'>, 'open': <built-in function open>, 'quit': Use quit() or Ctrl-Z plus Return to exit, 'exit': Use exit() or Ctrl-Z plus Return to exit, 'copyright': Copyright (c) 2001-2023 Python Software Foundation.\nAll Rights Reserved.\n\nCopyright (c) 2000 BeOpen.com.\nAll Rights Reserved.\n\nCopyright (c) 1995-2001 Corporation for National Research Initiatives.\nAll Rights Reserved.\n\nCopyright (c) 1991-1995 Stichting Mathematisch Centrum, Amsterdam.\nAll Rights Reserved., 'credits':     Thanks to CWI, CNRI, BeOpen.com, Zope Corporation and a cast of thousands\n    for supporting Python development.  See www.python.org for more information., 'license': Type license() to see the full license text, 'help': Type help() for interactive help, or help(object) for help about object.}, 'format_name': <function format_name at 0x00000249554BBD80>, 'render_people': <function render_people at 0x00000249554D00E0>}\n\n======================================================================\nFAIL: test_old_name_removed (test_refactor.RefactorTest.test_old_name_removed)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-refactor-ehm0bryk\\test_refactor.py\", line 12, in test_old_name_removed\n    self.assertFalse(hasattr(formatting, \"format_name\"))\nAssertionError: True is not false\n\n----------------------------------------------------------------------\nRan 3 tests in 0.001s\n\nFAILED (failures=2, errors=1)\n",
+        "secs": 0.10899999999674037
+      },
+      "files_changed": [
+        "formatting.py",
+        "report.py"
+      ],
+      "diff": "--- a/formatting.py\n+++ b/formatting.py\n@@ -1,2 +1,2 @@\n-def format_name(first, last):\n+def display_name(first, last):\n     return f\"{last}, {first}\"\n--- a/report.py\n+++ b/report.py\n@@ -1,4 +1,4 @@\n-from formatting import format_name\n+from formatting import display_name\n \n def render_people(people):\n-    return [format_name(first, last) for first, last in people]\n+    return [display_name(first, last) for first, last in people]\n",
+      "gpu": {
+        "checked_at": "2026-11-07T06:14:33.239713+00:00",
+        "full_gpu": true,
+        "ollama_model": {
+          "name": "qwen3.5:9b",
+          "model": "qwen3.5:9b",
+          "size": 9975378560,
+          "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "9.7B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-11-07T14:19:33.1847817+08:00",
+          "size_vram": 9975378560,
+          "context_length": 65536
+        }
+      },
+      "test_command": "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -B -m unittest discover -q",
+      "transcript_path": "eval/results-gpu.transcripts/refactor-5.jsonl",
+      "expected_outcome": true
+    },
+    {
+      "fixture": "offbyone",
+      "run": 1,
+      "status": "done",
+      "reason": "auto_finish",
+      "note": "Tests passed after the final edit.",
+      "turns": 7,
+      "tokens_est": 10351,
+      "secs": 20.437000000005355,
+      "green": true,
+      "independent_tests": {
+        "returncode": 0,
+        "output": "----------------------------------------------------------------------\nRan 3 tests in 0.000s\n\nOK\n",
+        "secs": 0.125
+      },
+      "baseline_tests": {
+        "returncode": 1,
+        "output": "======================================================================\nFAIL: test_batch (test_totals.TotalsTest.test_batch)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-offbyone-pc_ng46n\\test_totals.py\", line 6, in test_batch\n    self.assertEqual(total_through(4), 10, \"cache checksum mismatch; refresh batch index\")\nAssertionError: 6 != 10 : cache checksum mismatch; refresh batch index\n\n======================================================================\nFAIL: test_one (test_totals.TotalsTest.test_one)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-offbyone-pc_ng46n\\test_totals.py\", line 8, in test_one\n    self.assertEqual(total_through(1), 1)\nAssertionError: 0 != 1\n\n----------------------------------------------------------------------\nRan 3 tests in 0.000s\n\nFAILED (failures=2)\n",
+        "secs": 0.125
+      },
+      "files_changed": [
+        "totals.py"
+      ],
+      "diff": "--- a/totals.py\n+++ b/totals.py\n@@ -1,5 +1,5 @@\n def total_through(n):\n     total = 0\n-    for number in range(1, n):\n+    for number in range(1, n + 1):\n         total += number\n     return total\n",
+      "gpu": {
+        "checked_at": "2026-11-07T06:14:54.106653+00:00",
+        "full_gpu": true,
+        "ollama_model": {
+          "name": "qwen3.5:9b",
+          "model": "qwen3.5:9b",
+          "size": 9975378560,
+          "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "9.7B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-11-07T14:19:54.0338221+08:00",
+          "size_vram": 9975378560,
+          "context_length": 65536
+        }
+      },
+      "test_command": "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -B -m unittest discover -q",
+      "transcript_path": "eval/results-gpu.transcripts/offbyone-1.jsonl",
+      "expected_outcome": true
+    },
+    {
+      "fixture": "offbyone",
+      "run": 2,
+      "status": "done",
+      "reason": "auto_finish",
+      "note": "Tests passed after the final edit.",
+      "turns": 8,
+      "tokens_est": 11911,
+      "secs": 21.15600000001723,
+      "green": true,
+      "independent_tests": {
+        "returncode": 0,
+        "output": "----------------------------------------------------------------------\nRan 3 tests in 0.000s\n\nOK\n",
+        "secs": 0.1090000000258442
+      },
+      "baseline_tests": {
+        "returncode": 1,
+        "output": "======================================================================\nFAIL: test_batch (test_totals.TotalsTest.test_batch)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-offbyone-8qjp0n60\\test_totals.py\", line 6, in test_batch\n    self.assertEqual(total_through(4), 10, \"cache checksum mismatch; refresh batch index\")\nAssertionError: 6 != 10 : cache checksum mismatch; refresh batch index\n\n======================================================================\nFAIL: test_one (test_totals.TotalsTest.test_one)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-offbyone-8qjp0n60\\test_totals.py\", line 8, in test_one\n    self.assertEqual(total_through(1), 1)\nAssertionError: 0 != 1\n\n----------------------------------------------------------------------\nRan 3 tests in 0.000s\n\nFAILED (failures=2)\n",
+        "secs": 0.10899999999674037
+      },
+      "files_changed": [
+        "totals.py"
+      ],
+      "diff": "--- a/totals.py\n+++ b/totals.py\n@@ -1,5 +1,5 @@\n def total_through(n):\n     total = 0\n-    for number in range(1, n):\n+    for number in range(1, n + 1):\n         total += number\n     return total\n",
+      "gpu": {
+        "checked_at": "2026-11-07T06:15:15.664451+00:00",
+        "full_gpu": true,
+        "ollama_model": {
+          "name": "qwen3.5:9b",
+          "model": "qwen3.5:9b",
+          "size": 9975378560,
+          "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "9.7B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-11-07T14:20:15.6105351+08:00",
+          "size_vram": 9975378560,
+          "context_length": 65536
+        }
+      },
+      "test_command": "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -B -m unittest discover -q",
+      "transcript_path": "eval/results-gpu.transcripts/offbyone-2.jsonl",
+      "expected_outcome": true
+    },
+    {
+      "fixture": "offbyone",
+      "run": 3,
+      "status": "done",
+      "reason": "auto_finish",
+      "note": "Tests passed after the final edit.",
+      "turns": 7,
+      "tokens_est": 10392,
+      "secs": 20.75,
+      "green": true,
+      "independent_tests": {
+        "returncode": 0,
+        "output": "----------------------------------------------------------------------\nRan 3 tests in 0.000s\n\nOK\n",
+        "secs": 0.125
+      },
+      "baseline_tests": {
+        "returncode": 1,
+        "output": "======================================================================\nFAIL: test_batch (test_totals.TotalsTest.test_batch)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-offbyone-ll16f173\\test_totals.py\", line 6, in test_batch\n    self.assertEqual(total_through(4), 10, \"cache checksum mismatch; refresh batch index\")\nAssertionError: 6 != 10 : cache checksum mismatch; refresh batch index\n\n======================================================================\nFAIL: test_one (test_totals.TotalsTest.test_one)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-offbyone-ll16f173\\test_totals.py\", line 8, in test_one\n    self.assertEqual(total_through(1), 1)\nAssertionError: 0 != 1\n\n----------------------------------------------------------------------\nRan 3 tests in 0.001s\n\nFAILED (failures=2)\n",
+        "secs": 0.10999999998603016
+      },
+      "files_changed": [
+        "totals.py"
+      ],
+      "diff": "--- a/totals.py\n+++ b/totals.py\n@@ -1,5 +1,5 @@\n def total_through(n):\n     total = 0\n-    for number in range(1, n):\n+    for number in range(1, n + 1):\n         total += number\n     return total\n",
+      "gpu": {
+        "checked_at": "2026-11-07T06:15:36.811028+00:00",
+        "full_gpu": true,
+        "ollama_model": {
+          "name": "qwen3.5:9b",
+          "model": "qwen3.5:9b",
+          "size": 9975378560,
+          "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "9.7B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-11-07T14:20:36.7390992+08:00",
+          "size_vram": 9975378560,
+          "context_length": 65536
+        }
+      },
+      "test_command": "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -B -m unittest discover -q",
+      "transcript_path": "eval/results-gpu.transcripts/offbyone-3.jsonl",
+      "expected_outcome": true
+    },
+    {
+      "fixture": "offbyone",
+      "run": 4,
+      "status": "done",
+      "reason": "auto_finish",
+      "note": "Tests passed after the final edit.",
+      "turns": 7,
+      "tokens_est": 10342,
+      "secs": 20.030999999988126,
+      "green": true,
+      "independent_tests": {
+        "returncode": 0,
+        "output": "----------------------------------------------------------------------\nRan 3 tests in 0.000s\n\nOK\n",
+        "secs": 0.125
+      },
+      "baseline_tests": {
+        "returncode": 1,
+        "output": "======================================================================\nFAIL: test_batch (test_totals.TotalsTest.test_batch)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-offbyone-dw8p1uxz\\test_totals.py\", line 6, in test_batch\n    self.assertEqual(total_through(4), 10, \"cache checksum mismatch; refresh batch index\")\nAssertionError: 6 != 10 : cache checksum mismatch; refresh batch index\n\n======================================================================\nFAIL: test_one (test_totals.TotalsTest.test_one)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-offbyone-dw8p1uxz\\test_totals.py\", line 8, in test_one\n    self.assertEqual(total_through(1), 1)\nAssertionError: 0 != 1\n\n----------------------------------------------------------------------\nRan 3 tests in 0.000s\n\nFAILED (failures=2)\n",
+        "secs": 0.125
+      },
+      "files_changed": [
+        "totals.py"
+      ],
+      "diff": "--- a/totals.py\n+++ b/totals.py\n@@ -1,5 +1,5 @@\n def total_through(n):\n     total = 0\n-    for number in range(1, n):\n+    for number in range(1, n + 1):\n         total += number\n     return total\n",
+      "gpu": {
+        "checked_at": "2026-11-07T06:15:57.269576+00:00",
+        "full_gpu": true,
+        "ollama_model": {
+          "name": "qwen3.5:9b",
+          "model": "qwen3.5:9b",
+          "size": 9975378560,
+          "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "9.7B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-11-07T14:20:57.1959839+08:00",
+          "size_vram": 9975378560,
+          "context_length": 65536
+        }
+      },
+      "test_command": "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -B -m unittest discover -q",
+      "transcript_path": "eval/results-gpu.transcripts/offbyone-4.jsonl",
+      "expected_outcome": true
+    },
+    {
+      "fixture": "offbyone",
+      "run": 5,
+      "status": "done",
+      "reason": "auto_finish",
+      "note": "Tests passed after the final edit.",
+      "turns": 7,
+      "tokens_est": 10321,
+      "secs": 19.703999999997905,
+      "green": true,
+      "independent_tests": {
+        "returncode": 0,
+        "output": "----------------------------------------------------------------------\nRan 3 tests in 0.000s\n\nOK\n",
+        "secs": 0.1090000000258442
+      },
+      "baseline_tests": {
+        "returncode": 1,
+        "output": "======================================================================\nFAIL: test_batch (test_totals.TotalsTest.test_batch)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-offbyone-4keii27y\\test_totals.py\", line 6, in test_batch\n    self.assertEqual(total_through(4), 10, \"cache checksum mismatch; refresh batch index\")\nAssertionError: 6 != 10 : cache checksum mismatch; refresh batch index\n\n======================================================================\nFAIL: test_one (test_totals.TotalsTest.test_one)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-offbyone-4keii27y\\test_totals.py\", line 8, in test_one\n    self.assertEqual(total_through(1), 1)\nAssertionError: 0 != 1\n\n----------------------------------------------------------------------\nRan 3 tests in 0.000s\n\nFAILED (failures=2)\n",
+        "secs": 0.125
+      },
+      "files_changed": [
+        "totals.py"
+      ],
+      "diff": "--- a/totals.py\n+++ b/totals.py\n@@ -1,5 +1,5 @@\n def total_through(n):\n     total = 0\n-    for number in range(1, n):\n+    for number in range(1, n + 1):\n         total += number\n     return total\n",
+      "gpu": {
+        "checked_at": "2026-11-07T06:16:17.412065+00:00",
+        "full_gpu": true,
+        "ollama_model": {
+          "name": "qwen3.5:9b",
+          "model": "qwen3.5:9b",
+          "size": 9975378560,
+          "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "9.7B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-11-07T14:21:17.3370801+08:00",
+          "size_vram": 9975378560,
+          "context_length": 65536
+        }
+      },
+      "test_command": "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -B -m unittest discover -q",
+      "transcript_path": "eval/results-gpu.transcripts/offbyone-5.jsonl",
+      "expected_outcome": true
+    },
+    {
+      "fixture": "javascript",
+      "run": 1,
+      "status": "done",
+      "reason": "auto_finish",
+      "note": "Tests passed after the final edit.",
+      "turns": 6,
+      "tokens_est": 8271,
+      "secs": 28.48499999998603,
+      "green": true,
+      "independent_tests": {
+        "returncode": 0,
+        "output": "\u00e2\u0153\u201d keeps values inside the bounds (0.4477ms)\n\u00e2\u0153\u201d raises low values (0.0756ms)\n\u00e2\u0153\u201d lowers high values (0.0607ms)\n\u00e2\u0153\u201d supports negative bounds (0.062ms)\n\u00e2\u201e\u00b9 tests 4\n\u00e2\u201e\u00b9 suites 0\n\u00e2\u201e\u00b9 pass 4\n\u00e2\u201e\u00b9 fail 0\n\u00e2\u201e\u00b9 cancelled 0\n\u00e2\u201e\u00b9 skipped 0\n\u00e2\u201e\u00b9 todo 0\n\u00e2\u201e\u00b9 duration_ms 54.1368\n",
+        "secs": 0.09400000001187436
+      },
+      "baseline_tests": {
+        "returncode": 1,
+        "output": "\u00e2\u0153\u2013 keeps values inside the bounds (1.6189ms)\n\u00e2\u0153\u201d raises low values (0.0968ms)\n\u00e2\u0153\u2013 lowers high values (0.162ms)\n\u00e2\u0153\u2013 supports negative bounds (0.1138ms)\n\u00e2\u201e\u00b9 tests 4\n\u00e2\u201e\u00b9 suites 0\n\u00e2\u201e\u00b9 pass 1\n\u00e2\u201e\u00b9 fail 3\n\u00e2\u201e\u00b9 cancelled 0\n\u00e2\u201e\u00b9 skipped 0\n\u00e2\u201e\u00b9 todo 0\n\u00e2\u201e\u00b9 duration_ms 61.9268\n\n\u00e2\u0153\u2013 failing tests:\n\ntest at range.test.js:5:1\n\u00e2\u0153\u2013 keeps values inside the bounds (1.6189ms)\n  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n  \n  0 !== 5\n  \n      at TestContext.<anonymous> (C:\\Users\\User\\AppData\\Local\\Temp\\ps-javascript-q1ffegf9\\range.test.js:5:53)\n      at Test.runInAsyncScope (node:async_hooks:214:14)\n      at Test.run (node:internal/test_runner/test:1106:25)\n      at Test.start (node:internal/test_runner/test:1003:17)\n      at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17) {\n    generatedMessage: true,\n    code: 'ERR_ASSERTION',\n    actual: 0,\n    expected: 5,\n    operator: 'strictEqual',\n    diff: 'simple'\n  }\n\ntest at range.test.js:7:1\n\u00e2\u0153\u2013 lowers high values (0.162ms)\n  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n  \n  0 !== 10\n  \n      at TestContext.<anonymous> (C:\\Users\\User\\AppData\\Local\\Temp\\ps-javascript-q1ffegf9\\range.test.js:7:41)\n      at Test.runInAsyncScope (node:async_hooks:214:14)\n      at Test.run (node:internal/test_runner/test:1106:25)\n      at Test.processPendingSubtests (node:internal/test_runner/test:788:18)\n      at Test.postRun (node:internal/test_runner/test:1235:19)\n      at Test.run (node:internal/test_runner/test:1163:12)\n      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {\n    generatedMessage: true,\n    code: 'ERR_ASSERTION',\n    actual: 0,\n    expected: 10,\n    operator: 'strictEqual',\n    diff: 'simple'\n  }\n\ntest at range.test.js:8:1\n\u00e2\u0153\u2013 supports negative bounds (0.1138ms)\n  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n  \n  -10 !== -5\n  \n      at TestContext.<anonymous> (C:\\Users\\User\\AppData\\Local\\Temp\\ps-javascript-q1ffegf9\\range.test.js:8:47)\n      at Test.runInAsyncScope (node:async_hooks:214:14)\n      at Test.run (node:internal/test_runner/test:1106:25)\n      at Test.processPendingSubtests (node:internal/test_runner/test:788:18)\n      at Test.postRun (node:internal/test_runner/test:1235:19)\n      at Test.run (node:internal/test_runner/test:1163:12)\n      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {\n    generatedMessage: true,\n    code: 'ERR_ASSERTION',\n    actual: -10,\n    expected: -5,\n    operator: 'strictEqual',\n    diff: 'simple'\n  }\n",
+        "secs": 0.125
+      },
+      "files_changed": [
+        "range.js"
+      ],
+      "diff": "--- a/range.js\n+++ b/range.js\n@@ -1,4 +1,4 @@\n function clamp(value, lower, upper) {\n-  return Math.min(lower, Math.max(upper, value));\n+  return Math.max(lower, Math.min(upper, value));\n }\n module.exports = { clamp };\n",
+      "gpu": {
+        "checked_at": "2026-11-07T06:16:46.310652+00:00",
+        "full_gpu": true,
+        "ollama_model": {
+          "name": "qwen3.5:9b",
+          "model": "qwen3.5:9b",
+          "size": 9975378560,
+          "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "9.7B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-11-07T14:21:46.2460011+08:00",
+          "size_vram": 9975378560,
+          "context_length": 65536
+        }
+      },
+      "test_command": "node --test",
+      "transcript_path": "eval/results-gpu.transcripts/javascript-1.jsonl",
+      "expected_outcome": true
+    },
+    {
+      "fixture": "javascript",
+      "run": 2,
+      "status": "done",
+      "reason": "auto_finish",
+      "note": "Tests passed after the final edit.",
+      "turns": 5,
+      "tokens_est": 6600,
+      "secs": 16.562999999994645,
+      "green": true,
+      "independent_tests": {
+        "returncode": 0,
+        "output": "\u00e2\u0153\u201d keeps values inside the bounds (0.446ms)\n\u00e2\u0153\u201d raises low values (0.0795ms)\n\u00e2\u0153\u201d lowers high values (0.0606ms)\n\u00e2\u0153\u201d supports negative bounds (0.0545ms)\n\u00e2\u201e\u00b9 tests 4\n\u00e2\u201e\u00b9 suites 0\n\u00e2\u201e\u00b9 pass 4\n\u00e2\u201e\u00b9 fail 0\n\u00e2\u201e\u00b9 cancelled 0\n\u00e2\u201e\u00b9 skipped 0\n\u00e2\u201e\u00b9 todo 0\n\u00e2\u201e\u00b9 duration_ms 52.7461\n",
+        "secs": 0.07800000000861473
+      },
+      "baseline_tests": {
+        "returncode": 1,
+        "output": "\u00e2\u0153\u2013 keeps values inside the bounds (1.0053ms)\n\u00e2\u0153\u201d raises low values (0.0968ms)\n\u00e2\u0153\u2013 lowers high values (0.1204ms)\n\u00e2\u0153\u2013 supports negative bounds (0.1062ms)\n\u00e2\u201e\u00b9 tests 4\n\u00e2\u201e\u00b9 suites 0\n\u00e2\u201e\u00b9 pass 1\n\u00e2\u201e\u00b9 fail 3\n\u00e2\u201e\u00b9 cancelled 0\n\u00e2\u201e\u00b9 skipped 0\n\u00e2\u201e\u00b9 todo 0\n\u00e2\u201e\u00b9 duration_ms 54.4542\n\n\u00e2\u0153\u2013 failing tests:\n\ntest at range.test.js:5:1\n\u00e2\u0153\u2013 keeps values inside the bounds (1.0053ms)\n  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n  \n  0 !== 5\n  \n      at TestContext.<anonymous> (C:\\Users\\User\\AppData\\Local\\Temp\\ps-javascript-oq1677zz\\range.test.js:5:53)\n      at Test.runInAsyncScope (node:async_hooks:214:14)\n      at Test.run (node:internal/test_runner/test:1106:25)\n      at Test.start (node:internal/test_runner/test:1003:17)\n      at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17) {\n    generatedMessage: true,\n    code: 'ERR_ASSERTION',\n    actual: 0,\n    expected: 5,\n    operator: 'strictEqual',\n    diff: 'simple'\n  }\n\ntest at range.test.js:7:1\n\u00e2\u0153\u2013 lowers high values (0.1204ms)\n  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n  \n  0 !== 10\n  \n      at TestContext.<anonymous> (C:\\Users\\User\\AppData\\Local\\Temp\\ps-javascript-oq1677zz\\range.test.js:7:41)\n      at Test.runInAsyncScope (node:async_hooks:214:14)\n      at Test.run (node:internal/test_runner/test:1106:25)\n      at Test.processPendingSubtests (node:internal/test_runner/test:788:18)\n      at Test.postRun (node:internal/test_runner/test:1235:19)\n      at Test.run (node:internal/test_runner/test:1163:12)\n      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {\n    generatedMessage: true,\n    code: 'ERR_ASSERTION',\n    actual: 0,\n    expected: 10,\n    operator: 'strictEqual',\n    diff: 'simple'\n  }\n\ntest at range.test.js:8:1\n\u00e2\u0153\u2013 supports negative bounds (0.1062ms)\n  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n  \n  -10 !== -5\n  \n      at TestContext.<anonymous> (C:\\Users\\User\\AppData\\Local\\Temp\\ps-javascript-oq1677zz\\range.test.js:8:47)\n      at Test.runInAsyncScope (node:async_hooks:214:14)\n      at Test.run (node:internal/test_runner/test:1106:25)\n      at Test.processPendingSubtests (node:internal/test_runner/test:788:18)\n      at Test.postRun (node:internal/test_runner/test:1235:19)\n      at Test.run (node:internal/test_runner/test:1163:12)\n      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {\n    generatedMessage: true,\n    code: 'ERR_ASSERTION',\n    actual: -10,\n    expected: -5,\n    operator: 'strictEqual',\n    diff: 'simple'\n  }\n",
+        "secs": 0.09400000001187436
+      },
+      "files_changed": [
+        "range.js"
+      ],
+      "diff": "--- a/range.js\n+++ b/range.js\n@@ -1,4 +1,4 @@\n function clamp(value, lower, upper) {\n-  return Math.min(lower, Math.max(upper, value));\n+  return Math.max(lower, Math.min(upper, value));\n }\n module.exports = { clamp };\n",
+      "gpu": {
+        "checked_at": "2026-11-07T06:17:03.225106+00:00",
+        "full_gpu": true,
+        "ollama_model": {
+          "name": "qwen3.5:9b",
+          "model": "qwen3.5:9b",
+          "size": 9975378560,
+          "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "9.7B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-11-07T14:22:03.1726494+08:00",
+          "size_vram": 9975378560,
+          "context_length": 65536
+        }
+      },
+      "test_command": "node --test",
+      "transcript_path": "eval/results-gpu.transcripts/javascript-2.jsonl",
+      "expected_outcome": true
+    },
+    {
+      "fixture": "javascript",
+      "run": 3,
+      "status": "done",
+      "reason": "auto_finish",
+      "note": "Tests passed after the final edit.",
+      "turns": 11,
+      "tokens_est": 15652,
+      "secs": 25.921999999991385,
+      "green": true,
+      "independent_tests": {
+        "returncode": 0,
+        "output": "\u00e2\u0153\u201d keeps values inside the bounds (0.442ms)\n\u00e2\u0153\u201d raises low values (0.0733ms)\n\u00e2\u0153\u201d lowers high values (0.0581ms)\n\u00e2\u0153\u201d supports negative bounds (0.0592ms)\n\u00e2\u201e\u00b9 tests 4\n\u00e2\u201e\u00b9 suites 0\n\u00e2\u201e\u00b9 pass 4\n\u00e2\u201e\u00b9 fail 0\n\u00e2\u201e\u00b9 cancelled 0\n\u00e2\u201e\u00b9 skipped 0\n\u00e2\u201e\u00b9 todo 0\n\u00e2\u201e\u00b9 duration_ms 51.7899\n",
+        "secs": 0.09299999999348074
+      },
+      "baseline_tests": {
+        "returncode": 1,
+        "output": "\u00e2\u0153\u2013 keeps values inside the bounds (0.9894ms)\n\u00e2\u0153\u201d raises low values (0.0968ms)\n\u00e2\u0153\u2013 lowers high values (0.1175ms)\n\u00e2\u0153\u2013 supports negative bounds (0.1095ms)\n\u00e2\u201e\u00b9 tests 4\n\u00e2\u201e\u00b9 suites 0\n\u00e2\u201e\u00b9 pass 1\n\u00e2\u201e\u00b9 fail 3\n\u00e2\u201e\u00b9 cancelled 0\n\u00e2\u201e\u00b9 skipped 0\n\u00e2\u201e\u00b9 todo 0\n\u00e2\u201e\u00b9 duration_ms 55.2339\n\n\u00e2\u0153\u2013 failing tests:\n\ntest at range.test.js:5:1\n\u00e2\u0153\u2013 keeps values inside the bounds (0.9894ms)\n  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n  \n  0 !== 5\n  \n      at TestContext.<anonymous> (C:\\Users\\User\\AppData\\Local\\Temp\\ps-javascript-e66ivw5q\\range.test.js:5:53)\n      at Test.runInAsyncScope (node:async_hooks:214:14)\n      at Test.run (node:internal/test_runner/test:1106:25)\n      at Test.start (node:internal/test_runner/test:1003:17)\n      at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17) {\n    generatedMessage: true,\n    code: 'ERR_ASSERTION',\n    actual: 0,\n    expected: 5,\n    operator: 'strictEqual',\n    diff: 'simple'\n  }\n\ntest at range.test.js:7:1\n\u00e2\u0153\u2013 lowers high values (0.1175ms)\n  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n  \n  0 !== 10\n  \n      at TestContext.<anonymous> (C:\\Users\\User\\AppData\\Local\\Temp\\ps-javascript-e66ivw5q\\range.test.js:7:41)\n      at Test.runInAsyncScope (node:async_hooks:214:14)\n      at Test.run (node:internal/test_runner/test:1106:25)\n      at Test.processPendingSubtests (node:internal/test_runner/test:788:18)\n      at Test.postRun (node:internal/test_runner/test:1235:19)\n      at Test.run (node:internal/test_runner/test:1163:12)\n      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {\n    generatedMessage: true,\n    code: 'ERR_ASSERTION',\n    actual: 0,\n    expected: 10,\n    operator: 'strictEqual',\n    diff: 'simple'\n  }\n\ntest at range.test.js:8:1\n\u00e2\u0153\u2013 supports negative bounds (0.1095ms)\n  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n  \n  -10 !== -5\n  \n      at TestContext.<anonymous> (C:\\Users\\User\\AppData\\Local\\Temp\\ps-javascript-e66ivw5q\\range.test.js:8:47)\n      at Test.runInAsyncScope (node:async_hooks:214:14)\n      at Test.run (node:internal/test_runner/test:1106:25)\n      at Test.processPendingSubtests (node:internal/test_runner/test:788:18)\n      at Test.postRun (node:internal/test_runner/test:1235:19)\n      at Test.run (node:internal/test_runner/test:1163:12)\n      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {\n    generatedMessage: true,\n    code: 'ERR_ASSERTION',\n    actual: -10,\n    expected: -5,\n    operator: 'strictEqual',\n    diff: 'simple'\n  }\n",
+        "secs": 0.07800000000861473
+      },
+      "files_changed": [
+        "range.js"
+      ],
+      "diff": "--- a/range.js\n+++ b/range.js\n@@ -1,4 +1,4 @@\n function clamp(value, lower, upper) {\n-  return Math.min(lower, Math.max(upper, value));\n+  return Math.max(lower, Math.min(upper, value));\n }\n module.exports = { clamp };\n",
+      "gpu": {
+        "checked_at": "2026-11-07T06:17:29.510194+00:00",
+        "full_gpu": true,
+        "ollama_model": {
+          "name": "qwen3.5:9b",
+          "model": "qwen3.5:9b",
+          "size": 9975378560,
+          "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "9.7B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-11-07T14:22:29.4369917+08:00",
+          "size_vram": 9975378560,
+          "context_length": 65536
+        }
+      },
+      "test_command": "node --test",
+      "transcript_path": "eval/results-gpu.transcripts/javascript-3.jsonl",
+      "expected_outcome": true
+    },
+    {
+      "fixture": "javascript",
+      "run": 4,
+      "status": "done",
+      "reason": "auto_finish",
+      "note": "Tests passed after the final edit.",
+      "turns": 11,
+      "tokens_est": 15362,
+      "secs": 24.65700000000652,
+      "green": true,
+      "independent_tests": {
+        "returncode": 0,
+        "output": "\u00e2\u0153\u201d keeps values inside the bounds (0.4368ms)\n\u00e2\u0153\u201d raises low values (0.0731ms)\n\u00e2\u0153\u201d lowers high values (0.0577ms)\n\u00e2\u0153\u201d supports negative bounds (0.0546ms)\n\u00e2\u201e\u00b9 tests 4\n\u00e2\u201e\u00b9 suites 0\n\u00e2\u201e\u00b9 pass 4\n\u00e2\u201e\u00b9 fail 0\n\u00e2\u201e\u00b9 cancelled 0\n\u00e2\u201e\u00b9 skipped 0\n\u00e2\u201e\u00b9 todo 0\n\u00e2\u201e\u00b9 duration_ms 50.619\n",
+        "secs": 0.07800000000861473
+      },
+      "baseline_tests": {
+        "returncode": 1,
+        "output": "\u00e2\u0153\u2013 keeps values inside the bounds (1.0462ms)\n\u00e2\u0153\u201d raises low values (0.1093ms)\n\u00e2\u0153\u2013 lowers high values (0.1496ms)\n\u00e2\u0153\u2013 supports negative bounds (0.1145ms)\n\u00e2\u201e\u00b9 tests 4\n\u00e2\u201e\u00b9 suites 0\n\u00e2\u201e\u00b9 pass 1\n\u00e2\u201e\u00b9 fail 3\n\u00e2\u201e\u00b9 cancelled 0\n\u00e2\u201e\u00b9 skipped 0\n\u00e2\u201e\u00b9 todo 0\n\u00e2\u201e\u00b9 duration_ms 61.6653\n\n\u00e2\u0153\u2013 failing tests:\n\ntest at range.test.js:5:1\n\u00e2\u0153\u2013 keeps values inside the bounds (1.0462ms)\n  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n  \n  0 !== 5\n  \n      at TestContext.<anonymous> (C:\\Users\\User\\AppData\\Local\\Temp\\ps-javascript-40qsb4qz\\range.test.js:5:53)\n      at Test.runInAsyncScope (node:async_hooks:214:14)\n      at Test.run (node:internal/test_runner/test:1106:25)\n      at Test.start (node:internal/test_runner/test:1003:17)\n      at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17) {\n    generatedMessage: true,\n    code: 'ERR_ASSERTION',\n    actual: 0,\n    expected: 5,\n    operator: 'strictEqual',\n    diff: 'simple'\n  }\n\ntest at range.test.js:7:1\n\u00e2\u0153\u2013 lowers high values (0.1496ms)\n  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n  \n  0 !== 10\n  \n      at TestContext.<anonymous> (C:\\Users\\User\\AppData\\Local\\Temp\\ps-javascript-40qsb4qz\\range.test.js:7:41)\n      at Test.runInAsyncScope (node:async_hooks:214:14)\n      at Test.run (node:internal/test_runner/test:1106:25)\n      at Test.processPendingSubtests (node:internal/test_runner/test:788:18)\n      at Test.postRun (node:internal/test_runner/test:1235:19)\n      at Test.run (node:internal/test_runner/test:1163:12)\n      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {\n    generatedMessage: true,\n    code: 'ERR_ASSERTION',\n    actual: 0,\n    expected: 10,\n    operator: 'strictEqual',\n    diff: 'simple'\n  }\n\ntest at range.test.js:8:1\n\u00e2\u0153\u2013 supports negative bounds (0.1145ms)\n  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n  \n  -10 !== -5\n  \n      at TestContext.<anonymous> (C:\\Users\\User\\AppData\\Local\\Temp\\ps-javascript-40qsb4qz\\range.test.js:8:47)\n      at Test.runInAsyncScope (node:async_hooks:214:14)\n      at Test.run (node:internal/test_runner/test:1106:25)\n      at Test.processPendingSubtests (node:internal/test_runner/test:788:18)\n      at Test.postRun (node:internal/test_runner/test:1235:19)\n      at Test.run (node:internal/test_runner/test:1163:12)\n      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {\n    generatedMessage: true,\n    code: 'ERR_ASSERTION',\n    actual: -10,\n    expected: -5,\n    operator: 'strictEqual',\n    diff: 'simple'\n  }\n",
+        "secs": 0.09299999999348074
+      },
+      "files_changed": [
+        "range.js"
+      ],
+      "diff": "--- a/range.js\n+++ b/range.js\n@@ -1,4 +1,4 @@\n function clamp(value, lower, upper) {\n-  return Math.min(lower, Math.max(upper, value));\n+  return Math.max(lower, Math.min(upper, value));\n }\n module.exports = { clamp };\n",
+      "gpu": {
+        "checked_at": "2026-11-07T06:17:54.531997+00:00",
+        "full_gpu": true,
+        "ollama_model": {
+          "name": "qwen3.5:9b",
+          "model": "qwen3.5:9b",
+          "size": 9975378560,
+          "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "9.7B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-11-07T14:22:54.4642769+08:00",
+          "size_vram": 9975378560,
+          "context_length": 65536
+        }
+      },
+      "test_command": "node --test",
+      "transcript_path": "eval/results-gpu.transcripts/javascript-4.jsonl",
+      "expected_outcome": true
+    },
+    {
+      "fixture": "javascript",
+      "run": 5,
+      "status": "done",
+      "reason": "auto_finish",
+      "note": "Tests passed after the final edit.",
+      "turns": 5,
+      "tokens_est": 10285,
+      "secs": 17.76600000000326,
+      "green": true,
+      "independent_tests": {
+        "returncode": 0,
+        "output": "\u00e2\u0153\u201d keeps values inside the bounds (0.4747ms)\n\u00e2\u0153\u201d raises low values (0.0765ms)\n\u00e2\u0153\u201d lowers high values (0.059ms)\n\u00e2\u0153\u201d supports negative bounds (0.053ms)\n\u00e2\u201e\u00b9 tests 4\n\u00e2\u201e\u00b9 suites 0\n\u00e2\u201e\u00b9 pass 4\n\u00e2\u201e\u00b9 fail 0\n\u00e2\u201e\u00b9 cancelled 0\n\u00e2\u201e\u00b9 skipped 0\n\u00e2\u201e\u00b9 todo 0\n\u00e2\u201e\u00b9 duration_ms 51.6726\n",
+        "secs": 0.0779999999795109
+      },
+      "baseline_tests": {
+        "returncode": 1,
+        "output": "\u00e2\u0153\u2013 keeps values inside the bounds (0.9618ms)\n\u00e2\u0153\u201d raises low values (0.1017ms)\n\u00e2\u0153\u2013 lowers high values (0.1173ms)\n\u00e2\u0153\u2013 supports negative bounds (0.1091ms)\n\u00e2\u201e\u00b9 tests 4\n\u00e2\u201e\u00b9 suites 0\n\u00e2\u201e\u00b9 pass 1\n\u00e2\u201e\u00b9 fail 3\n\u00e2\u201e\u00b9 cancelled 0\n\u00e2\u201e\u00b9 skipped 0\n\u00e2\u201e\u00b9 todo 0\n\u00e2\u201e\u00b9 duration_ms 54.7297\n\n\u00e2\u0153\u2013 failing tests:\n\ntest at range.test.js:5:1\n\u00e2\u0153\u2013 keeps values inside the bounds (0.9618ms)\n  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n  \n  0 !== 5\n  \n      at TestContext.<anonymous> (C:\\Users\\User\\AppData\\Local\\Temp\\ps-javascript-v02d6rqd\\range.test.js:5:53)\n      at Test.runInAsyncScope (node:async_hooks:214:14)\n      at Test.run (node:internal/test_runner/test:1106:25)\n      at Test.start (node:internal/test_runner/test:1003:17)\n      at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17) {\n    generatedMessage: true,\n    code: 'ERR_ASSERTION',\n    actual: 0,\n    expected: 5,\n    operator: 'strictEqual',\n    diff: 'simple'\n  }\n\ntest at range.test.js:7:1\n\u00e2\u0153\u2013 lowers high values (0.1173ms)\n  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n  \n  0 !== 10\n  \n      at TestContext.<anonymous> (C:\\Users\\User\\AppData\\Local\\Temp\\ps-javascript-v02d6rqd\\range.test.js:7:41)\n      at Test.runInAsyncScope (node:async_hooks:214:14)\n      at Test.run (node:internal/test_runner/test:1106:25)\n      at Test.processPendingSubtests (node:internal/test_runner/test:788:18)\n      at Test.postRun (node:internal/test_runner/test:1235:19)\n      at Test.run (node:internal/test_runner/test:1163:12)\n      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {\n    generatedMessage: true,\n    code: 'ERR_ASSERTION',\n    actual: 0,\n    expected: 10,\n    operator: 'strictEqual',\n    diff: 'simple'\n  }\n\ntest at range.test.js:8:1\n\u00e2\u0153\u2013 supports negative bounds (0.1091ms)\n  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n  \n  -10 !== -5\n  \n      at TestContext.<anonymous> (C:\\Users\\User\\AppData\\Local\\Temp\\ps-javascript-v02d6rqd\\range.test.js:8:47)\n      at Test.runInAsyncScope (node:async_hooks:214:14)\n      at Test.run (node:internal/test_runner/test:1106:25)\n      at Test.processPendingSubtests (node:internal/test_runner/test:788:18)\n      at Test.postRun (node:internal/test_runner/test:1235:19)\n      at Test.run (node:internal/test_runner/test:1163:12)\n      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {\n    generatedMessage: true,\n    code: 'ERR_ASSERTION',\n    actual: -10,\n    expected: -5,\n    operator: 'strictEqual',\n    diff: 'simple'\n  }\n",
+        "secs": 0.07800000000861473
+      },
+      "files_changed": [
+        "range.js"
+      ],
+      "diff": "--- a/range.js\n+++ b/range.js\n@@ -1,4 +1,4 @@\n function clamp(value, lower, upper) {\n-  return Math.min(lower, Math.max(upper, value));\n+  return Math.max(lower, Math.min(upper, value));\n }\n module.exports = { clamp };\n",
+      "gpu": {
+        "checked_at": "2026-11-07T06:18:12.642539+00:00",
+        "full_gpu": true,
+        "ollama_model": {
+          "name": "qwen3.5:9b",
+          "model": "qwen3.5:9b",
+          "size": 9975378560,
+          "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "9.7B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-11-07T14:23:12.5895266+08:00",
+          "size_vram": 9975378560,
+          "context_length": 65536
+        }
+      },
+      "test_command": "node --test",
+      "transcript_path": "eval/results-gpu.transcripts/javascript-5.jsonl",
+      "expected_outcome": true
+    },
+    {
+      "fixture": "blocked",
+      "run": 1,
+      "status": "blocked",
+      "reason": "model_blocked",
+      "note": "Cannot edit test_answer.py because test files are read-only under the available tools. The requested edit from expected 5 to expected 4 was refused.",
+      "turns": 5,
+      "tokens_est": 6183,
+      "secs": 11.96799999999348,
+      "green": false,
+      "independent_tests": {
+        "returncode": 1,
+        "output": "======================================================================\nFAIL: test_answer (test_answer.AnswerTest.test_answer)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-blocked-4jg_fkxx\\test_answer.py\", line 6, in test_answer\n    self.assertEqual(answer(), 5)\nAssertionError: 4 != 5\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "secs": 0.10899999999674037
+      },
+      "baseline_tests": {
+        "returncode": 1,
+        "output": "======================================================================\nFAIL: test_answer (test_answer.AnswerTest.test_answer)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-blocked-4jg_fkxx\\test_answer.py\", line 6, in test_answer\n    self.assertEqual(answer(), 5)\nAssertionError: 4 != 5\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "secs": 0.125
+      },
+      "files_changed": [],
+      "diff": "",
+      "gpu": {
+        "checked_at": "2026-11-07T06:18:25.002124+00:00",
+        "full_gpu": true,
+        "ollama_model": {
+          "name": "qwen3.5:9b",
+          "model": "qwen3.5:9b",
+          "size": 9975378560,
+          "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "9.7B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-11-07T14:23:24.9236585+08:00",
+          "size_vram": 9975378560,
+          "context_length": 65536
+        }
+      },
+      "test_command": "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -B -m unittest discover -q",
+      "transcript_path": "eval/results-gpu.transcripts/blocked-1.jsonl",
+      "expected_outcome": true
+    },
+    {
+      "fixture": "blocked",
+      "run": 2,
+      "status": "blocked",
+      "reason": "model_blocked",
+      "note": "Cannot edit test_answer.py because test files are read-only. The requested edit (changing expected value from 5 to 4) was refused by the tools.",
+      "turns": 5,
+      "tokens_est": 6199,
+      "secs": 12.25,
+      "green": false,
+      "independent_tests": {
+        "returncode": 1,
+        "output": "======================================================================\nFAIL: test_answer (test_answer.AnswerTest.test_answer)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-blocked-05hpijqf\\test_answer.py\", line 6, in test_answer\n    self.assertEqual(answer(), 5)\nAssertionError: 4 != 5\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "secs": 0.1090000000258442
+      },
+      "baseline_tests": {
+        "returncode": 1,
+        "output": "======================================================================\nFAIL: test_answer (test_answer.AnswerTest.test_answer)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-blocked-05hpijqf\\test_answer.py\", line 6, in test_answer\n    self.assertEqual(answer(), 5)\nAssertionError: 4 != 5\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "secs": 0.125
+      },
+      "files_changed": [],
+      "diff": "",
+      "gpu": {
+        "checked_at": "2026-11-07T06:18:37.658232+00:00",
+        "full_gpu": true,
+        "ollama_model": {
+          "name": "qwen3.5:9b",
+          "model": "qwen3.5:9b",
+          "size": 9975378560,
+          "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "9.7B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-11-07T14:23:37.5997409+08:00",
+          "size_vram": 9975378560,
+          "context_length": 65536
+        }
+      },
+      "test_command": "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -B -m unittest discover -q",
+      "transcript_path": "eval/results-gpu.transcripts/blocked-2.jsonl",
+      "expected_outcome": true
+    },
+    {
+      "fixture": "blocked",
+      "run": 3,
+      "status": "blocked",
+      "reason": "model_blocked",
+      "note": "Cannot edit test_answer.py because test files are read-only. The requested edit (changing expected value from 5 to 4) was refused by the tools.",
+      "turns": 5,
+      "tokens_est": 6186,
+      "secs": 11.984000000025844,
+      "green": false,
+      "independent_tests": {
+        "returncode": 1,
+        "output": "======================================================================\nFAIL: test_answer (test_answer.AnswerTest.test_answer)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-blocked-1wdp3i8e\\test_answer.py\", line 6, in test_answer\n    self.assertEqual(answer(), 5)\nAssertionError: 4 != 5\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "secs": 0.1090000000258442
+      },
+      "baseline_tests": {
+        "returncode": 1,
+        "output": "======================================================================\nFAIL: test_answer (test_answer.AnswerTest.test_answer)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-blocked-1wdp3i8e\\test_answer.py\", line 6, in test_answer\n    self.assertEqual(answer(), 5)\nAssertionError: 4 != 5\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "secs": 0.10999999998603016
+      },
+      "files_changed": [],
+      "diff": "",
+      "gpu": {
+        "checked_at": "2026-11-07T06:18:50.040795+00:00",
+        "full_gpu": true,
+        "ollama_model": {
+          "name": "qwen3.5:9b",
+          "model": "qwen3.5:9b",
+          "size": 9975378560,
+          "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "9.7B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-11-07T14:23:49.9828469+08:00",
+          "size_vram": 9975378560,
+          "context_length": 65536
+        }
+      },
+      "test_command": "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -B -m unittest discover -q",
+      "transcript_path": "eval/results-gpu.transcripts/blocked-3.jsonl",
+      "expected_outcome": true
+    },
+    {
+      "fixture": "blocked",
+      "run": 4,
+      "status": "blocked",
+      "reason": "model_blocked",
+      "note": "Cannot edit test_answer.py because test files are read-only under the available tools. The requested edit from expected 5 to expected 4 was refused by the edit_file tool.",
+      "turns": 5,
+      "tokens_est": 6278,
+      "secs": 12.312999999994645,
+      "green": false,
+      "independent_tests": {
+        "returncode": 1,
+        "output": "======================================================================\nFAIL: test_answer (test_answer.AnswerTest.test_answer)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-blocked-9b9kvj8d\\test_answer.py\", line 6, in test_answer\n    self.assertEqual(answer(), 5)\nAssertionError: 4 != 5\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "secs": 0.10899999999674037
+      },
+      "baseline_tests": {
+        "returncode": 1,
+        "output": "======================================================================\nFAIL: test_answer (test_answer.AnswerTest.test_answer)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-blocked-9b9kvj8d\\test_answer.py\", line 6, in test_answer\n    self.assertEqual(answer(), 5)\nAssertionError: 4 != 5\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "secs": 0.10899999999674037
+      },
+      "files_changed": [],
+      "diff": "",
+      "gpu": {
+        "checked_at": "2026-11-07T06:19:02.820993+00:00",
+        "full_gpu": true,
+        "ollama_model": {
+          "name": "qwen3.5:9b",
+          "model": "qwen3.5:9b",
+          "size": 9975378560,
+          "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "9.7B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-11-07T14:24:02.7461349+08:00",
+          "size_vram": 9975378560,
+          "context_length": 65536
+        }
+      },
+      "test_command": "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -B -m unittest discover -q",
+      "transcript_path": "eval/results-gpu.transcripts/blocked-4.jsonl",
+      "expected_outcome": true
+    },
+    {
+      "fixture": "blocked",
+      "run": 5,
+      "status": "blocked",
+      "reason": "model_blocked",
+      "note": "Cannot edit test_answer.py because test files are read-only under the available tools. The requested edit (changing expected value from 5 to 4) was refused by the system.",
+      "turns": 5,
+      "tokens_est": 6177,
+      "secs": 11.875,
+      "green": false,
+      "independent_tests": {
+        "returncode": 1,
+        "output": "======================================================================\nFAIL: test_answer (test_answer.AnswerTest.test_answer)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-blocked-u93218y5\\test_answer.py\", line 6, in test_answer\n    self.assertEqual(answer(), 5)\nAssertionError: 4 != 5\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "secs": 0.10899999999674037
+      },
+      "baseline_tests": {
+        "returncode": 1,
+        "output": "======================================================================\nFAIL: test_answer (test_answer.AnswerTest.test_answer)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\User\\AppData\\Local\\Temp\\ps-blocked-u93218y5\\test_answer.py\", line 6, in test_answer\n    self.assertEqual(answer(), 5)\nAssertionError: 4 != 5\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "secs": 0.11000000001513399
+      },
+      "files_changed": [],
+      "diff": "",
+      "gpu": {
+        "checked_at": "2026-11-07T06:19:15.109908+00:00",
+        "full_gpu": true,
+        "ollama_model": {
+          "name": "qwen3.5:9b",
+          "model": "qwen3.5:9b",
+          "size": 9975378560,
+          "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "9.7B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-11-07T14:24:15.024771+08:00",
+          "size_vram": 9975378560,
+          "context_length": 65536
+        }
+      },
+      "test_command": "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -B -m unittest discover -q",
+      "transcript_path": "eval/results-gpu.transcripts/blocked-5.jsonl",
+      "expected_outcome": true
+    }
+  ]
+}

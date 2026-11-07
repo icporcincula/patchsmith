@@ -133,3 +133,60 @@ Plugin Doctor: /root/ps-test.ySvZlR
 [plugins] DEBUG Plugin patchsmith registered tool: implement_task
 [plugins] DEBUG   registered: 1 tool(s), 0 hook(s), 0 middleware, 0 slash command(s), 0 CLI command(s)
 ```
+
+## Phase 1 — Real-task GPU benchmark
+
+Command: `python -B eval/run_eval.py --runs 5 --model qwen3.5:9b --require-gpu --out eval/results-gpu.json`
+
+35/35 implementation runs returned done with independently green tests; 5/5 protected-test requests returned blocked with tests still red and no files changed.
+
+| fixture | runs | done | blocked | error | tests green | expected outcome | full GPU | median turns | median secs |
+|---|---|---|---|---|---|---|---|---|---|
+| bug1 | 5 | 5 | 0 | 0 | 5/5 | 5/5 | 5/5 | 6 | 10.796999999991385 |
+| bug2 | 5 | 5 | 0 | 0 | 5/5 | 5/5 | 5/5 | 6 | 15.10999999998603 |
+| feature | 5 | 5 | 0 | 0 | 5/5 | 5/5 | 5/5 | 9 | 84.10900000002584 |
+| multifile | 5 | 5 | 0 | 0 | 5/5 | 5/5 | 5/5 | 7 | 22.0 |
+| refactor | 5 | 5 | 0 | 0 | 5/5 | 5/5 | 5/5 | 5 | 16.98499999998603 |
+| offbyone | 5 | 5 | 0 | 0 | 5/5 | 5/5 | 5/5 | 7 | 20.437000000005355 |
+| javascript | 5 | 5 | 0 | 0 | 5/5 | 5/5 | 5/5 | 6 | 24.65700000000652 |
+| blocked | 5 | 0 | 5 | 0 | 0/5 | 5/5 | 5/5 | 5 | 11.984000000025844 |
+
+All 40 runs recorded full model residency in GPU memory. Each started with failing tests, and final tests were rerun independently. All five two-file fixture runs changed both production files. Raw outcomes, test output and GPU evidence are committed under eval, alongside all 40 transcripts. No failed runs were discarded. Only Ollama was measured; the optional second backend was not available on PATH in Windows or WSL. The benchmark runner now has per-fixture counts, incremental result persistence and hardware-check failure recording.
+
+```text
+name, memory.total [MiB], driver_version
+NVIDIA GeForce RTX 5060 Ti, 16311 MiB, 610.88
+.................................s....                                   [100%]
+37 passed, 1 skipped in 12.20s
+Clean copy: /root/ps-test.RxKRpK
+
+âœ“ manifest â€” plugin.yaml parses
+âœ“ manifest fields â€” name, version, description present
+âœ“ requires_hermes â€” spec '>=0.23.0' parses
+âœ“ config schema â€” not declared
+âœ“ requires_env â€” all entries UPPER_SNAKE
+âœ“ oauth â€” not declared
+âœ“ loadable â€” entry: __init__.py
+âœ“ python dependencies â€” none declared
+âœ“ capability probe â€” register() ran in isolation
+âœ“ declared tools â€” matches registrations
+âœ“ declared hooks â€” matches registrations
+âœ“ declared middleware â€” matches registrations
+âœ“ built-in tool collisions â€” no collisions
+âœ“ security scan â€” safe
+âœ“ no core override â€” no runtime rebinds of Hermes core
+â—† Isolation â€” runs in the plugin host (plugins.isolation: host)
+
+Validation passed.
+Plugin Doctor: /root/ps-test.RxKRpK
+  manifest: patchsmith 0.1.0 (standalone)
+  OK: runtime discovery, manifest parsing, import, and registration passed
+  registrations: 1 tool(s), 0 hook(s)
+[plugins] DEBUG HERMES_PLUGINS_DEBUG=1 â€” verbose plugin discovery logging enabled
+[plugins] DEBUG Parsed manifest: key=patchsmith name=patchsmith kind=standalone source=user path=/root/.hermes/cache/scratch/hermes-plugin-doctor-a9x9v4j0/plugins/ps-test.RxKRpK
+[plugins] DEBUG Loading plugin 'patchsmith' (source=user, kind=standalone, path=/root/.hermes/cache/scratch/hermes-plugin-doctor-a9x9v4j0/plugins/ps-test.RxKRpK)
+[plugins] DEBUG Plugin patchsmith registered tool: implement_task
+[plugins] DEBUG   registered: 1 tool(s), 0 hook(s), 0 middleware, 0 slash command(s), 0 CLI command(s)
+```
+
+Forbidden-word scan: zero matches.

@@ -1,6 +1,6 @@
 # patchsmith
 
-A Hermes plugin that adds one tool, `implement_task`. Your main agent hands a **single, well-specified coding task** to a **local model** (Ollama, llama.cpp, or any OpenAI-compatible local server). The local model edits the code under hard budgets and the tool returns the diff.
+A Hermes plugin that adds one tool, `implement_task`. Your main agent hands a **single, well-specified coding task** to a **local model** (served through a local OpenAI-compatible endpoint; only Ollama has been measured). The local model edits the code under hard budgets and the tool returns the diff.
 
 Why: the expensive model keeps its context and tokens for planning and review. The mechanical edit-run-fix loop runs on your own machine, with zero API spend and no code leaving it.
 
@@ -42,16 +42,26 @@ Each can also be passed as an argument of the tool call. If Hermes runs in WSL a
 - **Network.** Only the configured local endpoint; non-local endpoints are refused. No telemetry.
 - The agent should pass only a `test_command` the user authorized: it executes in your checkout.
 
-## Reliability (measured, not rounded)
+## Reliability (measured)
 
-Command: `python eval/run_eval.py --runs 5 --out eval/results.json` (raw rows in `eval/results.json`, table in `eval/results.table.md`). Model `qwen3.5:9b` (Q4_K_M) through Ollama, **CPU-only** during this run (GPU memory was held by other processes), default budgets. "Tests green" is an independent re-run of the tests after the call, not the returned status.
+Command: `python -B eval/run_eval.py --runs 5 --model qwen3.5:9b --require-gpu --out eval/results-gpu.json`. Eight fixtures, five fresh checkouts each, default budgets. Model: `qwen3.5:9b` through Ollama. Every run records the loaded model's full size in VRAM, independently reruns tests, and saves its transcript. Only Ollama was measured; no second-backend results are claimed.
 
-| bug | runs | done | blocked | error | tests green | median turns | median secs |
-|---|---|---|---|---|---|---|---|
-| bug1 (single-file `min` vs `max`) | 5 | 5 | 0 | 0 | 5/5 | 6 | 206.5 |
-| bug2 (`rank()` sort direction, symptom in another file's test) | 5 | 5 | 0 | 0 | 5/5 | 6 | 248.5 |
+| fixture | runs | done | blocked | error | tests green | expected outcome | full GPU | median turns | median secs |
+|---|---|---|---|---|---|---|---|---|---|
+| bug1 | 5 | 5 | 0 | 0 | 5/5 | 5/5 | 5/5 | 6 | 10.796999999991385 |
+| bug2 | 5 | 5 | 0 | 0 | 5/5 | 5/5 | 5/5 | 6 | 15.10999999998603 |
+| feature | 5 | 5 | 0 | 0 | 5/5 | 5/5 | 5/5 | 9 | 84.10900000002584 |
+| multifile | 5 | 5 | 0 | 0 | 5/5 | 5/5 | 5/5 | 7 | 22.0 |
+| refactor | 5 | 5 | 0 | 0 | 5/5 | 5/5 | 5/5 | 5 | 16.98499999998603 |
+| offbyone | 5 | 5 | 0 | 0 | 5/5 | 5/5 | 5/5 | 7 | 20.437000000005355 |
+| javascript | 5 | 5 | 0 | 0 | 5/5 | 5/5 | 5/5 | 6 | 24.65700000000652 |
+| blocked | 5 | 0 | 5 | 0 | 0/5 | 5/5 | 5/5 | 5 | 11.984000000025844 |
 
-Known limits of these numbers: two small seeded bugs, five runs each, one model, one machine. They show the loop and guardrails work end to end; they do not show the model can handle large or ambiguous tasks. Wall time is CPU-bound; expect it to be much faster on a GPU.
+35/35 implementation runs returned done with independently green tests; 5/5 protected-test requests returned blocked with tests still red and no files changed.
+
+The blocked fixture intentionally requests a protected test edit; green tests would be an unexpected outcome for it. The expected-outcome column separates this guardrail result from implementation success. Failed runs are retained rather than rerolled. Raw per-run results, baseline and final test output, exact elapsed seconds, token estimates and GPU evidence are in `eval/results-gpu.json`; transcripts are in `eval/results-gpu.transcripts/`.
+
+These are small synthetic tasks on one machine with one model, not evidence of large-project or ambiguous-task reliability. The older two-fixture CPU measurements remain in `eval/results.json` and `eval/results-cpu.table.md`.
 
 ## Hermes setup note
 
