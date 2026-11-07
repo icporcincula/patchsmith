@@ -241,8 +241,14 @@ class Session:
         return "\n".join(matches) or "(no matches)"
 
     def glob(self, pattern: str) -> str:
-        hits = [name for name in self.visible_files() if fnmatch.fnmatchcase(name, pattern)
-                or ("/**/" in pattern and fnmatch.fnmatchcase(name, pattern.replace("/**/", "/")))]
+        pattern = pattern.strip().replace("\\", "/")
+        prefix = self.root.as_posix().rstrip("/") + "/"
+        if pattern.startswith(prefix):
+            pattern = pattern[len(prefix):]  # models often pass absolute patterns inside the workdir
+        while pattern.startswith("./"):
+            pattern = pattern[2:]
+        variants = {pattern, pattern.replace("**/", "")}  # "**/" also matches zero directories
+        hits = [name for name in self.visible_files() if any(fnmatch.fnmatchcase(name, p) for p in variants)]
         return clip("\n".join(hits[:200]) or "(no files)")
 
     def git_status(self) -> str:

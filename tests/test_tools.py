@@ -52,6 +52,9 @@ def test_glob_and_grep_respect_git_visibility(repo):
         file.write_text("needle")
     session = Session(repo, "")
     assert session.glob("*.txt") == "visible.txt"
+    assert session.glob("**/*.txt") == "visible.txt"
+    assert session.glob(session.root.as_posix() + "/**/*.txt") == "visible.txt"
+    assert session.glob("./*.txt") == "visible.txt"
     assert session.grep("needle") == "visible.txt:1:needle"
 
 
