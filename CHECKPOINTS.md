@@ -76,3 +76,15 @@ hint: Packages were unavailable because the network was disabled. When the netwo
 ```
 
 Stopped at C2 under the checkpoint retry rule. C3–C6 remain pending.
+
+## C3 / C5 — Real model, reliability
+`python eval/run_eval.py --runs 5 --out eval/results.json`, Windows, Ollama qwen3.5:9b (CPU-only), default budgets.
+
+```text
+| bug | runs | done | blocked | error | tests green | median turns | median secs |
+| bug1 | 5 | 5 | 0 | 0 | 5/5 | 6 | 206.5 |
+| bug2 | 5 | 5 | 0 | 0 | 5/5 | 6 | 248.5 |
+```
+
+## C4 — Inside Hermes
+Installed with `hermes plugins install file:///root/li-src --enable --yes-deps`; `hermes plugins show local-implementer` = enabled. First attempt failed (tool hidden behind tool_search; agent never called it). After `hermes config set tools.tool_search.enabled off`, the session in eval/hermes-session-bug1.txt: agent called `implement_task`, plugin transcript written, `python3 -m unittest -q` = OK, diff `min` -> `max`.
