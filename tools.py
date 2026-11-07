@@ -140,13 +140,14 @@ class Session:
             if linked(parent):
                 raise Jail(f"Writing through a linked directory is refused: {parent.name}")
 
-    def git(self, *args: str, optional: bool = False) -> str:
+    def git(self, *args: str, optional: bool = False, input_data: bytes | None = None) -> str:
         env = {key: value for key, value in os.environ.items() if not key.upper().startswith("GIT_")}
         env.update(GIT_OPTIONAL_LOCKS="0", GIT_NO_LAZY_FETCH="1", GIT_TERMINAL_PROMPT="0",
                    GIT_ALLOW_PROTOCOL="")
         result = subprocess.run(
             ["git", "-c", "core.fsmonitor=false", "-c", "core.untrackedCache=false",
-             "--literal-pathspecs", *args], cwd=self.root, env=env, capture_output=True,
+             "-c", "core.autocrlf=false",
+             "--literal-pathspecs", *args], cwd=self.root, env=env, capture_output=True, input=input_data,
             timeout=30, check=False,
         )
         if result.returncode and not optional:
@@ -327,7 +328,7 @@ class Session:
         self.finished = status, " ".join(note.split())[:300]
         return "Finished."
 
-    def patch(self, scope: str = "."):
+    def patch(self, scope: str = ".", limit: int | None = 12000):
         files, patches = [], []
         for name in sorted(self.written):
             if not Path(name).is_relative_to(Path(scope)):
@@ -349,7 +350,7 @@ class Session:
                            for line in diff)
             if not old and not new:
                 patches.append(f"Empty file changed: {name}\n")
-        return files, clip("".join(patches), 12000)
+        return files, "".join(patches) if limit is None else clip("".join(patches), limit)
 
     def rollback(self):
         failures = []

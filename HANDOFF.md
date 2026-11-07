@@ -12,7 +12,7 @@
 - Hermes may hide tools behind tool_search. The earlier passing local-model session used `hermes config set tools.tool_search.enabled off`.
 - WSL reaches Ollama on Windows through its gateway address. Configure `PS_ENDPOINT` in `~/.hermes/.env`; the existing plugin-owned settings were renamed in place without exposing their values.
 - `PS_MODEL`, `PS_MAX_TURNS`, `PS_CTX_BUDGET`, and `PS_TEST_COMMAND` are optional. The benchmark used default budgets and explicitly selected `qwen3.5:9b`.
-- The current plugin still edits in place. Propose/review/apply, retries, native status and skill integration remain later phases of the extension plan.
+- Phase 2 adds isolated `mode="propose"` and guarded `apply_patch`. Default `mode="apply"` retains direct edits. Retries, native status and skill integration remain later phases.
 
 ## User publication steps after Phase 1
 
@@ -22,3 +22,14 @@
 4. Retake the demo after the chosen feature phases. Confirm the contest allows synthesized narration before posting.
 
 No repository, push, PR, post, or submission was created by this implementation.
+
+## Phase 2 — Propose, review, apply
+
+- `implement_task(..., mode="propose")` copies current checkout bytes into a detached temporary Git worktree, or a plain temporary directory for non-Git input. It returns a full saved patch, hash and base HEAD; the returned diff may be clipped. The checkout receives no model edits, transcript or patch files. Temporary worktrees are removed.
+- Proposal records and transcripts live outside the checkout under `~/.patchsmith/proposals/`. Linked source content and storage inside the checkout are refused.
+- After reviewing the diff and obtaining approval, call `apply_patch(patch_path=...)`. It refuses moved HEAD/branch, changed affected-file bytes/modes/index entries, tampering, protected tests and outside paths. Git checks the full patch before applying; line endings and original permissions are preserved.
+- Windows offline tests: 58 passed, 1 skipped. Clean-copy Hermes validation and doctor register two tools without collisions.
+- The real Hermes session in `eval/hermes-session-propose.txt` contains a proposal turn showing the diff, a separate approval turn calling `apply_patch`, byte-identical source verification before approval, cleaned-up isolation, and two independently passing tests afterward.
+- Earlier integration failures were fixed after the user's explicit stop-rule override. Readable diagnostic records are in `eval/phase2-diagnostics.json`; original raw streams remain in the private implementation archive. The public GPU benchmark remains the unchanged Phase 1 direct-mode benchmark.
+
+Known bounds: ordinary text patches only; Git proposals need an initial commit; linked checkout content is refused. Worktrees share Git metadata. The configured test command is trusted code, not an operating-system sandbox. Applying a proposal does not rerun tests automatically.

@@ -190,3 +190,59 @@ Plugin Doctor: /root/ps-test.RxKRpK
 ```
 
 Forbidden-word scan: zero matches.
+
+## Phase 2 — Initial pause (historical)
+
+The phase initially paused after two real-Hermes post-apply verification failures despite 57 passed, 1 skipped offline. Both proposal turns left source bytes unchanged. The first apply produced correct bytes but changed permissions from 0777 to 0755; the attempted correction was not successfully verified in the installed runtime. Source and installed code were temporarily restored to Phase 1, and all unfinished work was archived privately. The user then explicitly overrode the stop rule and requested fixing the coding issue and continuing. Readable failed-attempt records are in `eval/phase2-diagnostics.json`; complete raw logs are preserved privately. The pause did not create a green Phase 2 tag.
+
+## Phase 2 resumed by user
+
+The user explicitly overrode the two-attempt stop rule and requested fixing the coding issue and continuing Phase 2. The archived implementation was restored for diagnosis. The previous stop notes describe historical state, not a permanent scope cut.
+
+## Phase 2 — Propose / apply green
+
+Implemented isolated proposal generation, a full saved patch with SHA-256 provenance and base HEAD, cleanup, and guarded application. The source checkout remains byte-identical during a proposal. Apply checks the saved hash, original HEAD and branch, affected-file bytes, modes and index entries, and actual patch paths. Test files and outside paths are refused. Git checks applicability before writing; original permissions and line endings are preserved. Default direct apply behavior remains available.
+
+The Windows line-ending issue was fixed by disabling Git autocrlf conversion for plugin Git commands. The permission check was reproduced directly on Linux and passed after preserving original permissions. The corrected runtime was reinstalled from an immutable local commit with byte-for-byte source checks. A further agent-side endpoint override was fixed in the integration prompt by supplying the configured local endpoint explicitly. No performance failure caused the stop.
+
+```text
+58 passed, 1 skipped in 30.64s
+Proposal Hermes process exit: 0
+Proposal checkout byte comparison: identical
+Apply Hermes process exit: 0
+Ran 2 tests in 0.000s
+OK
+Real Hermes propose, review, approval and apply: passed
+```
+
+The real session is preserved in `eval/hermes-session-propose.txt` and `.jsonl`; its complete model-loop transcript is `eval/phase2-proposal-transcript.jsonl`, and the applied patch is `eval/phase2-demo.patch`. The first agent response displayed the exact diff before the second, explicit approval turn called apply_patch. The successful run cleaned up its isolated checkout. Earlier unsuccessful integration runs remain documented; no benchmark rows were changed or rerolled.
+
+Final clean-copy gate:
+
+```text
+
+✓ manifest — plugin.yaml parses
+✓ manifest fields — name, version, description present
+✓ requires_hermes — spec '>=0.23.0' parses
+✓ config schema — not declared
+✓ requires_env — all entries UPPER_SNAKE
+✓ oauth — not declared
+✓ loadable — entry: __init__.py
+✓ python dependencies — none declared
+✓ capability probe — register() ran in isolation
+✓ declared tools — matches registrations
+✓ declared hooks — matches registrations
+✓ declared middleware — matches registrations
+✓ built-in tool collisions — no collisions
+✓ security scan — safe
+✓ no core override — no runtime rebinds of Hermes core
+◆ Isolation — runs in the plugin host (plugins.isolation: host)
+
+Validation passed.
+Plugin Doctor: /root/ps-phase2-green.51kabtdk
+  manifest: patchsmith 0.1.0 (standalone)
+  OK: runtime discovery, manifest parsing, import, and registration passed
+  registrations: 2 tool(s), 0 hook(s)
+```
+
+Forbidden-word scan over release files: zero matches.

@@ -153,12 +153,14 @@ def positive(value, name, ceiling=None):
     return number
 
 
-def execute(session, client, task, turns, budget, keep):
-    log_dir = session.root / TRANSCRIPTS
+def execute(session, client, task, turns, budget, keep, log_dir=None):
+    in_place = log_dir is None
+    log_dir = log_dir or session.root / TRANSCRIPTS
     if linked(log_dir):
         raise Jail("The transcript directory must not be a link.")
     log_dir.mkdir(mode=0o700, exist_ok=True)
-    result = {"turns": 0, "tokens_est": 0, "files_changed": [], "diff": "", "transcript_path": None}
+    result = {"turns": 0, "tokens_est": 0, "files_changed": [], "diff": "", "transcript_path": None,
+              "patch_path": None, "patch_sha256": None, "base_head": None, "applied": False}
     with tempfile.NamedTemporaryFile(prefix="run-", suffix=".jsonl", dir=log_dir, mode="w",
                                      encoding="utf-8", delete=False) as log:
         result["transcript_path"] = log.name
@@ -166,6 +168,7 @@ def execute(session, client, task, turns, budget, keep):
         try:
             before = session.test_snapshot()
             head = session.head()
+            result["base_head"] = head[1].strip() or None
             status, reason, note = run_loop(session, client, task, turns, budget, log, result)
         except Exception as exc:
             status, reason, note = "error", "execution_error", str(exc)
@@ -192,7 +195,7 @@ def execute(session, client, task, turns, budget, keep):
             result["files_changed"], result["diff"] = session.patch()
         except (OSError, Jail) as exc:
             note += f". Could not read the final patch: {exc}"
-        result.update(status=status, note=clip(note))
+        result.update(status=status, note=clip(note), applied=in_place and bool(result["files_changed"]))
         if reason:
             result["reason"] = reason
         emit(log, {"event": "result", **result})
@@ -206,6 +209,9 @@ def implement(args):
     if not isinstance(workdir, str) or not workdir.strip() or not Path(workdir).is_dir():
         raise ValueError("workdir must be an existing directory.")
     root = Path(workdir).resolve(strict=True)
+    mode = args.get("mode", "apply")
+    if mode not in {"apply", "propose"}:
+        raise ValueError("mode must be apply or propose.")
     turns = positive(configured(args, "max_turns", "PS_MAX_TURNS", 25), "max_turns", 60)
     budget = positive(configured(args, "context_budget_tokens", "PS_CTX_BUDGET", 24000),
                       "context_budget_tokens")
@@ -225,6 +231,9 @@ def implement(args):
             raise ValueError("A task is already running in this directory.")
         ACTIVE.add(root)
     try:
+        if mode == "propose":
+            from .patches import propose
+            return propose(root, client, task, turns, budget, command, keep, execute)
         return execute(Session(root, command), client, task, turns, budget, keep)
     finally:
         with ACTIVE_LOCK:

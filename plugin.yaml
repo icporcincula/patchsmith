@@ -1,10 +1,11 @@
 name: patchsmith
 version: "0.1.0"
-description: "Implements one coding task through a bounded local-model tool loop and returns the patch."
+description: "Proposes or applies one bounded local-model coding task, with guarded application of reviewed patches."
 author: "Bart Porcincula"
 requires_hermes: ">=0.23.0"
 provides_tools:
   - implement_task
+  - apply_patch
 requires_env:
   - name: PS_ENDPOINT
     description: "Local OpenAI-compatible API base."

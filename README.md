@@ -1,6 +1,6 @@
 # patchsmith
 
-A Hermes plugin that adds one tool, `implement_task`. Your main agent hands a **single, well-specified coding task** to a **local model** (served through a local OpenAI-compatible endpoint; only Ollama has been measured). The local model edits the code under hard budgets and the tool returns the diff.
+A Hermes plugin with `implement_task` for bounded local coding and `apply_patch` for applying a reviewed proposal. Your main agent hands a **single, well-specified coding task** to a **local model** (served through a local OpenAI-compatible endpoint; only Ollama has been measured). The local model edits the code under hard budgets and the tool returns the diff.
 
 Why: the expensive model keeps its context and tokens for planning and review. The mechanical edit-run-fix loop runs on your own machine, with zero API spend and no code leaving it.
 
@@ -26,8 +26,22 @@ Each can also be passed as an argument of the tool call. If Hermes runs in WSL a
 
 ## The tool
 
-`implement_task(task, workdir, max_turns?, test_command?, context_budget_tokens?, model?, endpoint?, keep_partial?)` returns JSON:
-`status` (`done` / `blocked` / `error`), `reason`, `turns`, `tokens_est`, `files_changed`, `diff`, `note`, `transcript_path`.
+`implement_task(task, workdir, max_turns?, test_command?, context_budget_tokens?, model?, endpoint?, keep_partial?, mode?)` returns JSON:
+`status` (`done` / `blocked` / `error`), `reason`, `turns`, `tokens_est`, `files_changed`, `diff`, `note`, `transcript_path`, `patch_path`, `patch_sha256`, `base_head`, `applied`.
+
+## Propose, review, apply
+
+Set `mode="propose"` to run the full loop in a temporary detached Git worktree. A plain directory is copied instead. Dirty, ignored and untracked files are copied so the model sees the current bytes. Linked checkout content is refused. The temporary checkout is removed when the run finishes, including on failure. Your original checkout receives no code, transcript or patch writes during proposal generation.
+
+A successful proposal returns its diff, `patch_path`, SHA-256 in `patch_sha256`, `base_head`, and `applied: false`. The complete patch and provenance record live beside the transcript under `~/.patchsmith/proposals/<id>/`. The returned diff may be clipped; the saved patch is complete. Only ordinary text patches are supported.
+
+1. Call `implement_task(task=..., workdir=..., test_command=..., mode="propose")`.
+2. Show the returned diff for review and obtain the user's approval.
+3. Call `apply_patch(patch_path=...)` with that exact saved path.
+
+`apply_patch` verifies the stored hash, original HEAD and branch, affected file bytes/modes and index entries. It validates the patch's actual paths against the same jail and test-file restrictions as the coding loop, then runs `git apply --check` before applying. A stale or tampered patch is refused; unrelated local edits are preserved. The result reports `applied: true` only after application. Tests run in the isolated proposal; rerun the authorized tests after applying if you need verification against later unrelated edits.
+
+The default `mode="apply"` retains direct-edit behavior and existing rollback rules. Git-backed proposals require an initial commit. Storage must be outside the chosen workdir. Detached worktrees share repository metadata; the configured test command remains trusted code, not an operating-system sandbox.
 
 ## Safety model (enforced by the plugin, not requested of the model)
 
@@ -43,6 +57,8 @@ Each can also be passed as an argument of the tool call. If Hermes runs in WSL a
 - The agent should pass only a `test_command` the user authorized: it executes in your checkout.
 
 ## Reliability (measured)
+
+Measured in direct apply mode at `phase-1-green`, before proposal support. The proposal flow is verified separately in `eval/hermes-session-propose.txt`.
 
 Command: `python -B eval/run_eval.py --runs 5 --model qwen3.5:9b --require-gpu --out eval/results-gpu.json`. Eight fixtures, five fresh checkouts each, default budgets. Model: `qwen3.5:9b` through Ollama. Every run records the loaded model's full size in VRAM, independently reruns tests, and saves its transcript. Only Ollama was measured; no second-backend results are claimed.
 
