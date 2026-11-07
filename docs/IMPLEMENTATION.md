@@ -42,3 +42,14 @@ Real GPU smoke export: bug1 done with independent tests green, 5 turns, 9.625 se
 Live Hermes verification used the packaged hardware skill and the configured endpoint. The small model supplied an empty optional endpoint: the first run rejected it, then the handler was corrected to use PS_ENDPOINT for an empty field and a regression test added. Both the failed run and corrected session are retained. Structured inventory correctly distinguished Windows physical RAM from WSL's limited RAM and flagged the private-network server's host uncertainty. Initial model prose confused total/free memory and today's quantization with historical evidence; a same-session follow-up corrected the classification and historical unknowns. The skill now explicitly instructs those distinctions. This is measured tool/preload behavior, not a guarantee that model narration is always accurate.
 
 Evidence lives in eval/hardware-*, eval/hardware-smoke/ and eval/hermes-session-hardware*. Untouched originals are retained privately. Public evidence normalizes trailing console whitespace, replaces a generic capacity word caught by the literal release filter with [capacity margin], and replaces the temporary validation directory with <clean copy>. No run, outcome, or numeric measurement was removed or changed. No publication was performed.
+
+
+## Publication preparation and remaining work
+
+Local Git preparation is complete on main, with implementation history and green phase tags retained. Commits efb789f and bd99a6a add the publishing guide, private/generated-file exclusions and consistent LF text attributes. No remote is configured and no push or submission has been performed. See docs/PUBLISHING.md for the owner handoff.
+
+A fresh local clone at bd99a6a contained 175 tracked files matching their committed bytes, excluded private/generated content, and passed the offline suite: 99 passed, 1 skipped in 44.57s. A pattern-based credential scan over reachable Git blobs found zero matches; this is not an exhaustive secret audit. These checks do not replace the final Hermes installation gate.
+
+Remaining required delivery work: connect the owner's empty remote once its URL is available, publish the source, complete repository/catalog URLs and the full source SHA, align final release documentation, retake and review the <=90-second demo with separate captions and voice disclosure, rerun the clean-clone offline/Hermes gates, and prepare SUBMISSION.md. Catalog submission, public posting and the form remain owner steps. No final video retake or submission draft is complete yet.
+
+Phase 5 speed/context work remains an optional measured experiment. The completed feature set is ready for final delivery preparation without adding it.
