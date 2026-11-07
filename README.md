@@ -26,8 +26,8 @@ Each can also be passed as an argument of the tool call. If Hermes runs in WSL a
 
 ## The tool
 
-`implement_task(task, workdir, max_turns?, test_command?, context_budget_tokens?, model?, endpoint?, keep_partial?, mode?)` returns JSON:
-`status` (`done` / `blocked` / `error`), `reason`, `turns`, `tokens_est`, `files_changed`, `diff`, `note`, `transcript_path`, `patch_path`, `patch_sha256`, `base_head`, `applied`.
+`implement_task(task, workdir, max_turns?, test_command?, context_budget_tokens?, model?, endpoint?, keep_partial?, mode?, attempts?, fallback_model?)` returns JSON:
+`status` (`done` / `blocked` / `error`), `reason`, `turns`, `tokens_est`, `files_changed`, `diff`, `note`, `transcript_path`, `patch_path`, `patch_sha256`, `base_head`, `applied`, `attempt_history`, `handback`.
 
 ## Propose, review, apply
 
@@ -43,12 +43,22 @@ A successful proposal returns its diff, `patch_path`, SHA-256 in `patch_sha256`,
 
 The default `mode="apply"` retains direct-edit behavior and existing rollback rules. Git-backed proposals require an initial commit. Storage must be outside the chosen workdir. Detached worktrees share repository metadata; the configured test command remains trusted code, not an operating-system sandbox.
 
+## Retries and failure handback
+
+Set `attempts=3` for up to three fresh contexts (default one, maximum three). A blocked attempt or a claimed completion with failing configured tests can retry after its edits are rolled back. The next context receives the original task plus a clipped factual failure digest. Test-file changes, moved Git state, endpoint errors and incomplete rollback stop immediately. `keep_partial` affects the final failure only; intermediate attempts always roll back.
+
+`max_turns` and `context_budget_tokens` apply to the whole call, shared across attempts. The token budget now counts cumulative prompt and completion use, using server usage when provided and character estimates otherwise. A request reserves its estimated prompt cost and caps the requested completion to the remaining allowance. Token accounting is approximate; a server reporting a larger prompt than estimated can exhaust the allowance after a response, before tool execution. Retries do not replenish either budget.
+
+Optional `fallback_model` selects a different local model for the last allowed attempt only, at the same validated local endpoint. Early success ends the run before fallback. No fallback model was benchmarked; the evaluation uses the same model for every attempt.
+
+Every run returns `attempt_history` with status, reason, model, turns, tokens, files touched and clipped test output for each attempt. Final failure also returns `handback`: `what_was_tried`, `last_failure`, `files_touched` (a list), and `suggested_next`. These are built from recorded facts and stop reasons. Without a configured test command, completion remains unverified.
+
 ## Safety model (enforced by the plugin, not requested of the model)
 
 - **No shell.** The model has only: `read_file`, `grep`, `glob`, `git_status`, `git_diff`, `write_file`, `edit_file`, `run_tests`, `finish`. `run_tests` runs only the configured test command.
 - **Path jail.** Writes outside `workdir`, through links, or under `.git` / `node_modules` are refused.
 - **Test files are read-only.** If they change anyway they are restored and the run is `blocked` (`test_files_modified`).
-- **Budgets.** Turn cap and context budget end the run as `blocked`.
+- **Budgets.** Shared total turn and token budgets end the run as `blocked`.
 - **Repeat guard.** The same tool call three times without progress ends the run.
 - **Auto-finish.** Green tests after an edit end the run as `done`, so a small model cannot talk itself out of a fix.
 - **Revert on failure.** `blocked` / `error` runs revert the files they touched unless `keep_partial` is true.
@@ -96,3 +106,24 @@ Use `implement_task` for bounded, precisely specified edits that have a test com
 ## Development
 
 `python -m pytest tests -q` (offline; uses a scripted fake model server). License: MIT.
+
+## Retry evaluation (Phase 3)
+
+Command: `python -B eval/run_eval.py --runs 5 --attempts 3 --model qwen3.5:9b --require-gpu --out eval/results-retries-gpu.json`. Same eight fixtures, five fresh checkouts per fixture, default shared total budgets, no fallback model.
+
+32/35 implementation runs succeeded on the first attempt; 32/35 succeeded within three attempts. 5/5 protected-test requests ended blocked with red tests and no edits. 40/40 runs retained full GPU residency.
+
+No measured retry improvement in this sample. Phase 3 enforces a cumulative token allowance; the historical Phase 1 table used a per-request context allowance, so it is not a controlled before/after comparison. Failures are retained. The blocked fixture is a guardrail check, not an implementation success.
+
+| fixture | runs | done | blocked | error | tests green | expected outcome | full GPU | median turns | median secs | first-attempt success | success within three |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| bug1 | 5 | 5 | 0 | 0 | 5/5 | 5/5 | 5/5 | 5 | 9.89100000000326 | 5/5 | 5/5 |
+| bug2 | 5 | 5 | 0 | 0 | 5/5 | 5/5 | 5/5 | 6 | 15.172000000020489 | 5/5 | 5/5 |
+| feature | 5 | 2 | 3 | 0 | 2/5 | 2/5 | 5/5 | 11 | 97.70300000000861 | 2/5 | 2/5 |
+| multifile | 5 | 5 | 0 | 0 | 5/5 | 5/5 | 5/5 | 7 | 20.01600000000326 | 5/5 | 5/5 |
+| refactor | 5 | 5 | 0 | 0 | 5/5 | 5/5 | 5/5 | 5 | 17.453000000008615 | 5/5 | 5/5 |
+| offbyone | 5 | 5 | 0 | 0 | 5/5 | 5/5 | 5/5 | 7 | 20.062999999994645 | 5/5 | 5/5 |
+| javascript | 5 | 5 | 0 | 0 | 5/5 | 5/5 | 5/5 | 5 | 18.75 | 5/5 | 5/5 |
+| blocked | 5 | 0 | 5 | 0 | 0/5 | 5/5 | 5/5 | 17 | 44.39000000001397 | 0/5 | 0/5 |
+
+Per-attempt records, failure handbacks and independent test results are in `eval/results-retries-gpu.json`, with release transcripts alongside. Timestamp and temporary Git identifiers are omitted from these release copies; full raw files remain in the private implementation archive. Numerical measurements are unchanged.

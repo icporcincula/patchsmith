@@ -100,7 +100,7 @@ def unchanged(source, record):
             raise Refused("files_changed", "A proposed file or its index entry changed: " + name)
 
 
-def propose(root, client, task, turns, budget, command, keep, execute):
+def propose(root, client, task, turns, budget, command, keep, execute, **options):
     storage = ARTIFACT_ROOT.resolve()
     if storage.is_relative_to(root):
         raise Jail("Choose a workdir outside the proposal storage directory.")
@@ -113,7 +113,7 @@ def propose(root, client, task, turns, budget, command, keep, execute):
     result = None
     with isolated_checkout(source, directory) as sandbox:
         session = Session(sandbox, command)
-        result = execute(session, client, task, turns, budget, keep, log_dir=directory)
+        result = execute(session, client, task, turns, budget, keep, log_dir=directory, **options)
         result.update(patch_path=None, patch_sha256=None, base_head=head[1].strip() or None, applied=False)
         if result["status"] == "done" and result["files_changed"]:
             names, patch = session.patch(limit=None)

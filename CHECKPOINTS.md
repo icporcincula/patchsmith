@@ -246,3 +246,31 @@ Plugin Doctor: /root/ps-phase2-green.51kabtdk
 ```
 
 Forbidden-word scan over release files: zero matches.
+
+## Phase 3 — Retry and structured handback
+
+- Added attempts (default 1, maximum 3), fresh contexts with clipped failure facts, rollback between attempts, optional same-endpoint fallback only on the final allowed attempt, and factual failure handbacks. Turn and cumulative token budgets are shared across the entire call. Configured tests are verified before accepting a completion. Guardrail, endpoint and rollback failures do not retry.
+- Windows verification: 73 passed, 1 skipped in 42.51s. The skip is the existing Windows link test. Coverage includes shared turn/token limits, dirty-byte rollback, failed-test recovery, fallback timing, final-only partial edits, proposal isolation and table columns.
+- Clean-copy Hermes validate --install-deps and doctor --ci passed with two tools; no collisions and security scan safe.
+- GPU command and exact generated table:
+
+`python -B eval/run_eval.py --runs 5 --attempts 3 --model qwen3.5:9b --require-gpu --out eval/results-retries-gpu.json`
+
+| fixture | runs | done | blocked | error | tests green | expected outcome | full GPU | median turns | median secs | first-attempt success | success within three |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| bug1 | 5 | 5 | 0 | 0 | 5/5 | 5/5 | 5/5 | 5 | 9.89100000000326 | 5/5 | 5/5 |
+| bug2 | 5 | 5 | 0 | 0 | 5/5 | 5/5 | 5/5 | 6 | 15.172000000020489 | 5/5 | 5/5 |
+| feature | 5 | 2 | 3 | 0 | 2/5 | 2/5 | 5/5 | 11 | 97.70300000000861 | 2/5 | 2/5 |
+| multifile | 5 | 5 | 0 | 0 | 5/5 | 5/5 | 5/5 | 7 | 20.01600000000326 | 5/5 | 5/5 |
+| refactor | 5 | 5 | 0 | 0 | 5/5 | 5/5 | 5/5 | 5 | 17.453000000008615 | 5/5 | 5/5 |
+| offbyone | 5 | 5 | 0 | 0 | 5/5 | 5/5 | 5/5 | 7 | 20.062999999994645 | 5/5 | 5/5 |
+| javascript | 5 | 5 | 0 | 0 | 5/5 | 5/5 | 5/5 | 5 | 18.75 | 5/5 | 5/5 |
+| blocked | 5 | 0 | 5 | 0 | 0/5 | 5/5 | 5/5 | 17 | 44.39000000001397 | 0/5 | 0/5 |
+
+32/35 implementation runs succeeded on the first attempt; 32/35 succeeded within three attempts. 5/5 protected-test requests ended blocked with red tests and no edits. 40/40 runs retained full GPU residency.
+
+No measured retry improvement; no improvement claim is made. The stricter cumulative token allowance differs from the historical Phase 1 per-request context check; the tables are not a controlled budget comparison. All failures remain in the evidence. The final input-error handback and independent-success predicate were hardened with regression tests (13 passed in 0.47s); all recorded first-attempt successes also passed independent tests. The final handback wording was tightened after benchmark startup to distinguish a stop fact from a model note; budget and edit-loop behavior did not change.
+
+Full original evidence, including incidental timestamp and temporary Git identifier matches in the release scan, is preserved at `C:\tmp\patchsmith-phase3-raw-20261107-160728`. Release copies omit those identifier fields only. All numerical measurements and every run are retained.
+
+Final release scan: zero forbidden matches over tracked text, all tracked text UTF-8. Staged whitespace check passed. Installed runtime and README match the final source bytes after immutable local reinstall. Original console whitespace is preserved in the private raw archive.

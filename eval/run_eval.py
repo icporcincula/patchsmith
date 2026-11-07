@@ -109,7 +109,7 @@ def one(plugin, fixture, args, run_index):
             raise RuntimeError(f"{fixture}: fixture must begin with failing tests")
         call = {"task": TASKS[fixture], "workdir": str(work),
                 "test_command": command_line(test_argv(fixture)),
-                "model": args.model, "endpoint": args.endpoint}
+                "model": args.model, "endpoint": args.endpoint, "attempts": getattr(args, "attempts", 1)}
         started = time.monotonic()
         res = json.loads(plugin._handle_implement_task(call))
         secs = time.monotonic() - started
@@ -123,7 +123,8 @@ def one(plugin, fixture, args, run_index):
                "turns": res["turns"], "tokens_est": res["tokens_est"], "secs": secs,
                "green": tests["returncode"] == 0, "independent_tests": tests,
                "baseline_tests": baseline, "files_changed": res["files_changed"],
-               "diff": res["diff"], "gpu": gpu, "test_command": call["test_command"]}
+               "diff": res["diff"], "attempt_history": res.get("attempt_history", []),
+               "handback": res.get("handback"), "gpu": gpu, "test_command": call["test_command"]}
         if res.get("transcript_path"):
             transcript = Path(res["transcript_path"])
             if args.out:
@@ -132,13 +133,17 @@ def one(plugin, fixture, args, run_index):
                 saved = target / f"{fixture}-{run_index}.jsonl"
                 shutil.copyfile(transcript, saved)
                 row["transcript_path"] = saved.as_posix()
+        history = res.get("attempt_history", [])
+        row["first_attempt_success"] = bool(row["green"] and history and history[0]["status"] == "done"
+                                             and history[0].get("test_output", "").startswith("exit 0"))
+        row["within_three_success"] = row["status"] == "done" and row["green"]
         row["expected_outcome"] = outcome_ok(row)
         return row
 
 
 def results_table(rows, fixtures):
-    lines = ["| fixture | runs | done | blocked | error | tests green | expected outcome | full GPU | median turns | median secs |",
-             "|---|---|---|---|---|---|---|---|---|---|"]
+    lines = ["| fixture | runs | done | blocked | error | tests green | expected outcome | full GPU | median turns | median secs | first-attempt success | success within three |",
+             "|---|---|---|---|---|---|---|---|---|---|---|---|"]
     for fixture in fixtures:
         selected = [r for r in rows if r["fixture"] == fixture]
         if not selected:
@@ -150,7 +155,9 @@ def results_table(rows, fixtures):
                      f"{sum(r['green'] for r in selected)}/{count} | "
                      f"{sum(r['expected_outcome'] for r in selected)}/{count} | {gpu_count}/{count} | "
                      f"{statistics.median(r['turns'] for r in selected)} | "
-                     f"{statistics.median(r['secs'] for r in selected)} |")
+                     f"{statistics.median(r['secs'] for r in selected)} | "
+                     f"{sum(r.get('first_attempt_success', False) for r in selected)}/{count} | "
+                     f"{sum(r.get('within_three_success', False) for r in selected)}/{count} |")
     return "\n".join(lines) + "\n"
 
 
@@ -166,6 +173,7 @@ def save(args, metadata, rows, fixtures):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--attempts", type=int, choices=(1, 2, 3), default=1)
     parser.add_argument("--runs", type=int, default=5)
     parser.add_argument("--fixtures", "--bugs", dest="fixtures", default=",".join(TASKS))
     parser.add_argument("--fixture-runs", action="append", default=[], metavar="NAME=N")
@@ -193,7 +201,7 @@ def main():
         if not gpu_evidence(args.endpoint, args.model)["full_gpu"]:
             raise SystemExit("GPU preflight failed: model is not fully resident in GPU memory; no benchmark runs started")
     metadata = {"started_at": datetime.now(timezone.utc).isoformat(), "command": command_line(sys.argv),
-                "model": args.model, "endpoint": args.endpoint, "python": sys.version,
+                "attempts": args.attempts, "model": args.model, "endpoint": args.endpoint, "python": sys.version,
                 "platform": platform.platform(), "require_gpu": args.require_gpu, "counts": counts,
                 "budgets": {"max_turns": os.environ.get("PS_MAX_TURNS", "25"),
                             "context_budget_tokens": os.environ.get("PS_CTX_BUDGET", "24000")}}

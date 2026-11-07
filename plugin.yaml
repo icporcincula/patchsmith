@@ -1,6 +1,6 @@
 name: patchsmith
 version: "0.1.0"
-description: "Proposes or applies one bounded local-model coding task, with guarded application of reviewed patches."
+description: "Proposes or applies one bounded local-model coding task, with bounded retries, failure handbacks and guarded patch application."
 author: "Bart Porcincula"
 requires_hermes: ">=0.23.0"
 provides_tools:
@@ -17,7 +17,7 @@ requires_env:
     description: "Default maximum model turns."
     required: false
   - name: PS_CTX_BUDGET
-    description: "Default context budget."
+    description: "Default total token budget across attempts."
     required: false
   - name: PS_TEST_COMMAND
     description: "User-authorized test command."

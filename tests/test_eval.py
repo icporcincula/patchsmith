@@ -37,9 +37,20 @@ def test_runner_checks_tests_even_if_plugin_claims_done():
         @staticmethod
         def _handle_implement_task(call):
             return json.dumps({"status": "done", "turns": 1, "tokens_est": 1,
-                               "files_changed": [], "diff": ""})
+                               "files_changed": [], "diff": "", "attempt_history": [
+                                   {"status": "done", "test_output": "exit 0"}]})
     args = SimpleNamespace(model="fake", endpoint="http://localhost:11434/v1", require_gpu=False, out=None)
     row = benchmark.one(PretendSuccess(), "bug1", args, 1)
     assert row["baseline_tests"]["returncode"] != 0
     assert row["independent_tests"]["returncode"] != 0
     assert not row["green"] and not row["expected_outcome"]
+    assert not row["first_attempt_success"] and not row["within_three_success"]
+
+
+def test_retry_table_has_both_success_columns():
+    row = dict(fixture="bug1", status="done", green=True, expected_outcome=True,
+               gpu={"full_gpu": True}, turns=4, secs=2, first_attempt_success=False,
+               within_three_success=True)
+    table = benchmark.results_table([row], ["bug1"])
+    assert "first-attempt success" in table and "success within three" in table
+    assert table.rstrip().endswith("0/1 | 1/1 |")

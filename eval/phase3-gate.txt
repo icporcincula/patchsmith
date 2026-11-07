@@ -1,0 +1,8 @@
+Windows Python 3.12: 73 passed, 1 skipped in 42.51s
+Clean-copy Hermes validate --install-deps: passed
+Clean-copy Hermes doctor --ci: OK, two tools
+32/35 implementation runs succeeded on the first attempt; 32/35 succeeded within three attempts. 5/5 protected-test requests ended blocked with red tests and no edits. 40/40 runs retained full GPU residency.
+Evaluation honesty regression: 13 passed in 0.47s
+Release scan: zero forbidden matches
+Staged whitespace check: passed
+Installed runtime file hashes: match final source

@@ -12,7 +12,7 @@
 - Hermes may hide tools behind tool_search. The earlier passing local-model session used `hermes config set tools.tool_search.enabled off`.
 - WSL reaches Ollama on Windows through its gateway address. Configure `PS_ENDPOINT` in `~/.hermes/.env`; the existing plugin-owned settings were renamed in place without exposing their values.
 - `PS_MODEL`, `PS_MAX_TURNS`, `PS_CTX_BUDGET`, and `PS_TEST_COMMAND` are optional. The benchmark used default budgets and explicitly selected `qwen3.5:9b`.
-- Phase 2 adds isolated `mode="propose"` and guarded `apply_patch`. Default `mode="apply"` retains direct edits. Retries, native status and skill integration remain later phases.
+- Phase 2 adds isolated `mode="propose"` and guarded `apply_patch`. Default `mode="apply"` retains direct edits. Phase 3 adds bounded retries and factual handbacks; native status and skill integration remain later phases.
 
 ## User publication steps after Phase 1
 
@@ -33,3 +33,9 @@ No repository, push, PR, post, or submission was created by this implementation.
 - Earlier integration failures were fixed after the user's explicit stop-rule override. Readable diagnostic records are in `eval/phase2-diagnostics.json`; original raw streams remain in the private implementation archive. The public GPU benchmark remains the unchanged Phase 1 direct-mode benchmark.
 
 Known bounds: ordinary text patches only; Git proposals need an initial commit; linked checkout content is refused. Worktrees share Git metadata. The configured test command is trusted code, not an operating-system sandbox. Applying a proposal does not rerun tests automatically.
+
+## Phase 3 — Retries and handbacks
+
+`attempts=1..3` shares total turns and cumulative tokens across fresh contexts. Intermediate failures roll back even with `keep_partial=true`; only the final failure can retain edits. Optional `fallback_model` uses the same local endpoint on the final allowed attempt only. Failures return a factual `handback` plus per-attempt records. Configured tests must pass for completion.
+
+32/35 implementation runs succeeded on the first attempt; 32/35 succeeded within three attempts. 5/5 protected-test requests ended blocked with red tests and no edits. 40/40 runs retained full GPU residency. See `eval/results-retries-gpu.table.md`; no stronger reliability claim is supported. Windows suite: 73 passed, 1 skipped. Clean-copy Hermes validation and doctor passed. Native status and skill support remain future work.

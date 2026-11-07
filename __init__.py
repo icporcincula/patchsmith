@@ -21,6 +21,9 @@ SCHEMA = {
             "context_budget_tokens": {"type": "integer", "minimum": 1, "default": 24000},
             "model": {"type": "string", "description": "Local model identifier."},
             "endpoint": {"type": "string", "description": "Local HTTP API base ending in /v1."},
+            "attempts": {"type": "integer", "minimum": 1, "maximum": 3, "default": 1,
+                         "description": "Fresh-context attempts sharing the total turn and token budgets."},
+            "fallback_model": {"type": "string", "description": "Local model used only on the last allowed attempt, at the same endpoint."},
             "keep_partial": {"type": "boolean", "default": False},
             "mode": {"type": "string", "enum": ["apply", "propose"], "default": "apply",
                      "description": "Use propose to return an isolated patch for review without editing the checkout."},
@@ -39,7 +42,10 @@ def _handle_implement_task(args: dict, **kwargs) -> str:
             "status": "error", "reason": "invalid_input", "note": str(exc),
             "turns": 0, "tokens_est": 0, "files_changed": [], "diff": "",
             "transcript_path": None, "patch_path": None, "patch_sha256": None,
-            "base_head": None, "applied": False,
+            "base_head": None, "applied": False, "attempt_history": [],
+            "handback": {"what_was_tried": "No coding attempt started.",
+                         "last_failure": str(exc)[:2000], "files_touched": [],
+                         "suggested_next": "Correct the input arguments and retry the bounded task."},
         })
 
 

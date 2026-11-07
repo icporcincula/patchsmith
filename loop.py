@@ -72,6 +72,8 @@ def dispatch(session, call, calls):
             return "Repeated tool call without progress.", True
         before = session.written.copy()
         output = getattr(session, name)(**values)
+        if name == "run_tests":
+            session.last_test = output
         if session.written != before:
             calls.clear()
         return output, False
@@ -94,12 +96,12 @@ def run_loop(session, client, task, turns, budget, log, result):
                "max_turns": turns, "context_budget": budget})
     for turn in range(1, turns + 1):
         prompt = estimate([messages, TOOL_SCHEMAS])
-        remaining = budget - prompt - adjustment
+        remaining = budget - result["tokens_est"] - prompt - adjustment
         if remaining <= 0:
             if session.green:
                 return "done", "auto_finish", "Tests passed after the final edit."
             return "blocked", "context_budget", "The next request would exceed the context budget."
-        result["turns"] = turn
+        result["turns"] += 1
         emit(log, {"event": "turn", "turn": turn, "context_est": prompt + adjustment})
         message, usage = client.complete(messages, TOOL_SCHEMAS, min(2048, remaining))
         observed = usage_count(usage, "prompt_tokens")
@@ -109,7 +111,7 @@ def run_loop(session, client, task, turns, budget, log, result):
         used = (observed or prompt + adjustment) + completion
         result["tokens_est"] += used
         emit(log, message)
-        if used > budget:
+        if result["tokens_est"] > budget:
             return "blocked", "context_budget", "The model response exhausted the context budget."
         messages.append(message)
         tool_calls = message.get("tool_calls", [])
@@ -153,44 +155,93 @@ def positive(value, name, ceiling=None):
     return number
 
 
-def execute(session, client, task, turns, budget, keep, log_dir=None):
+def handback(history):
+    last = history[-1]
+    reason = last.get("reason")
+    advice = {
+        "max_turns": "Split the task into a smaller change and name the target file.",
+        "context_budget": "Split the task and provide a focused failing test and file hint.",
+        "tests_failed": "Inspect the failing test output and name the implementation file to fix.",
+        "model_blocked": "Clarify the acceptance requirement and name the target file; keep tests read-only.",
+        "test_files_modified": "Provide a failing test and request changes only to implementation files.",
+    }.get(reason, "Inspect the failure, provide a focused failing test, and name the target file.")
+    return {"what_was_tried": clip("; ".join(
+                f"Attempt {r['attempt']} with {r['model']}: {r['status']} ({r.get('reason') or 'finished'}), "
+                f"{r['turns']} turns; files: {', '.join(r['files_touched']) or '(none)'}" for r in history), 2000),
+            "last_failure": clip((last.get("test_output") if last.get("test_output", "").startswith(("exit ", "Test command"))
+                                  and not last["test_output"].startswith("exit 0") else None)
+                                 or (f"Stopped: {last['status']} ({reason})." if reason == "model_blocked"
+                                     else last["note"]), 2000),
+            "files_touched": sorted({name for r in history for name in r["files_touched"]}),
+            "suggested_next": advice}
+
+
+def execute(session, client, task, turns, budget, keep, log_dir=None, attempts=1, fallback=None):
     in_place = log_dir is None
     log_dir = log_dir or session.root / TRANSCRIPTS
     if linked(log_dir):
         raise Jail("The transcript directory must not be a link.")
     log_dir.mkdir(mode=0o700, exist_ok=True)
     result = {"turns": 0, "tokens_est": 0, "files_changed": [], "diff": "", "transcript_path": None,
-              "patch_path": None, "patch_sha256": None, "base_head": None, "applied": False}
+              "patch_path": None, "patch_sha256": None, "base_head": None, "applied": False,
+              "attempt_history": [], "handback": None}
     with tempfile.NamedTemporaryFile(prefix="run-", suffix=".jsonl", dir=log_dir, mode="w",
                                      encoding="utf-8", delete=False) as log:
         result["transcript_path"] = log.name
-        before = head = None
-        try:
-            before = session.test_snapshot()
-            head = session.head()
-            result["base_head"] = head[1].strip() or None
-            status, reason, note = run_loop(session, client, task, turns, budget, log, result)
-        except Exception as exc:
-            status, reason, note = "error", "execution_error", str(exc)
-        try:
-            if before is not None:
-                changed, failures = session.restore_tests(before)
-                if changed:
-                    status, reason = "blocked", "test_files_modified"
-                    note = "Test files changed during the run: " + ", ".join(changed)
-                    if failures:
-                        note += ". Restore failed for " + ", ".join(failures)
-            if head is not None and session.head() != head:
-                if reason != "test_files_modified":
+        retry_task = task
+        for attempt in range(1, attempts + 1):
+            before = head = None
+            start_turns, start_tokens = result["turns"], result["tokens_est"]
+            active_client = fallback if fallback is not None and attempt == attempts else client
+            session.last_test = ""
+            try:
+                before = session.test_snapshot()
+                head = session.head()
+                result["base_head"] = head[1].strip() or None
+                status, reason, note = run_loop(session, active_client, retry_task,
+                                               turns - result["turns"], budget, log, result)
+                if status == "done" and session.argv and not session.green:
+                    session.last_test = session.run_tests()
+                    if not session.green:
+                        status, reason, note = "blocked", "tests_failed", "Configured tests did not pass after an edit."
+            except Exception as exc:
+                status, reason, note = "error", "execution_error", str(exc)
+            try:
+                if before is not None:
+                    changed, failures = session.restore_tests(before)
+                    if changed:
+                        status, reason = "blocked", "test_files_modified"
+                        note = "Test files changed during the run: " + ", ".join(changed)
+                        if failures:
+                            note += ". Restore failed for " + ", ".join(failures)
+                if head is not None and session.head() != head:
                     status, reason, note = "blocked", "git_state_changed", "HEAD or branch changed."
-                else:
-                    note += ". HEAD or branch also changed."
-        except Exception as exc:
-            status, reason, note = "error", "verification_error", f"{note} Verification failed: {exc}"
-        if status != "done" and not keep:
-            failures = session.rollback()
-            if failures:
-                note += ". Rollback skipped: " + ", ".join(failures)
+            except Exception as exc:
+                status, reason, note = "error", "verification_error", f"{note} Verification failed: {exc}"
+            row = {"attempt": attempt, "model": active_client.model, "status": status, "reason": reason,
+                   "note": clip(note), "turns": result["turns"] - start_turns,
+                   "tokens_est": result["tokens_est"] - start_tokens,
+                   "files_touched": sorted(session.written), "test_output": clip(session.last_test, 2000)}
+            result["attempt_history"].append(row)
+            emit(log, {"event": "attempt", **row})
+            retry = (status == "blocked" and reason not in {"test_files_modified", "git_state_changed"}
+                     and attempt < attempts and result["turns"] < turns and result["tokens_est"] < budget)
+            if status != "done" and (retry or not keep):
+                failures = session.rollback()
+                if failures:
+                    status, reason = "error", "rollback_failed"
+                    note += ". Rollback skipped: " + ", ".join(failures)
+                    row.update(status=status, reason=reason, note=clip(note))
+                    retry = False
+            if not retry:
+                break
+            retry_task = task + "\n\nPrevious attempt facts (edits were rolled back):\n" + json.dumps(handback(result["attempt_history"]))
+            # Keep the same object for proposal capture, but discard all attempt state.
+            session.original.clear()
+            session.written.clear()
+            session.created_dirs.clear()
+            session.finished = None
+            session.green = False
         try:
             result["files_changed"], result["diff"] = session.patch()
         except (OSError, Jail) as exc:
@@ -198,6 +249,8 @@ def execute(session, client, task, turns, budget, keep, log_dir=None):
         result.update(status=status, note=clip(note), applied=in_place and bool(result["files_changed"]))
         if reason:
             result["reason"] = reason
+        if status != "done":
+            result["handback"] = handback(result["attempt_history"])
         emit(log, {"event": "result", **result})
     return result
 
@@ -215,6 +268,10 @@ def implement(args):
     turns = positive(configured(args, "max_turns", "PS_MAX_TURNS", 25), "max_turns", 60)
     budget = positive(configured(args, "context_budget_tokens", "PS_CTX_BUDGET", 24000),
                       "context_budget_tokens")
+    attempts = positive(args.get("attempts", 1), "attempts", 3)
+    fallback_model = args.get("fallback_model")
+    if fallback_model is not None and (not isinstance(fallback_model, str) or not fallback_model.strip()):
+        raise ValueError("fallback_model must be a nonempty local model identifier.")
     keep = args.get("keep_partial", False)
     if type(keep) is not bool:
         raise ValueError("keep_partial must be a boolean.")
@@ -226,6 +283,7 @@ def implement(args):
     if not isinstance(command, str):
         raise ValueError("test_command must be a string.")
     client = LocalModel(endpoint, model)
+    fallback = LocalModel(endpoint, fallback_model) if fallback_model is not None else None
     with ACTIVE_LOCK:
         if root in ACTIVE:
             raise ValueError("A task is already running in this directory.")
@@ -233,8 +291,8 @@ def implement(args):
     try:
         if mode == "propose":
             from .patches import propose
-            return propose(root, client, task, turns, budget, command, keep, execute)
-        return execute(Session(root, command), client, task, turns, budget, keep)
+            return propose(root, client, task, turns, budget, command, keep, execute, attempts=attempts, fallback=fallback)
+        return execute(Session(root, command), client, task, turns, budget, keep, attempts=attempts, fallback=fallback)
     finally:
         with ACTIVE_LOCK:
             ACTIVE.remove(root)

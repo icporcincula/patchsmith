@@ -108,7 +108,7 @@ def test_repeat_guard(repo):
 
 
 def test_auto_finish(repo):
-    command = test_command("-c", "import app; assert app.value == 2")
+    command = test_command("-B", "-c", "import app; assert app.value == 2")
     with scripted(TEST, EDIT, TEST, STATUS) as (url, _):
         result = invoke(repo, url, test_command=command)
     assert (result["status"], result["reason"]) == ("done", "auto_finish")
