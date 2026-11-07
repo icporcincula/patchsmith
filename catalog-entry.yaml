@@ -19,7 +19,9 @@ description: >-
   patch, provenance record and transcript under `~/.patchsmith/proposals/`; Git worktree
   bookkeeping is created and removed in the source repository metadata; network access only to the configured local model
   endpoint (non-local endpoints are refused); no telemetry, no self-update, no stored
-  credentials.
+  credentials. Includes a namespaced delegation skill, /patchsmith status, and local run summaries
+  under ~/.patchsmith/runs with estimated token totals. Optional process-local background
+  runs return a job identifier for task_status; keep Hermes open until completion.
 maintainer: Bart Porcincula
 tier: community
 category: tools
@@ -31,6 +33,7 @@ capabilities:
   provides_tools:
     - implement_task
     - apply_patch
+    - task_status
   provides_hooks: []
   provides_middleware: []
   requires_env:

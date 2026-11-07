@@ -6,6 +6,7 @@ requires_hermes: ">=0.23.0"
 provides_tools:
   - implement_task
   - apply_patch
+  - task_status
 requires_env:
   - name: PS_ENDPOINT
     description: "Local OpenAI-compatible API base."

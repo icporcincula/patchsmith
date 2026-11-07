@@ -1,6 +1,10 @@
 """Register the local coding tool with Hermes."""
 
 import json
+from pathlib import Path
+
+from .ledger import status_command
+from .jobs import start, task_status
 
 from .loop import implement
 from .patches import apply_patch
@@ -24,6 +28,8 @@ SCHEMA = {
             "attempts": {"type": "integer", "minimum": 1, "maximum": 3, "default": 1,
                          "description": "Fresh-context attempts sharing the total turn and token budgets."},
             "fallback_model": {"type": "string", "description": "Local model used only on the last allowed attempt, at the same endpoint."},
+            "background": {"type": "boolean", "default": False,
+                           "description": "Return a process-local job_id immediately; poll task_status and keep Hermes open."},
             "keep_partial": {"type": "boolean", "default": False},
             "mode": {"type": "string", "enum": ["apply", "propose"], "default": "apply",
                      "description": "Use propose to return an isolated patch for review without editing the checkout."},
@@ -36,6 +42,11 @@ SCHEMA = {
 
 def _handle_implement_task(args: dict, **kwargs) -> str:
     try:
+        background = args.get("background", False)
+        if type(background) is not bool:
+            raise ValueError("background must be a boolean.")
+        if background:
+            return json.dumps(start(args, _handle_implement_task))
         return json.dumps(implement(args))
     except Exception as exc:
         return json.dumps({
@@ -66,6 +77,13 @@ def _handle_apply_patch(args: dict, **kwargs) -> str:
                            "patch_path": None, "base_head": None, "applied": False, "files_changed": []})
 
 
+STATUS_SCHEMA = {
+    "name": "task_status", "description": "Poll a Patchsmith background job in the same Hermes process; completed jobs include the full result.",
+    "parameters": {"type": "object", "properties": {"job_id": {"type": "string"}},
+                   "required": ["job_id"], "additionalProperties": False},
+}
+
+
 def register(ctx) -> None:
     ctx.register_tool(
         name="implement_task", toolset="patchsmith", schema=SCHEMA,
@@ -75,3 +93,9 @@ def register(ctx) -> None:
     ctx.register_tool(
         name="apply_patch", toolset="patchsmith", schema=APPLY_SCHEMA, handler=_handle_apply_patch,
     )
+
+    ctx.register_tool(name="task_status", toolset="patchsmith", schema=STATUS_SCHEMA, handler=task_status)
+    ctx.register_command("patchsmith", status_command,
+                         description="Show recent Patchsmith runs and estimated local tokens.", args_hint="status")
+    ctx.register_skill("delegate", Path(__file__).parent / "skills" / "delegate" / "SKILL.md",
+                       description="Delegate a bounded, test-verified coding change to the configured local Patchsmith model.")

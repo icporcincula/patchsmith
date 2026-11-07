@@ -5,6 +5,7 @@ import json
 import os
 from pathlib import Path
 import tempfile
+from time import monotonic
 from threading import Lock
 
 from .llm import LocalModel
@@ -255,7 +256,7 @@ def execute(session, client, task, turns, budget, keep, log_dir=None, attempts=1
     return result
 
 
-def implement(args):
+def _implement(args):
     task, workdir = args.get("task"), args.get("workdir")
     if not isinstance(task, str) or not task.strip():
         raise ValueError("task must be a nonempty string.")
@@ -296,3 +297,15 @@ def implement(args):
     finally:
         with ACTIVE_LOCK:
             ACTIVE.remove(root)
+
+
+def implement(args):
+    started = monotonic()
+    result = _implement(args)
+    from .ledger import record
+    seconds = monotonic() - started
+    result["seconds"] = seconds
+    warning = record(result, seconds, args.get("mode", "apply"))
+    if warning:
+        result["ledger_warning"] = warning
+    return result

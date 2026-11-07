@@ -127,3 +127,19 @@ No measured retry improvement in this sample. Phase 3 enforces a cumulative toke
 | blocked | 5 | 0 | 5 | 0 | 0/5 | 5/5 | 5/5 | 17 | 44.39000000001397 | 0/5 | 0/5 |
 
 Per-attempt records, failure handbacks and independent test results are in `eval/results-retries-gpu.json`, with release transcripts alongside. Timestamp and temporary Git identifiers are omitted from these release copies; full raw files remain in the private implementation archive. Numerical measurements are unchanged.
+
+## Hermes skill, status, and slow runs
+
+The plugin registers the read-only `patchsmith:delegate` skill through Hermes's skill API. Preload it with `hermes chat -s patchsmith:delegate` when starting a session. It helps the main agent choose a bounded task, name file hints and an acceptance test, prefer an isolated proposal, and use the existing `PS_MODEL` and `PS_ENDPOINT` settings. It respects existing user authorization when applying a reviewed patch.
+
+Run `/patchsmith status` inside Hermes for the last five recorded coding runs: status, turns, elapsed seconds, changed files, and saved patch path. The running total is an **estimate of local tokens**, including repeated prompt processing, with no financial claim. Old transcripts are not backfilled. Completed calls through `implement_task` are recorded once, including failed runs that reached execution; invalid inputs do not add local work. Applying a saved patch adds no model tokens and is not another coding run.
+
+Summaries are private local files under `~/.patchsmith/runs/`. They store run metadata and paths, without task text, file contents, endpoint, or credentials. Transcripts remain at their existing locations and can contain task text and source. A summary write failure returns `ledger_warning` without changing the coding result. Status reports invalid records it skips; totals cover readable records only. Removing summaries resets those totals.
+
+Hermes's installed executor has a default 420-second tool deadline, configurable by the host. Slow local runs can exceed it. Set `background: true` on `implement_task` to return a `job_id` immediately, then call `task_status` with that exact identifier in the **same Hermes process**. A completed response contains the full coding result. One background job runs at a time; the last 50 handles are retained in memory. Keep Hermes open until completion: restart, unload, or one-shot process exit is not a durable job runner and can interrupt work. Prefer proposal mode for these runs. Existing turn, token, endpoint, test, and rollback rules apply inside the worker. Synchronous calls remain the default.
+
+The command and skill are registered through the SDK, not unsupported manifest fields. `plugin.yaml` declares the three tools; registration tests and clean-copy validation verify the command and packaged skill separately.
+
+Planned hardware compatibility and contributor benchmark work is recorded in [implementation notes](docs/IMPLEMENTATION.md); it is not implemented yet.
+
+Phase 4's real skill session used Hermes skill preloading and omitted model and endpoint arguments from the coding call. Its proposal passed two independent tests in a separate copy and preserved the source checkout. Automatic skill selection failed in the first take; the successful session needed a follow-up to display the exact diff instead of a prose summary. Both takes are retained in `eval/`. Skill instructions guide the main model; they do not enforce its response formatting.

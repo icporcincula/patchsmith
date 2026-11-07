@@ -1,0 +1,68 @@
+
+✓ manifest — plugin.yaml parses
+✓ manifest fields — name, version, description present
+✓ requires_hermes — spec '>=0.23.0' parses
+✓ config schema — not declared
+✓ requires_env — all entries UPPER_SNAKE
+✓ oauth — not declared
+✓ loadable — entry: __init__.py
+✓ python dependencies — none declared
+✓ capability probe — register() ran in isolation
+✓ declared tools — matches registrations
+✓ declared hooks — matches registrations
+✓ declared middleware — matches registrations
+✓ built-in tool collisions — no collisions
+✓ security scan — safe
+✓ no core override — no runtime rebinds of Hermes core
+◆ Isolation — runs in the plugin host (plugins.isolation: host)
+
+Validation passed.
+
+Plugin Doctor: /root/ps-phase4-clean-6plxzt0h
+  manifest: patchsmith 0.1.0 (standalone)
+  OK: runtime discovery, manifest parsing, import, and registration passed
+  registrations: 3 tool(s), 0 hook(s)
+
+Fresh immutable local reinstall:
+Warning: custom (unreviewed) source — not from the Hermes catalog.
+Warning: Using insecure/local URL scheme. Consider using https:// or git@ for
+production installs.
+Cloning file:///root/ps-phase2-src.QCAvrh...
+
+patchsmith requires the following environment variables:
+
+  PS_MODEL — Local model identifier.
+  PS_MODEL:
+  Skipped (you can set these later in ~/.hermes/.env)
+
+╭──────────────────── ✓ Installed ────────────────────╮
+│ Plugin installed: file:///root/ps-phase2-src.QCAvrh │
+│ Location: /root/.hermes/plugins/patchsmith          │
+╰─────────────────────────────────────────────────────╯
+
+Replacement installed; plugin selection was not changed.
+
+
+Installed runtime file hashes match Phase 4 source.
+
+Fresh immutable local reinstall:
+Warning: custom (unreviewed) source — not from the Hermes catalog.
+Warning: Using insecure/local URL scheme. Consider using https:// or git@ for
+production installs.
+Cloning file:///root/ps-phase2-src.QCAvrh...
+
+patchsmith requires the following environment variables:
+
+  PS_MODEL — Local model identifier.
+  PS_MODEL:
+  Skipped (you can set these later in ~/.hermes/.env)
+
+╭──────────────────── ✓ Installed ────────────────────╮
+│ Plugin installed: file:///root/ps-phase2-src.QCAvrh │
+│ Location: /root/.hermes/plugins/patchsmith          │
+╰─────────────────────────────────────────────────────╯
+
+Replacement installed; plugin selection was not changed.
+
+
+Installed runtime file hashes match Phase 4 source.

@@ -35,3 +35,9 @@ def repo(tmp_path):
 
 
 collect_ignore = ["fixtures"]
+
+
+@pytest.fixture(autouse=True)
+def private_ledger(tmp_path, monkeypatch):
+    from patchsmith_plugin import ledger
+    monkeypatch.setattr(ledger, "directory", lambda: tmp_path / "local-runs")

@@ -1,0 +1,11 @@
+{
+  "skill_preloaded_via_hermes_cli": true,
+  "calls_without_model_or_endpoint": 1,
+  "source_byte_identical": true,
+  "proposal_checkout_removed": true,
+  "diff_and_path_shown_after_followup": true,
+  "independent_test_exit": 0,
+  "turns": 5,
+  "tokens_est": 5774,
+  "seconds": 8.29107088500001
+}

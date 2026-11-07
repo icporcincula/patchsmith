@@ -274,3 +274,30 @@ No measured retry improvement; no improvement claim is made. The stricter cumula
 Full original evidence, including incidental timestamp and temporary Git identifier matches in the release scan, is preserved at `C:\tmp\patchsmith-phase3-raw-20261107-160728`. Release copies omit those identifier fields only. All numerical measurements and every run are retained.
 
 Final release scan: zero forbidden matches over tracked text, all tracked text UTF-8. Staged whitespace check passed. Installed runtime and README match the final source bytes after immutable local reinstall. Original console whitespace is preserved in the private raw archive.
+
+
+## Phase 4: Hermes skill, status, and local ledger
+
+Implemented the read-only `patchsmith:delegate` skill using `PluginContext.register_skill(name, path, description)` and `/patchsmith status` using `register_command(name, handler, args_hint)`. Verified the actual installed manager resolves the namespaced skill to the packaged file and dispatches the command. Unsupported command declaration fields were excluded; the supported manifest declares exactly three tools: implement_task, apply_patch, task_status. The registration test separately verifies the command and skill.
+
+Each completed coding call records status, reason, turns, seconds, estimated local tokens, files, mode, and artifact paths under ~/.patchsmith/runs. Unique records become visible only after complete writes. Concurrent writes retain every run; invalid records are reported and excluded from totals. Ledger failures add a warning without changing completed edits. Proposal records contain the final saved patch path. Prior transcripts are not backfilled; patch application does not add another model run.
+
+Inspected `agent/tool_executor.py`: `_DEFAULT_CONCURRENT_TOOL_TIMEOUT_S = 420.0`; the sequential deadline inherits that default through `_resolve_sequential_tool_timeout`. The installed `register_tool` SDK does not expose execution_timeout. Added opt-in background=true with immediate process-local job_id and task_status polling. One background job runs at a time, up to 50 completed handles retained, no restart durability. Keep Hermes open; proposal mode is preferred. Tests verify nonblocking start, busy refusal, completion, repeated polls, invalid/expired handles, and the actual handler-loop-ledger path.
+
+Windows final command: `PYTHONDONTWRITEBYTECODE=1 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python -B -m pytest tests -q -p no:cacheprovider --tb=short`.
+
+```text
+82 passed, 1 skipped in 44.24s
+```
+
+Skill validator: `Skill is valid!`. Clean-copy validate --install-deps and doctor --ci both exited 0, safe security scan, no tool collisions, 3 tools. Actual manager resolves `/patchsmith` and `patchsmith:delegate`; the skill bytes match source. Evidence: eval/phase4-validation.txt and eval/phase4-status.txt.
+
+Real Hermes acceptance used `-s patchsmith:delegate` through the supported skill-preloading mechanism. The coding tool call omitted both model and endpoint and used existing configured defaults. One successful isolated proposal: 5 turns, 5774 estimated local tokens, 8.29107088500001 seconds. The source byte comparison passed, temporary proposal checkout was removed, and the saved patch passed 2 independent unittest tests when applied in a separate disposable copy. The original checkout stayed unchanged. Final facts are in eval/phase4-skill-gate.json; full session evidence is eval/hermes-session-skill.jsonl and .txt.
+
+Honesty and corrected checks: the initial suite found ledger status treated a file at its directory location as an empty history; fixed and rechecked. The first live take did not load the skill, invented model/endpoint overrides, and failed its local request; retained as eval/hermes-session-skill-failed.jsonl and .txt. Native skill preloading fixed the integration path. The successful coding run initially showed only a prose summary; a same-session follow-up displayed the actual returned diff and saved path without another coding run. The first resume helper used a different turn cap and was refused by Hermes before model execution; keeping the launch limit resolved it. The final response, rather than incremental text chunks, was used to verify the verbatim diff. No coding results were rerolled or omitted.
+
+The actual status command reports 2 recorded runs, including the error, and 5774 estimated local tokens. No retry reliability or speed improvement is claimed here. Phase 3's benchmark remains unchanged.
+
+Original Phase 4 evidence is also preserved privately at C:/tmp/patchsmith-phase4-raw. Release evidence keeps all identifiers and measurements; only trailing console whitespace was normalized in phase4-validation.txt and hermes-session-skill.txt. The forbidden-pattern scan over all tracked and pending release text returned zero hits before staging. Final staged checks are recorded in eval/phase4-gate.txt.
+
+The approved hardware inspection and contributor benchmark idea is recorded as a planned follow-up in docs/IMPLEMENTATION.md. Hardware detection, recommendations, downloads, and result submission are not implemented in this phase. No publication occurred.

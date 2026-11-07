@@ -1,0 +1,6 @@
+Actual Hermes plugin manager registrations: 3 tools, /patchsmith, patchsmith:delegate.
+Patchsmith: 2 recorded runs.
+5774 tokens of edit-loop work kept on this machine (estimate of local tokens).
+Last five runs:
+done | 5 turns | 8.291s | files: scorer.py | patch: /root/.patchsmith/proposals/0801afbf14994d2ba882e0c71950bcc8/patch.diff
+error | 1 turns | 0.034s | files: (none) | patch: (none)

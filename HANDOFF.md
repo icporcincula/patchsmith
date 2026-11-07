@@ -39,3 +39,6 @@ Known bounds: ordinary text patches only; Git proposals need an initial commit; 
 `attempts=1..3` shares total turns and cumulative tokens across fresh contexts. Intermediate failures roll back even with `keep_partial=true`; only the final failure can retain edits. Optional `fallback_model` uses the same local endpoint on the final allowed attempt only. Failures return a factual `handback` plus per-attempt records. Configured tests must pass for completion.
 
 32/35 implementation runs succeeded on the first attempt; 32/35 succeeded within three attempts. 5/5 protected-test requests ended blocked with red tests and no edits. 40/40 runs retained full GPU residency. See `eval/results-retries-gpu.table.md`; no stronger reliability claim is supported. Windows suite: 73 passed, 1 skipped. Clean-copy Hermes validation and doctor passed. Native status and skill support remain future work.
+
+
+Phase 4 adds `patchsmith:delegate`, `/patchsmith status`, private summary records under `~/.patchsmith/runs`, and optional process-local background calls with `task_status`. Keep Hermes open for background work; handles do not survive a restart. The hardware compatibility feature and contributor benchmark format are planned in `docs/IMPLEMENTATION.md` and remain unimplemented.

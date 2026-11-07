@@ -1,0 +1,17 @@
+Phase 4 verification
+Windows Python 3.12; offline suite with bytecode and plugin autoload disabled:
+82 passed, 1 skipped in 44.24s
+Skill validation: Skill is valid!
+Clean-copy Hermes validate --install-deps: exit 0
+Clean-copy Hermes doctor --ci: exit 0; 3 tools, no collisions
+Actual SDK registrations: implement_task, apply_patch, task_status; /patchsmith; patchsmith:delegate
+Real coding call: model and endpoint arguments omitted
+Proposal: 5 turns; 5774 estimated local tokens; 8.29107088500001 seconds
+Source byte identity and temporary checkout cleanup: passed
+Independent saved-patch tests in a separate copy: 2 tests, exit 0
+Actual command ledger: 2 runs (1 done, 1 error); 5774 estimated local tokens
+Failed discovery take retained; successful skill preloaded with -s; exact diff shown on same-session follow-up
+Private raw evidence archive: C:/tmp/patchsmith-phase4-raw
+Final tracked UTF-8 forbidden-pattern scan: zero hits
+Final staged git diff --check: passed
+Final installed runtime files, skill, README and implementation notes match source bytes
