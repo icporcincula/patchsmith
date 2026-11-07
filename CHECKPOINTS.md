@@ -88,3 +88,9 @@ Stopped at C2 under the checkpoint retry rule. C3–C6 remain pending.
 
 ## C4 — Inside Hermes
 Installed with `hermes plugins install file:///root/li-src --enable --yes-deps`; `hermes plugins show local-implementer` = enabled. First attempt failed (tool hidden behind tool_search; agent never called it). After `hermes config set tools.tool_search.enabled off`, the session in eval/hermes-session-bug1.txt: agent called `implement_task`, plugin transcript written, `python3 -m unittest -q` = OK, diff `min` -> `max`.
+
+## C6 — Final gates (clean `git clone` copy, .git removed)
+- `hermes plugins validate --install-deps`: exit 0, "Validation passed", security scan safe.
+- `doctor --ci`: OK, 1 tool registered.
+- Forbidden-word grep over tracked files: zero hits. Secret scan: only the word "token" (LLM tokens); no credentials.
+- `python -m pytest tests -q` (Windows 3.12.7): 25 passed, 1 skipped (fixtures excluded from collection).

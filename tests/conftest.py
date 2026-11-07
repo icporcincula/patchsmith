@@ -32,3 +32,6 @@ def repo(tmp_path):
     git("add", ".")
     git("commit", "-qm", "Seed")
     return root
+
+
+collect_ignore = ["fixtures"]
