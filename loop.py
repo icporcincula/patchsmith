@@ -8,6 +8,7 @@ import tempfile
 from time import monotonic
 from threading import Lock
 
+from .guards import check_workdir
 from .llm import LocalModel
 from .tools import Jail, Session, TRANSCRIPTS, clip, linked
 
@@ -263,6 +264,7 @@ def _implement(args):
     if not isinstance(workdir, str) or not workdir.strip() or not Path(workdir).is_dir():
         raise ValueError("workdir must be an existing directory.")
     root = Path(workdir).resolve(strict=True)
+    check_workdir(root)
     mode = args.get("mode", "apply")
     if mode not in {"apply", "propose"}:
         raise ValueError("mode must be apply or propose.")
@@ -276,9 +278,11 @@ def _implement(args):
     keep = args.get("keep_partial", False)
     if type(keep) is not bool:
         raise ValueError("keep_partial must be a boolean.")
-    endpoint = configured(args, "endpoint", "PS_ENDPOINT", "http://127.0.0.1:11434/v1")
+    if {"endpoint", "test_command"} & set(args):
+        raise ValueError("endpoint and test_command are owner configuration (PS_ENDPOINT, PS_TEST_COMMAND).")
+    endpoint = os.environ.get("PS_ENDPOINT") or "http://127.0.0.1:11434/v1"
     model = configured(args, "model", "PS_MODEL", "qwen3.5:9b")
-    command = configured(args, "test_command", "PS_TEST_COMMAND", "")
+    command = os.environ.get("PS_TEST_COMMAND", "")
     if not isinstance(endpoint, str) or not isinstance(model, str) or not model.strip():
         raise ValueError("endpoint and model must be nonempty strings.")
     if not isinstance(command, str):

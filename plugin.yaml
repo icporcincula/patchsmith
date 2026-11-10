@@ -1,5 +1,5 @@
 name: patchsmith
-version: "0.1.0"
+version: "0.1.1"
 description: "Proposes or applies one bounded local-model coding task, with bounded retries, failure handbacks and guarded patch application."
 author: "Bart Porcincula"
 requires_hermes: ">=0.23.0"
@@ -20,6 +20,9 @@ requires_env:
     required: false
   - name: PS_CTX_BUDGET
     description: "Default total token budget across attempts."
+    required: false
+  - name: PS_ENV_PASSTHROUGH
+    description: "Optional comma-separated variable names forwarded to subprocesses."
     required: false
   - name: PS_TEST_COMMAND
     description: "User-authorized test command."

@@ -6,8 +6,7 @@ from urllib.parse import urlsplit, urlunsplit
 from urllib.request import HTTPRedirectHandler, ProxyHandler, Request, build_opener
 
 NETWORKS = tuple(map(ipaddress.ip_network, (
-    "10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16", "169.254.0.0/16",
-    "fc00::/7", "fe80::/10",
+    "10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16", "fc00::/7",
 )))
 RESPONSE_LIMIT = 1024 * 1024
 

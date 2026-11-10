@@ -198,13 +198,9 @@ def tested_configurations(hardware, backend):
 
 def inspect_hardware(args: dict, **kwargs) -> str:
     try:
-        if not isinstance(args, dict) or set(args) - {"endpoint"}:
-            raise ValueError("Only optional endpoint is accepted.")
-        endpoint = args.get("endpoint", os.environ.get("PS_ENDPOINT", "http://127.0.0.1:11434/v1"))
-        if not isinstance(endpoint, str):
-            raise ValueError("endpoint must be a string")
-        if not endpoint.strip():
-            endpoint = os.environ.get("PS_ENDPOINT", "http://127.0.0.1:11434/v1")
+        if not isinstance(args, dict) or args:
+            raise ValueError("No arguments are accepted; the endpoint comes only from PS_ENDPOINT.")
+        endpoint = os.environ.get("PS_ENDPOINT") or "http://127.0.0.1:11434/v1"
         local_url(endpoint)
         host = host_inventory()
         backend = backend_inventory(endpoint)

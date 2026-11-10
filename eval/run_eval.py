@@ -108,10 +108,20 @@ def one(plugin, fixture, args, run_index):
         if baseline["returncode"] in (0, None):
             raise RuntimeError(f"{fixture}: fixture must begin with failing tests")
         call = {"task": TASKS[fixture], "workdir": str(work),
-                "test_command": command_line(test_argv(fixture)),
-                "model": args.model, "endpoint": args.endpoint, "attempts": getattr(args, "attempts", 1)}
+                "model": args.model, "attempts": getattr(args, "attempts", 1)}
         started = time.monotonic()
-        res = json.loads(plugin._handle_implement_task(call))
+        saved = {k: os.environ.get(k) for k in ("PS_ENDPOINT", "PS_TEST_COMMAND")}
+        test_command = command_line(test_argv(fixture))
+        os.environ["PS_ENDPOINT"] = args.endpoint
+        os.environ["PS_TEST_COMMAND"] = test_command
+        try:
+            res = json.loads(plugin._handle_implement_task(call))
+        finally:
+            for k, v in saved.items():
+                if v is None:
+                    os.environ.pop(k, None)
+                else:
+                    os.environ[k] = v
         secs = time.monotonic() - started
         try:
             gpu = gpu_evidence(args.endpoint, args.model) if args.require_gpu else None
@@ -124,7 +134,7 @@ def one(plugin, fixture, args, run_index):
                "green": tests["returncode"] == 0, "independent_tests": tests,
                "baseline_tests": baseline, "files_changed": res["files_changed"],
                "diff": res["diff"], "attempt_history": res.get("attempt_history", []),
-               "handback": res.get("handback"), "gpu": gpu, "test_command": call["test_command"]}
+               "handback": res.get("handback"), "gpu": gpu, "test_command": test_command}
         if res.get("transcript_path"):
             transcript = Path(res["transcript_path"])
             if args.out:

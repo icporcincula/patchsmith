@@ -14,6 +14,8 @@ import subprocess
 import tempfile
 from dataclasses import dataclass
 
+from .guards import child_env, protected_target
+
 OUT_LIMIT = 6000
 TRANSCRIPTS = ".patchsmith"
 HIDDEN = {".git", "node_modules", ".ship", TRANSCRIPTS}
@@ -126,6 +128,8 @@ class Session:
         if write:
             if resolved == self.root:
                 raise Jail("Expected a file path.")
+            if protected_target(raw.relative_to(self.root)) or protected_target(relative):
+                raise Jail(f"Protected write target (.env* and .ssh/ are never written): {name}")
             if TEST_RE.search(raw.relative_to(self.root).as_posix()) or TEST_RE.search(relative.as_posix()):
                 raise Jail(f"Test files are read-only: {name}")
             self.check_parents(raw)
@@ -141,7 +145,7 @@ class Session:
                 raise Jail(f"Writing through a linked directory is refused: {parent.name}")
 
     def git(self, *args: str, optional: bool = False, input_data: bytes | None = None) -> str:
-        env = {key: value for key, value in os.environ.items() if not key.upper().startswith("GIT_")}
+        env = child_env()
         env.update(GIT_OPTIONAL_LOCKS="0", GIT_NO_LAZY_FETCH="1", GIT_TERMINAL_PROMPT="0",
                    GIT_ALLOW_PROTOCOL="")
         result = subprocess.run(
@@ -309,7 +313,7 @@ class Session:
             return "No test command configured."
         with tempfile.TemporaryFile() as output:
             try:
-                result = subprocess.run(self.argv, cwd=self.root, stdout=output,
+                result = subprocess.run(self.argv, cwd=self.root, env=child_env(), stdout=output,
                                         stderr=subprocess.STDOUT, timeout=300, shell=False, check=False)
             except subprocess.TimeoutExpired:
                 return "Test command timed out after 300 seconds."

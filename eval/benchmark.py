@@ -134,7 +134,8 @@ def main():
     if not args.out or args.out.exists():
         parser.error("--out must name a new directory; prior evidence is never overwritten")
     plugin = run_eval.load_plugin()
-    inventory = json.loads(plugin.inspect_hardware({"endpoint": args.endpoint}))
+    os.environ["PS_ENDPOINT"] = args.endpoint
+    inventory = json.loads(plugin.inspect_hardware({}))
     if inventory["status"] != "done":
         parser.error("Local hardware/backend inventory failed")
     args.out.mkdir(parents=True)

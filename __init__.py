@@ -14,7 +14,7 @@ SCHEMA = {
     "name": "implement_task",
     "description": (
         "Implement one precise coding task using a bounded local model and return its diff. "
-        "Pass only a test command the user has authorized to execute in this checkout."
+        "Tests run only the owner-configured PS_TEST_COMMAND; the endpoint comes only from PS_ENDPOINT."
     ),
     "parameters": {
         "type": "object",
@@ -22,10 +22,8 @@ SCHEMA = {
             "task": {"type": "string", "description": "Precise coding task."},
             "workdir": {"type": "string", "description": "Existing working directory."},
             "max_turns": {"type": "integer", "minimum": 1, "maximum": 60, "default": 25},
-            "test_command": {"type": "string", "description": "User-authorized command line."},
             "context_budget_tokens": {"type": "integer", "minimum": 1, "default": 24000},
             "model": {"type": "string", "description": "Local model identifier."},
-            "endpoint": {"type": "string", "description": "Local HTTP API base ending in /v1."},
             "attempts": {"type": "integer", "minimum": 1, "maximum": 3, "default": 1,
                          "description": "Fresh-context attempts sharing the total turn and token budgets."},
             "fallback_model": {"type": "string", "description": "Local model used only on the last allowed attempt, at the same endpoint."},
@@ -43,6 +41,9 @@ SCHEMA = {
 
 def _handle_implement_task(args: dict, **kwargs) -> str:
     try:
+        banned = sorted({"endpoint", "test_command"} & set(args))
+        if banned:
+            raise ValueError(f"{', '.join(banned)} cannot be set per call; the owner configures PS_ENDPOINT and PS_TEST_COMMAND.")
         background = args.get("background", False)
         if type(background) is not bool:
             raise ValueError("background must be a boolean.")
@@ -88,9 +89,7 @@ STATUS_SCHEMA = {
 HARDWARE_SCHEMA = {
     "name": "inspect_hardware",
     "description": "Read CPU, RAM, GPU/VRAM and configured local model inventory; compare tested evidence and conservative weight-memory estimates. No downloads or uploads.",
-    "parameters": {"type": "object", "properties": {"endpoint": {
-        "type": "string", "description": "Optional configured local API base; omit or leave empty to use PS_ENDPOINT."}},
-        "additionalProperties": False},
+    "parameters": {"type": "object", "properties": {}, "additionalProperties": False},
 }
 
 

@@ -42,7 +42,7 @@ def test_estimates_are_not_runtime_guarantees_or_pooled_cards():
 def test_hardware_handler_rejects_cloud_before_any_probe(monkeypatch):
     def forbidden(): raise AssertionError("must not probe")
     monkeypatch.setattr(hardware, "host_inventory", forbidden)
-    for args in ({"endpoint": "https://example.com/v1"}, {"endpoint": 3}, {"download": True}, None):
+    for args in ({"endpoint": "https://example.com/v1"}, {"endpoint": 3}, {"endpoint": ""}, {"download": True}, None):
         assert json.loads(hardware.inspect_hardware(args))["status"] == "error"
 
 
@@ -158,7 +158,7 @@ def test_blocked_guardrail_requires_no_edits():
     with pytest.raises(ValueError): bench.validate_report(r)
 
 
-def test_empty_optional_endpoint_uses_configured_endpoint(monkeypatch):
+def test_endpoint_comes_only_from_configuration(monkeypatch):
     monkeypatch.setenv("PS_ENDPOINT", "http://172.20.0.1:11434/v1")
     monkeypatch.setattr(hardware, "host_inventory", host)
     seen = []
@@ -166,5 +166,5 @@ def test_empty_optional_endpoint_uses_configured_endpoint(monkeypatch):
         seen.append(endpoint)
         return backend()
     monkeypatch.setattr(hardware, "backend_inventory", configured)
-    assert json.loads(hardware.inspect_hardware({"endpoint": ""}))["status"] == "done"
+    assert json.loads(hardware.inspect_hardware({}))["status"] == "done"
     assert seen == ["http://172.20.0.1:11434/v1"]

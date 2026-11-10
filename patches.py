@@ -9,9 +9,10 @@ import shutil
 import stat
 import uuid
 
+from .guards import check_workdir, data_root
 from .tools import Jail, Session, capture, clip, linked
 
-ARTIFACT_ROOT = Path.home() / ".patchsmith" / "proposals"
+ARTIFACT_ROOT = data_root() / "proposals"
 
 
 class Refused(ValueError):
@@ -170,6 +171,10 @@ def apply_patch(args):
         root = Path(record["workdir"])
         if not root.is_absolute() or root.resolve(strict=True) != root:
             raise Refused("invalid_patch", "The original workdir moved or became a link.")
+        try:
+            check_workdir(root)
+        except ValueError as exc:
+            raise Refused("invalid_patch", str(exc)) from None
         source = Session(root, "")
         with ACTIVE_LOCK:
             if root in ACTIVE:

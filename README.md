@@ -20,22 +20,23 @@ You need a local OpenAI-compatible server with a tool-calling model, for example
 | `PS_MODEL` | `qwen3.5:9b` | Model identifier |
 | `PS_MAX_TURNS` | `25` | Model turns per task (hard cap 60) |
 | `PS_CTX_BUDGET` | `24000` | Approximate token budget for the whole run |
-| `PS_TEST_COMMAND` | none | Test command the model may run |
+| `PS_TEST_COMMAND` | none | Owner-set test command; the model can only run it, never choose it |
+| `PS_ENV_PASSTHROUGH` | none | Comma-separated extra variable names forwarded to test and git subprocesses (they otherwise get a minimal environment: PATH, HOME, LANG, TMPDIR, SYSTEMROOT/PATHEXT) |
 
-Each can also be passed as an argument of the tool call. If Hermes runs in WSL and Ollama on Windows, point `PS_ENDPOINT` at the Windows host address.
+`PS_MODEL`, `PS_MAX_TURNS` and `PS_CTX_BUDGET` can also be passed as tool arguments; `PS_ENDPOINT` and `PS_TEST_COMMAND` are owner-only. If Hermes runs in WSL and Ollama on Windows, point `PS_ENDPOINT` at the Windows host address.
 
 ## The tool
 
-`implement_task(task, workdir, max_turns?, test_command?, context_budget_tokens?, model?, endpoint?, keep_partial?, mode?, attempts?, fallback_model?)` returns JSON:
+`implement_task(task, workdir, max_turns?, context_budget_tokens?, model?, keep_partial?, mode?, attempts?, fallback_model?)` returns JSON:
 `status` (`done` / `blocked` / `error`), `reason`, `turns`, `tokens_est`, `files_changed`, `diff`, `note`, `transcript_path`, `patch_path`, `patch_sha256`, `base_head`, `applied`, `attempt_history`, `handback`.
 
 ## Propose, review, apply
 
 Set `mode="propose"` to run the full loop in a temporary detached Git worktree. A plain directory is copied instead. Dirty, ignored and untracked files are copied so the model sees the current bytes. Linked checkout content is refused. The temporary checkout is removed when the run finishes, including on failure. Your original checkout receives no code, transcript or patch writes during proposal generation.
 
-A successful proposal returns its diff, `patch_path`, SHA-256 in `patch_sha256`, `base_head`, and `applied: false`. The complete patch and provenance record live beside the transcript under `~/.patchsmith/proposals/<id>/`. The returned diff may be clipped; the saved patch is complete. Only ordinary text patches are supported.
+A successful proposal returns its diff, `patch_path`, SHA-256 in `patch_sha256`, `base_head`, and `applied: false`. The complete patch and provenance record live beside the transcript under `<hermes home>/plugin-data/patchsmith/proposals/<id>/`. The returned diff may be clipped; the saved patch is complete. Only ordinary text patches are supported.
 
-1. Call `implement_task(task=..., workdir=..., test_command=..., mode="propose")`.
+1. Call `implement_task(task=..., workdir=..., mode="propose")`.
 2. Show the returned diff for review and obtain the user's approval.
 3. Call `apply_patch(patch_path=...)` with that exact saved path.
 
@@ -64,7 +65,7 @@ Every run returns `attempt_history` with status, reason, model, turns, tokens, f
 - **Revert on failure.** `blocked` / `error` runs revert the files they touched unless `keep_partial` is true.
 - **HEAD/branch check.** A run that moves HEAD or branch is `blocked`.
 - **Network.** Only the configured local endpoint; non-local endpoints are refused. No telemetry.
-- The agent should pass only a `test_command` the user authorized: it executes in your checkout.
+- The test command and endpoint are owner configuration (`PS_TEST_COMMAND`, `PS_ENDPOINT`); neither is a tool argument. Subprocesses get a minimal environment, `workdir` may not be the Hermes home, the user home or a filesystem root, and `.env*` / `.ssh/` targets are never written. Link-local addresses (including the cloud metadata address) are refused as endpoints.
 
 ## Reliability (measured)
 
@@ -134,7 +135,7 @@ The plugin registers the read-only `patchsmith:delegate` skill through Hermes's 
 
 Run `/patchsmith status` inside Hermes for the last five recorded coding runs: status, turns, elapsed seconds, changed files, and saved patch path. The running total is an **estimate of local tokens**, including repeated prompt processing, with no financial claim. Old transcripts are not backfilled. Completed calls through `implement_task` are recorded once, including failed runs that reached execution; invalid inputs do not add local work. Applying a saved patch adds no model tokens and is not another coding run.
 
-Summaries are private local files under `~/.patchsmith/runs/`. They store run metadata and paths, without task text, file contents, endpoint, or credentials. Transcripts remain at their existing locations and can contain task text and source. A summary write failure returns `ledger_warning` without changing the coding result. Status reports invalid records it skips; totals cover readable records only. Removing summaries resets those totals.
+Summaries are private local files under `<hermes home>/plugin-data/patchsmith/runs/`. They store run metadata and paths, without task text, file contents, endpoint, or credentials. Transcripts remain at their existing locations and can contain task text and source. A summary write failure returns `ledger_warning` without changing the coding result. Status reports invalid records it skips; totals cover readable records only. Removing summaries resets those totals.
 
 Hermes's installed executor has a default 420-second tool deadline, configurable by the host. Slow local runs can exceed it. Set `background: true` on `implement_task` to return a `job_id` immediately, then call `task_status` with that exact identifier in the **same Hermes process**. A completed response contains the full coding result. One background job runs at a time; the last 50 handles are retained in memory. Keep Hermes open until completion: restart, unload, or one-shot process exit is not a durable job runner and can interrupt work. Prefer proposal mode for these runs. Existing turn, token, endpoint, test, and rollback rules apply inside the worker. Synchronous calls remain the default.
 

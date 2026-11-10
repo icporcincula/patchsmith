@@ -8,13 +8,14 @@ from pathlib import Path
 from threading import Lock
 from uuid import uuid4
 
+from .guards import data_root
 from .tools import linked
 
 LOCK = Lock()
 
 
 def directory():
-    return Path.home() / ".patchsmith" / "runs"
+    return data_root() / "runs"
 
 
 def record(result, seconds, mode):

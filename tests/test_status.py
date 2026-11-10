@@ -109,19 +109,20 @@ def test_bad_job_and_handler_input():
     assert json.loads(PLUGIN._handle_implement_task({"background": "yes"}))["reason"] == "invalid_input"
 
 
-def test_background_handler_runs_loop_and_records_once(repo):
+def test_background_handler_runs_loop_and_records_once(repo, monkeypatch):
     import threading
     with scripted(EDIT, FINISH) as (url, _):
+        monkeypatch.setenv("PS_ENDPOINT", url)
         job = json.loads(PLUGIN._handle_implement_task({
             "task": "Set app.py value to 2", "workdir": str(repo),
-            "endpoint": url, "model": "scripted", "background": True,
+            "model": "scripted", "background": True,
         }))
         assert job["status"] == "running"
         for worker in threading.enumerate():
             if worker.name == "patchsmith-" + job["job_id"]: worker.join(5)
         result = json.loads(jobs.task_status({"job_id": job["job_id"]}))
     assert result["status"] == "completed"
-    assert result["result"]["status"] == "done"
+    assert result["result"]["status"] == "done", result["result"]
     records, skipped = ledger.summaries()
     assert len(records) == 1 and skipped == 0
     assert records[0]["tokens_est"] == result["result"]["tokens_est"]

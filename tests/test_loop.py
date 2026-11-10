@@ -1,6 +1,7 @@
 from contextlib import contextmanager
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
+import os
 from pathlib import Path
 import shlex
 import socket
@@ -57,9 +58,24 @@ def scripted(*steps):
 
 
 def invoke(root, endpoint, **options):
-    return json.loads(_handle_implement_task({
-        "task": "Make the value 2.", "workdir": str(root), "endpoint": endpoint, **options,
-    }))
+    """Endpoint and test command are owner configuration, so they travel as environment."""
+    command = options.pop("test_command", None)
+    saved = {k: os.environ.get(k) for k in ("PS_ENDPOINT", "PS_TEST_COMMAND")}
+    os.environ["PS_ENDPOINT"] = endpoint
+    if command is None:
+        os.environ.pop("PS_TEST_COMMAND", None)
+    else:
+        os.environ["PS_TEST_COMMAND"] = command
+    try:
+        return json.loads(_handle_implement_task({
+            "task": "Make the value 2.", "workdir": str(root), **options,
+        }))
+    finally:
+        for k, v in saved.items():
+            if v is None:
+                os.environ.pop(k, None)
+            else:
+                os.environ[k] = v
 
 
 def test_command(*args):
