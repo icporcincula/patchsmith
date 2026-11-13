@@ -11,6 +11,7 @@ report whether tests actually ran and passed.
 
 ## 2026-11-13
 
+- Bumped the Codex plugin manifest to 0.2.0 for the new feature set.
 - Added sequential, proposal-only comparison of two local models.
 - Added a process-local task queue and Codex queue/poll tools.
 - Added an explicit verification outcome and test output to coding results.
