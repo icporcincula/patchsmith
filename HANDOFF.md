@@ -1,5 +1,9 @@
 # Patchsmith handoff
 
+## Current
+
+Patchsmith is public at `icporcincula/patchsmith`. See [publishing instructions](docs/PUBLISHING.md) for the protected-branch and catalog workflows. `implement_task` defaults to an isolated proposal; pass `mode="apply"` for direct edits.
+
 ## Green increments
 
 - Phase 0: renamed the plugin/toolset, configuration and transcript directory to Patchsmith. The tool remains `implement_task`; the source directory remains unchanged. Five Hermes environment settings now use `PS_` with no legacy fallback.
@@ -12,9 +16,9 @@
 - Hermes may hide tools behind tool_search. The earlier passing local-model session used `hermes config set tools.tool_search.enabled off`.
 - WSL reaches Ollama on Windows through its gateway address. Configure `PS_ENDPOINT` in `~/.hermes/.env`; the existing plugin-owned settings were renamed in place without exposing their values.
 - `PS_MODEL`, `PS_MAX_TURNS`, `PS_CTX_BUDGET`, and `PS_TEST_COMMAND` are optional. The benchmark used default budgets and explicitly selected `qwen3.5:9b`.
-- Phase 2 adds isolated `mode="propose"` and guarded `apply_patch`. Default `mode="apply"` retains direct edits. Phase 3 adds bounded retries and factual handbacks; Phase 4 provides native status and skills.
+- Phase 2 added isolated `mode="propose"` and guarded `apply_patch`. Phase 3 adds bounded retries and factual handbacks; Phase 4 provides native status and skills.
 
-## User publication steps after Phase 1
+## Historical publication plan after Phase 1
 
 1. Create the Patchsmith repository and push the green code when ready. The directory rename is yours to do.
 2. Replace `<USER>` and the SHA placeholder in `catalog-entry.yaml` with the public repository and exact 40-character commit.
@@ -47,7 +51,7 @@ Phase 4 adds `patchsmith:delegate`, `/patchsmith status`, private summary record
 
 Adds inspect_hardware (four declared tools total), patchsmith:hardware, benchmarks/tested.json, and the reproducible eval/benchmark.py command documented in benchmarks/README.md. Hardware matching and memory estimates make no new reliability claims. No public publication or model installation occurs. Phase 5 is now complete; final delivery preparation is next.
 
-## Local repository and remote handoff
+## Historical local repository and remote handoff
 
 The local Git repository uses `main` and preserves all implementation commits and phase tags. `docs/PUBLISHING.md` gives the commands for connecting an empty remote, pushing source, and filling the catalog placeholders. Local secrets, private plans, generated state and the video workspace are ignored. No remote or public submission has been created.
 

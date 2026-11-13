@@ -7,7 +7,7 @@ from .hardware import inspect_hardware
 from .ledger import status_command
 from .jobs import start, task_status
 
-from .loop import implement
+from .loop import DEFAULT_MODE, implement
 from .patches import apply_patch
 
 SCHEMA = {
@@ -30,8 +30,8 @@ SCHEMA = {
             "background": {"type": "boolean", "default": False,
                            "description": "Return a process-local job_id immediately; poll task_status and keep Hermes open."},
             "keep_partial": {"type": "boolean", "default": False},
-            "mode": {"type": "string", "enum": ["apply", "propose"], "default": "apply",
-                     "description": "Use propose to return an isolated patch for review without editing the checkout."},
+            "mode": {"type": "string", "enum": ["apply", "propose"], "default": DEFAULT_MODE,
+                     "description": "Propose an isolated patch for review by default. Use apply to edit the checkout directly."},
         },
         "required": ["task", "workdir"],
         "additionalProperties": False,

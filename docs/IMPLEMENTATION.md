@@ -2,7 +2,9 @@
 
 ## Current scope
 
-Phases 0 through 4 and the additional hardware/community-benchmark phase are complete. Phase 4 adds a Hermes delegation skill, recent-run status, and a local token ledger. Phase 5 is complete; its measured candidate was reverted after a fixture success regression. Final delivery preparation follows the latest green phase.
+Patchsmith is published at `icporcincula/patchsmith`. Proposal mode is the default for synchronous and background runs. The tool schema, runtime and ledger use the same default; the benchmark runner explicitly selects direct apply to preserve its measurement protocol. File editing, post-test restoration and patch application share the protected test-path policy. GitHub CI checks lint, byte-compilation and the offline tests on Windows and Linux.
+
+Phases 0 through 4 and the additional hardware/community-benchmark phase are complete. Phase 4 adds a Hermes delegation skill, recent-run status, and a local token ledger. Phase 5 is complete; its measured candidate was reverted after a fixture success regression.
 
 ## Additional phase: hardware compatibility and community benchmarks
 

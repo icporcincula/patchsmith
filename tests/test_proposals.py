@@ -106,7 +106,10 @@ def test_apply_refuses_tampered_patch(repo):
     assert snapshot(repo) == before
 
 
-@pytest.mark.parametrize("target", ["test_app.py", "src/x.spec.tsx", "../escape.py", ".git/config", "node_modules/x.js"])
+@pytest.mark.parametrize("target", [
+    "test_app.py", "app_test.py", "conftest.py", "service_test.go",
+    "src/x.spec.tsx", "../escape.py", ".git/config", "node_modules/x.js",
+])
 def test_actual_patch_paths_are_jailed_even_with_matching_hash(repo, target):
     result = propose(repo)
     path = Path(result["patch_path"])

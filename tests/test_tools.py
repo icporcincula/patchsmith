@@ -7,7 +7,9 @@ from patchsmith_plugin.tools import Jail, Session, clip
 
 @pytest.mark.parametrize("path", ["../outside", ".git/config", "node_modules/a", ".ship/a",
                                   ".patchsmith/a", "test_app.py", "src/x.spec.tsx",
-                                  "lib/tests/helper.py", "x/__tests__/fixture.json"])
+                                  "lib/tests/helper.py", "x/__tests__/fixture.json",
+                                  "app_test.py", "Conftest.py", "service_test.go",
+                                  "src/range.test.mjs", "test/fixture.json"])
 def test_refused_write(repo, path):
     with pytest.raises(Jail):
         Session(repo, "").write_file(path, "bad")
@@ -16,6 +18,13 @@ def test_refused_write(repo, path):
 def test_absolute_outside(repo):
     with pytest.raises(Jail):
         Session(repo, "").read_file(str(repo.parent / "outside"))
+
+
+def test_source_files_with_test_in_name_are_writable(repo):
+    session = Session(repo, "")
+    for name in ("src/contest.py", "src/testament.py", "src/testing/helper.py"):
+        session.write_file(name, "source")
+    assert session.test_snapshot().keys() == {"test_app.py"}
 
 
 def test_symlink_escape_and_test_alias(repo):
