@@ -11,6 +11,7 @@ from .loop import DEFAULT_MODE, implement
 from .patches import apply_patch
 from .preflight import inspect_tool
 from .revision import revise_tool
+from .comparison import compare_tool
 
 SCHEMA = {
     "name": "implement_task",
@@ -107,6 +108,14 @@ REVISION_SCHEMA = {
         "required": ["patch_path", "task", "feedback"], "additionalProperties": False},
 }
 
+COMPARISON_SCHEMA = {
+    "name": "compare_models", "description": "Run the same task through two local models sequentially in separate isolated proposals.",
+    "parameters": {"type": "object", "properties": {
+        "task": {"type": "string"}, "workdir": {"type": "string"},
+        "models": {"type": "array", "items": {"type": "string"}, "minItems": 2, "maxItems": 2}},
+        "required": ["task", "workdir", "models"], "additionalProperties": False},
+}
+
 
 def register(ctx) -> None:
     ctx.register_tool(
@@ -127,5 +136,6 @@ def register(ctx) -> None:
     ctx.register_tool(name="inspect_hardware", toolset="patchsmith", schema=HARDWARE_SCHEMA, handler=inspect_hardware)
     ctx.register_tool(name="task_preflight", toolset="patchsmith", schema=PREFLIGHT_SCHEMA, handler=inspect_tool)
     ctx.register_tool(name="revise_proposal", toolset="patchsmith", schema=REVISION_SCHEMA, handler=revise_tool)
+    ctx.register_tool(name="compare_models", toolset="patchsmith", schema=COMPARISON_SCHEMA, handler=compare_tool)
     ctx.register_skill("hardware", Path(__file__).parent / "skills" / "hardware" / "SKILL.md",
                        description="Inspect local hardware, distinguish tested configurations from memory estimates, and prepare reproducible contributor benchmarks.")

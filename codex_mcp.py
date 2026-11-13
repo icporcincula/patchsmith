@@ -67,6 +67,13 @@ async def list_tools():
         description="Poll a process-local queued or running Patchsmith task.",
         inputSchema={"type": "object", "properties": {"job_id": {"type": "string"}},
                      "required": ["job_id"], "additionalProperties": False},
+    ), Tool(
+        name="compare_models",
+        description="Compare two local models on the same task using separate isolated proposals.",
+        inputSchema={"type": "object", "properties": {
+            "task": {"type": "string", "minLength": 1}, "workdir": {"type": "string"},
+            "models": {"type": "array", "items": {"type": "string"}, "minItems": 2, "maxItems": 2}},
+            "required": ["task", "workdir", "models"], "additionalProperties": False},
     )]
 
 
@@ -76,6 +83,9 @@ async def call_tool(name, arguments):
         import json
         from patchsmith_codex.jobs import task_status
         return json.loads(task_status(arguments))
+    if name == "compare_models":
+        from patchsmith_codex.comparison import compare
+        return await asyncio.to_thread(compare, arguments)
     if name == "queue_task":
         import json
         from patchsmith_codex.jobs import start

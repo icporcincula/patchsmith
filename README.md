@@ -35,6 +35,7 @@ Codex also exposes read-only `recent_runs` and `inspect_hardware` tools.
 For a slow task, use `queue_task(task, workdir)` and poll `task_status(job_id)` in the same Codex process. Up to ten tasks wait in a process-local FIFO queue; one runs at a time.
 Run `task_preflight(workdir)` to check the project, trusted test command and local endpoint before delegation. A reachable endpoint does not prove the selected model is loaded or suitable.
 Use `revise_proposal(patch_path, task, feedback)` to make a new proposal after review. Provide the full task again; the original checkout must still match the saved proposal. The previous patch is context only, and the new diff needs its own review.
+Use `compare_models(task, workdir, models=["model-a", "model-b"])` to run the same task sequentially through two local models. It returns both proposal results, including verification, timing and token estimates. No patch is selected or applied automatically.
 
 ### Hermes
 

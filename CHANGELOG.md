@@ -8,6 +8,7 @@ The Codex desktop beta exposes the local proposal workflow through MCP.
 
 ## 2026-11-13
 
+- Added sequential, proposal-only comparison of two local models.
 - Added a process-local task queue and Codex queue/poll tools.
 - Added an explicit verification outcome and test output to coding results.
 - Added proposal revision from a saved patch and reviewer feedback.

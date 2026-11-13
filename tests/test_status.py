@@ -72,7 +72,7 @@ def test_registrations_and_packaged_skill():
         def register_skill(self, name, path, **kw): self.skills[name] = path
     ctx = Context()
     PLUGIN.register(ctx)
-    assert set(ctx.tools) == {"implement_task", "apply_patch", "task_status", "inspect_hardware", "task_preflight", "revise_proposal"}
+    assert set(ctx.tools) == {"implement_task", "apply_patch", "task_status", "inspect_hardware", "task_preflight", "revise_proposal", "compare_models"}
     assert set(ctx.commands) == {"patchsmith"}
     assert ctx.commands["patchsmith"]("status").startswith("Patchsmith:")
     assert set(ctx.skills) == {"delegate", "hardware"}
