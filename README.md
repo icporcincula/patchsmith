@@ -62,6 +62,7 @@ For per-project defaults, run `python -B profile_cli.py <absolute-project-path> 
 
 `implement_task(task, workdir, max_turns?, context_budget_tokens?, model?, keep_partial?, mode?, attempts?, fallback_model?)` returns JSON:
 `status` (`done` / `blocked` / `error`), `reason`, `turns`, `tokens_est`, `files_changed`, `diff`, `note`, `transcript_path`, `patch_path`, `patch_sha256`, `base_head`, `applied`, `attempt_history`, `handback`.
+The `verification` object states `passed`, `failed`, `not_run`, or `not_configured`, with clipped test output. A `done` result without configured tests is explicitly unverified.
 
 ## Propose, review, apply
 

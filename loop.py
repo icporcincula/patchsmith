@@ -251,6 +251,12 @@ def execute(session, client, task, turns, budget, keep, log_dir=None, attempts=1
         except (OSError, Jail) as exc:
             note += f". Could not read the final patch: {exc}"
         result.update(status=status, note=clip(note), applied=in_place and bool(result["files_changed"]))
+        final_test = result["attempt_history"][-1]["test_output"] if result["attempt_history"] else ""
+        outcome = ("not_configured" if not session.argv else
+                   "passed" if final_test.startswith("exit 0\n") and status == "done" else
+                   "failed" if final_test else "not_run")
+        result["verification"] = {"outcome": outcome, "configured": bool(session.argv),
+                                  "test_output": final_test or None}
         if reason:
             result["reason"] = reason
         if status != "done":
