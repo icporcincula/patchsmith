@@ -26,7 +26,7 @@ def test_codex_stdio_proposes_verified_patch_without_editing_checkout(repo, tmp_
         async with stdio_client(params) as (reader, writer):
             async with ClientSession(reader, writer) as session:
                 await session.initialize()
-                assert [tool.name for tool in (await session.list_tools()).tools] == ["implement_task", "recent_runs", "inspect_hardware"]
+                assert [tool.name for tool in (await session.list_tools()).tools] == ["implement_task", "recent_runs", "inspect_hardware", "task_preflight"]
                 arguments = {"task": "Make the value 2.", "workdir": str(repo)}
                 refused = await session.call_tool("implement_task", {**arguments, "mode": "apply"})
                 assert refused.isError

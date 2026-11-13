@@ -32,6 +32,7 @@ diff for review.” Codex exposes `implement_task(task, workdir)`, where
 `~/.patchsmith/proposals/`. Codex can apply an approved patch as a separate
 action. The Hermes instructions below cover the Hermes-specific apply tool.
 Codex also exposes read-only `recent_runs` and `inspect_hardware` tools.
+Run `task_preflight(workdir)` to check the project, trusted test command and local endpoint before delegation. A reachable endpoint does not prove the selected model is loaded or suitable.
 
 ### Hermes
 

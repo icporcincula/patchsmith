@@ -9,6 +9,7 @@ from .jobs import start, task_status
 
 from .loop import DEFAULT_MODE, implement
 from .patches import apply_patch
+from .preflight import inspect_tool
 
 SCHEMA = {
     "name": "implement_task",
@@ -92,6 +93,12 @@ HARDWARE_SCHEMA = {
     "parameters": {"type": "object", "properties": {}, "additionalProperties": False},
 }
 
+PREFLIGHT_SCHEMA = {
+    "name": "task_preflight", "description": "Check checkout, configured tests and local model endpoint before a task; makes no edits.",
+    "parameters": {"type": "object", "properties": {"workdir": {"type": "string"}},
+                   "required": ["workdir"], "additionalProperties": False},
+}
+
 
 def register(ctx) -> None:
     ctx.register_tool(
@@ -110,5 +117,6 @@ def register(ctx) -> None:
                        description="Delegate a bounded, test-verified coding change to the configured local Patchsmith model.")
 
     ctx.register_tool(name="inspect_hardware", toolset="patchsmith", schema=HARDWARE_SCHEMA, handler=inspect_hardware)
+    ctx.register_tool(name="task_preflight", toolset="patchsmith", schema=PREFLIGHT_SCHEMA, handler=inspect_tool)
     ctx.register_skill("hardware", Path(__file__).parent / "skills" / "hardware" / "SKILL.md",
                        description="Inspect local hardware, distinguish tested configurations from memory estimates, and prepare reproducible contributor benchmarks.")

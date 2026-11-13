@@ -45,11 +45,19 @@ async def list_tools():
         name="inspect_hardware",
         description="Inspect local hardware and configured model inventory without downloading anything.",
         inputSchema={"type": "object", "properties": {}, "additionalProperties": False},
+    ), Tool(
+        name="task_preflight",
+        description="Check project, test command and local endpoint readiness without editing files.",
+        inputSchema={"type": "object", "properties": {"workdir": {"type": "string"}},
+                     "required": ["workdir"], "additionalProperties": False},
     )]
 
 
 @server.call_tool()
 async def call_tool(name, arguments):
+    if name == "task_preflight":
+        from patchsmith_codex.preflight import inspect
+        return await asyncio.to_thread(inspect, arguments["workdir"])
     if name == "recent_runs":
         from patchsmith_codex.ledger import summaries
         rows, skipped = await asyncio.to_thread(summaries)
