@@ -163,6 +163,7 @@ class Session:
             ["git", "-c", "core.fsmonitor=false", "-c", "core.untrackedCache=false",
              "-c", "core.autocrlf=false",
              "--literal-pathspecs", *args], cwd=self.root, env=env, capture_output=True, input=input_data,
+            stdin=subprocess.DEVNULL if input_data is None else None,
             timeout=30, check=False,
         )
         if result.returncode and not optional:
@@ -325,7 +326,8 @@ class Session:
         with tempfile.TemporaryFile() as output:
             try:
                 result = subprocess.run(self.argv, cwd=self.root, env=child_env(), stdout=output,
-                                        stderr=subprocess.STDOUT, timeout=300, shell=False, check=False)
+                                        stdin=subprocess.DEVNULL, stderr=subprocess.STDOUT,
+                                        timeout=300, shell=False, check=False)
             except subprocess.TimeoutExpired:
                 return "Test command timed out after 300 seconds."
             size = output.tell()

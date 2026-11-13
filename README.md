@@ -1,10 +1,38 @@
 # patchsmith
 
-A Hermes plugin with `implement_task` for bounded local coding and `apply_patch` for applying a reviewed proposal. Your main agent hands a **single, well-specified coding task** to a **local model** (served through a local OpenAI-compatible endpoint; only Ollama has been measured). The local model edits the code under hard budgets and the tool returns the diff.
+A local coding plugin for Hermes and a Codex desktop beta. Your main agent hands a **single, well-specified coding task** to a **local model** (served through a local OpenAI-compatible endpoint; only Ollama has been measured). The local model edits the code under hard budgets and the tool returns the diff.
 
 Why: the expensive model keeps its context and tokens for planning and review. The mechanical edit-run-fix loop runs on your own machine, with zero API spend and no code leaving it.
 
 ## Install
+
+### Codex desktop beta
+
+Clone this repository and install the server dependency into the Python 3.12+
+interpreter that Codex can find as `python`. Git must also be on PATH.
+
+```sh
+python -m pip install -r requirements-codex.txt
+codex plugin marketplace add .
+```
+
+From the repository root, run the commands above. In the desktop app's Plugins
+directory, choose the **Patchsmith** marketplace and install **Patchsmith**.
+Restart the app if the marketplace does not appear, then open a new local
+Codex chat in the target project.
+
+Start a local tool-calling model, for example Ollama with `qwen3.5:9b`.
+Set any needed `PS_*` environment variables before launching Codex.
+`PS_TEST_COMMAND` should be a trusted command suitable for the selected
+checkout. Without it, the result is unverified.
+
+Try asking Codex: “Use Patchsmith to propose a fix for this bug. Show me the
+diff for review.” Codex exposes `implement_task(task, workdir)`, where
+`workdir` is an absolute project path. The tool saves proposals under
+`~/.patchsmith/proposals/`. Codex can apply an approved patch as a separate
+action. The Hermes instructions below cover the Hermes-specific apply tool.
+
+### Hermes
 
 ```
 hermes plugins install icporcincula/patchsmith --enable

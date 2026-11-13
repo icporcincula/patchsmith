@@ -6,6 +6,19 @@ Patchsmith is published at `icporcincula/patchsmith`. Proposal mode is the defau
 
 Phases 0 through 4 and the additional hardware/community-benchmark phase are complete. Phase 4 adds a Hermes delegation skill, recent-run status, and a local token ledger. Phase 5 is complete; its measured candidate was reverted after a fixture success regression.
 
+## Codex desktop beta
+
+The repo marketplace installs the same Python engine behind a local stdio MCP
+server. Its only tool accepts a task and an absolute checkout path, fixes the
+mode to `propose`, and returns the existing engine result as MCP structured
+content and JSON text. The Codex entry point defaults `PS_DATA_DIR` to
+`~/.patchsmith` before loading the engine. Hermes retains its per-profile
+storage default. Tests and the endpoint come from the process environment.
+
+The stdio regression test starts the packaged entry point and a scripted
+loopback model. It checks that the server rejects an apply-mode override and
+returns a tested patch while preserving the source file.
+
 ## Additional phase: hardware compatibility and community benchmarks
 
 Implemented after Phase 4 at the user's request: inspect_hardware, the patchsmith:hardware skill, an evidence-linked tested registry and eval/benchmark.py for contributor bundles. No downloads or uploads are performed.

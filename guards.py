@@ -34,6 +34,8 @@ def hermes_home() -> Path:
 
 def data_root() -> Path:
     """Per-profile plugin data directory."""
+    if directory := os.environ.get("PS_DATA_DIR"):
+        return Path(directory).expanduser()
     return hermes_home() / "plugin-data" / "patchsmith"
 
 

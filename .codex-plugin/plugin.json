@@ -1,0 +1,7 @@
+{
+  "name": "patchsmith",
+  "version": "0.1.0",
+  "description": "Delegate a bounded coding task to a local model and review the proposed patch.",
+  "mcpServers": "./.mcp.json",
+  "requires_local_executor": true
+}

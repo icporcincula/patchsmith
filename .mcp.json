@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "patchsmith": {
+      "command": "python",
+      "args": ["-B", "${PLUGIN_ROOT}/codex_mcp.py"],
+      "cwd": "${PLUGIN_ROOT}",
+      "tool_timeout_sec": 420,
+      "env_vars": ["PS_ENDPOINT", "PS_MODEL", "PS_TEST_COMMAND", "PS_MAX_TURNS", "PS_CTX_BUDGET", "PS_ENV_PASSTHROUGH"]
+    }
+  }
+}
