@@ -4,7 +4,10 @@
 
 Pull requests to `main` are checked on Windows and Linux and merged manually by the maintainer. Coding tasks produce isolated proposals by default.
 
-The Codex desktop beta exposes the local proposal workflow through MCP.
+The Codex desktop beta exposes proposal generation, revision, comparison,
+preflight, status, hardware inspection and a process-local task queue through
+MCP. Owner-managed project profiles set per-checkout defaults. Coding results
+report whether tests actually ran and passed.
 
 ## 2026-11-13
 

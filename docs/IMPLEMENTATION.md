@@ -9,11 +9,16 @@ Phases 0 through 4 and the additional hardware/community-benchmark phase are com
 ## Codex desktop beta
 
 The repo marketplace installs the same Python engine behind a local stdio MCP
-server. Its only tool accepts a task and an absolute checkout path, fixes the
-mode to `propose`, and returns the existing engine result as MCP structured
-content and JSON text. The Codex entry point defaults `PS_DATA_DIR` to
+server. Coding tools require an absolute checkout path and fix the mode to
+`propose`. The server also exposes run summaries, hardware inspection, task
+preflight, proposal revision, a process-local FIFO queue and two-model
+comparison. The Codex entry point defaults `PS_DATA_DIR` to
 `~/.patchsmith` before loading the engine. Hermes retains its per-profile
-storage default. Tests and the endpoint come from the process environment.
+storage default. The endpoint comes from the process environment. The trusted
+test command and model can be set by an owner-managed project profile outside
+the checkout, with environment variables taking precedence. Coding results
+include an explicit verification outcome. Revision and comparison create new
+isolated proposals; neither selects or applies a patch.
 
 The stdio regression test starts the packaged entry point and a scripted
 loopback model. It checks that the server rejects an apply-mode override and

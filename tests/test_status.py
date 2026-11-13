@@ -126,7 +126,7 @@ def test_background_handler_runs_loop_and_records_once(repo, tmp_path, monkeypat
         }))
         assert job["status"] == "running"
         for worker in threading.enumerate():
-            if worker.name == "patchsmith-" + job["job_id"]: worker.join(5)
+            if worker.name == "patchsmith-queue": worker.join(5)
         result = json.loads(jobs.task_status({"job_id": job["job_id"]}))
     assert result["status"] == "completed"
     assert result["result"]["status"] == "done", result["result"]
