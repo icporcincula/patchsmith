@@ -92,7 +92,9 @@ def test_background_nonblocking_busy_completion_and_repeat_poll():
     result = jobs.start({"background": True}, handler)
     try:
         assert result["status"] == "running" and entered.wait(1)
-        assert jobs.start({}, handler)["reason"] == "job_busy"
+        queued = jobs.start({}, handler)
+        assert queued["status"] == "queued"
+        assert json.loads(jobs.task_status({"job_id": queued["job_id"]}))["status"] == "queued"
         assert json.loads(jobs.task_status({"job_id": result["job_id"]}))["status"] == "running"
     finally:
         release.set()
@@ -100,10 +102,11 @@ def test_background_nonblocking_busy_completion_and_repeat_poll():
     # Joining the named worker establishes completion without polling sleeps.
     import threading
     for worker in threading.enumerate():
-        if worker.name == "patchsmith-" + result["job_id"]: worker.join(2)
+        if worker.name == "patchsmith-queue": worker.join(2)
     poll = json.loads(jobs.task_status({"job_id": result["job_id"]}))
     assert poll["status"] == "completed" and poll["result"]["tokens_est"] == 10
     assert json.loads(jobs.task_status({"job_id": result["job_id"]})) == poll
+    assert json.loads(jobs.task_status({"job_id": queued["job_id"]}))["status"] == "completed"
 
 
 def test_bad_job_and_handler_input():

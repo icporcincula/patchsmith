@@ -56,11 +56,33 @@ async def list_tools():
         inputSchema={"type": "object", "properties": {
             "patch_path": {"type": "string"}, "task": {"type": "string"}, "feedback": {"type": "string"}},
             "required": ["patch_path", "task", "feedback"], "additionalProperties": False},
+    ), Tool(
+        name="queue_task",
+        description="Queue one proposal-only coding task and return a job ID for polling.",
+        inputSchema={"type": "object", "properties": {
+            "task": {"type": "string", "minLength": 1}, "workdir": {"type": "string"}},
+            "required": ["task", "workdir"], "additionalProperties": False},
+    ), Tool(
+        name="task_status",
+        description="Poll a process-local queued or running Patchsmith task.",
+        inputSchema={"type": "object", "properties": {"job_id": {"type": "string"}},
+                     "required": ["job_id"], "additionalProperties": False},
     )]
 
 
 @server.call_tool()
 async def call_tool(name, arguments):
+    if name == "task_status":
+        import json
+        from patchsmith_codex.jobs import task_status
+        return json.loads(task_status(arguments))
+    if name == "queue_task":
+        import json
+        from patchsmith_codex.jobs import start
+        from patchsmith_codex.loop import implement
+        if not Path(arguments["workdir"]).is_absolute():
+            raise ValueError("workdir must be absolute.")
+        return start({**arguments, "mode": "propose"}, lambda values: json.dumps(implement(values)))
     if name == "task_preflight":
         from patchsmith_codex.preflight import inspect
         return await asyncio.to_thread(inspect, arguments["workdir"])

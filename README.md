@@ -32,6 +32,7 @@ diff for review.” Codex exposes `implement_task(task, workdir)`, where
 `~/.patchsmith/proposals/`. Codex can apply an approved patch as a separate
 action. The Hermes instructions below cover the Hermes-specific apply tool.
 Codex also exposes read-only `recent_runs` and `inspect_hardware` tools.
+For a slow task, use `queue_task(task, workdir)` and poll `task_status(job_id)` in the same Codex process. Up to ten tasks wait in a process-local FIFO queue; one runs at a time.
 Run `task_preflight(workdir)` to check the project, trusted test command and local endpoint before delegation. A reachable endpoint does not prove the selected model is loaded or suitable.
 Use `revise_proposal(patch_path, task, feedback)` to make a new proposal after review. Provide the full task again; the original checkout must still match the saved proposal. The previous patch is context only, and the new diff needs its own review.
 
@@ -175,13 +176,15 @@ Per-attempt records, failure handbacks and independent test results are in `eval
 
 ## Hermes skill, status, and slow runs
 
+Hermes background tasks also use the process-local FIFO queue. Up to ten tasks can wait while one runs. Queue and handles disappear when the host exits.
+
 The plugin registers the read-only `patchsmith:delegate` skill through Hermes's skill API. Preload it with `hermes chat -s patchsmith:delegate` when starting a session. It helps the main agent choose a bounded task, name file hints and an acceptance test, prefer an isolated proposal, and use the existing `PS_MODEL` and `PS_ENDPOINT` settings. It respects existing user authorization when applying a reviewed patch.
 
 Run `/patchsmith status` inside Hermes for the last five recorded coding runs: status, turns, elapsed seconds, changed files, and saved patch path. The running total is an **estimate of local tokens**, including repeated prompt processing, with no financial claim. Old transcripts are not backfilled. Completed calls through `implement_task` are recorded once, including failed runs that reached execution; invalid inputs do not add local work. Applying a saved patch adds no model tokens and is not another coding run.
 
 Summaries are private local files under `<hermes home>/plugin-data/patchsmith/runs/`. They store run metadata and paths, without task text, file contents, endpoint, or credentials. Transcripts remain at their existing locations and can contain task text and source. A summary write failure returns `ledger_warning` without changing the coding result. Status reports invalid records it skips; totals cover readable records only. Removing summaries resets those totals.
 
-Hermes's installed executor has a default 420-second tool deadline, configurable by the host. Slow local runs can exceed it. Set `background: true` on `implement_task` to return a `job_id` immediately, then call `task_status` with that exact identifier in the **same Hermes process**. A completed response contains the full coding result. One background job runs at a time; the last 50 handles are retained in memory. Keep Hermes open until completion: restart, unload, or one-shot process exit is not a durable job runner and can interrupt work. Prefer proposal mode for these runs. Existing turn, token, endpoint, test, and rollback rules apply inside the worker. Synchronous calls remain the default.
+Hermes's installed executor has a default 420-second tool deadline, configurable by the host. Slow local runs can exceed it. Set `background: true` on `implement_task` to return a `job_id` immediately, then call `task_status` with that exact identifier in the **same Hermes process**. A completed response contains the full coding result. One background job runs at a time; up to ten more wait in the queue. The last 50 completed handles are retained in memory. Keep Hermes open until completion: restart, unload, or one-shot process exit is not a durable job runner and can interrupt work. Prefer proposal mode for these runs. Existing turn, token, endpoint, test, and rollback rules apply inside the worker. Synchronous calls remain the default.
 
 The command and skill are registered through the SDK, not unsupported manifest fields. `plugin.yaml` declares four tools; registration tests and clean-copy validation verify the command and packaged skill separately.
 
