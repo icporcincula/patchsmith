@@ -10,6 +10,7 @@ from .jobs import start, task_status
 from .loop import DEFAULT_MODE, implement
 from .patches import apply_patch
 from .preflight import inspect_tool
+from .revision import revise_tool
 
 SCHEMA = {
     "name": "implement_task",
@@ -99,6 +100,13 @@ PREFLIGHT_SCHEMA = {
                    "required": ["workdir"], "additionalProperties": False},
 }
 
+REVISION_SCHEMA = {
+    "name": "revise_proposal", "description": "Create a fresh isolated proposal from a saved patch and review feedback; original checkout stays untouched.",
+    "parameters": {"type": "object", "properties": {
+        "patch_path": {"type": "string"}, "task": {"type": "string"}, "feedback": {"type": "string"}},
+        "required": ["patch_path", "task", "feedback"], "additionalProperties": False},
+}
+
 
 def register(ctx) -> None:
     ctx.register_tool(
@@ -118,5 +126,6 @@ def register(ctx) -> None:
 
     ctx.register_tool(name="inspect_hardware", toolset="patchsmith", schema=HARDWARE_SCHEMA, handler=inspect_hardware)
     ctx.register_tool(name="task_preflight", toolset="patchsmith", schema=PREFLIGHT_SCHEMA, handler=inspect_tool)
+    ctx.register_tool(name="revise_proposal", toolset="patchsmith", schema=REVISION_SCHEMA, handler=revise_tool)
     ctx.register_skill("hardware", Path(__file__).parent / "skills" / "hardware" / "SKILL.md",
                        description="Inspect local hardware, distinguish tested configurations from memory estimates, and prepare reproducible contributor benchmarks.")

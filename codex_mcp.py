@@ -50,6 +50,12 @@ async def list_tools():
         description="Check project, test command and local endpoint readiness without editing files.",
         inputSchema={"type": "object", "properties": {"workdir": {"type": "string"}},
                      "required": ["workdir"], "additionalProperties": False},
+    ), Tool(
+        name="revise_proposal",
+        description="Create a new isolated proposal from a saved patch, full task and review feedback.",
+        inputSchema={"type": "object", "properties": {
+            "patch_path": {"type": "string"}, "task": {"type": "string"}, "feedback": {"type": "string"}},
+            "required": ["patch_path", "task", "feedback"], "additionalProperties": False},
     )]
 
 
@@ -58,6 +64,9 @@ async def call_tool(name, arguments):
     if name == "task_preflight":
         from patchsmith_codex.preflight import inspect
         return await asyncio.to_thread(inspect, arguments["workdir"])
+    if name == "revise_proposal":
+        from patchsmith_codex.revision import revise
+        return await asyncio.to_thread(revise, arguments)
     if name == "recent_runs":
         from patchsmith_codex.ledger import summaries
         rows, skipped = await asyncio.to_thread(summaries)

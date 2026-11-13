@@ -33,6 +33,7 @@ diff for review.” Codex exposes `implement_task(task, workdir)`, where
 action. The Hermes instructions below cover the Hermes-specific apply tool.
 Codex also exposes read-only `recent_runs` and `inspect_hardware` tools.
 Run `task_preflight(workdir)` to check the project, trusted test command and local endpoint before delegation. A reachable endpoint does not prove the selected model is loaded or suitable.
+Use `revise_proposal(patch_path, task, feedback)` to make a new proposal after review. Provide the full task again; the original checkout must still match the saved proposal. The previous patch is context only, and the new diff needs its own review.
 
 ### Hermes
 

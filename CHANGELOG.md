@@ -8,6 +8,7 @@ The Codex desktop beta exposes the local proposal workflow through MCP.
 
 ## 2026-11-13
 
+- Added proposal revision from a saved patch and reviewer feedback.
 - Added a read-only task preflight for Hermes and Codex.
 - Exposed recent-run summaries and hardware inspection through the Codex MCP server.
 - Added owner-managed per-project test and model profiles in private plugin storage.
