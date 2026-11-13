@@ -37,11 +37,27 @@ async def list_tools():
             "required": ["task", "workdir"],
             "additionalProperties": False,
         },
+    ), Tool(
+        name="recent_runs",
+        description="Read the last five local Patchsmith run summaries and estimated token total.",
+        inputSchema={"type": "object", "properties": {}, "additionalProperties": False},
+    ), Tool(
+        name="inspect_hardware",
+        description="Inspect local hardware and configured model inventory without downloading anything.",
+        inputSchema={"type": "object", "properties": {}, "additionalProperties": False},
     )]
 
 
 @server.call_tool()
 async def call_tool(name, arguments):
+    if name == "recent_runs":
+        from patchsmith_codex.ledger import summaries
+        rows, skipped = await asyncio.to_thread(summaries)
+        return {"runs": rows[:5], "total_tokens_est": sum(row["tokens_est"] for row in rows), "skipped": skipped}
+    if name == "inspect_hardware":
+        import json
+        from patchsmith_codex.hardware import inspect_hardware
+        return json.loads(await asyncio.to_thread(inspect_hardware, {}))
     if name != "implement_task":
         raise ValueError(f"Unknown Patchsmith tool: {name}")
     if not Path(arguments["workdir"]).is_absolute():

@@ -31,6 +31,7 @@ diff for review.” Codex exposes `implement_task(task, workdir)`, where
 `workdir` is an absolute project path. The tool saves proposals under
 `~/.patchsmith/proposals/`. Codex can apply an approved patch as a separate
 action. The Hermes instructions below cover the Hermes-specific apply tool.
+Codex also exposes read-only `recent_runs` and `inspect_hardware` tools.
 
 ### Hermes
 
