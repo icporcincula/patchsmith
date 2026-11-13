@@ -53,6 +53,8 @@ You need a local OpenAI-compatible server with a tool-calling model, for example
 
 `PS_MODEL`, `PS_MAX_TURNS` and `PS_CTX_BUDGET` can also be passed as tool arguments; `PS_ENDPOINT` and `PS_TEST_COMMAND` are owner-only. If Hermes runs in WSL and Ollama on Windows, point `PS_ENDPOINT` at the Windows host address.
 
+For per-project defaults, run `python -B profile_cli.py <absolute-project-path> --test-command "python -m pytest" --model qwen3.5:9b` from this repository. Profiles live in private Patchsmith data, outside the project checkout. An explicit `PS_TEST_COMMAND` or `PS_MODEL` overrides the profile; a per-call model overrides both. Configure only commands you trust.
+
 ## The tool
 
 `implement_task(task, workdir, max_turns?, context_budget_tokens?, model?, keep_partial?, mode?, attempts?, fallback_model?)` returns JSON:

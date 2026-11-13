@@ -8,6 +8,7 @@ The Codex desktop beta exposes the local proposal workflow through MCP.
 
 ## 2026-11-13
 
+- Added owner-managed per-project test and model profiles in private plugin storage.
 - Added the Codex plugin marketplace, a proposal-only MCP tool and a stdio regression test.
 - Defaulted coding tasks to proposal mode and preserved explicit direct apply for benchmarks and callers that need it.
 - Protected additional Python, Go, and JavaScript/TypeScript test files and conventional test directories.
