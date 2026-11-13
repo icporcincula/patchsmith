@@ -108,7 +108,7 @@ def one(plugin, fixture, args, run_index):
         if baseline["returncode"] in (0, None):
             raise RuntimeError(f"{fixture}: fixture must begin with failing tests")
         call = {"task": TASKS[fixture], "workdir": str(work),
-                "model": args.model, "attempts": getattr(args, "attempts", 1)}
+                "model": args.model, "attempts": getattr(args, "attempts", 1), "mode": "apply"}
         started = time.monotonic()
         saved = {k: os.environ.get(k) for k in ("PS_ENDPOINT", "PS_TEST_COMMAND")}
         test_command = command_line(test_argv(fixture))

@@ -1,0 +1,26 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+        types_or: [python, yaml]
+      - id: end-of-file-fixer
+        types_or: [python, yaml]
+  - repo: local
+    hooks:
+      - id: lint
+        name: Lint Python
+        entry: python -m ruff check
+        language: system
+        types: [python]
+      - id: compile
+        name: Compile Python
+        entry: python -m compileall -q
+        language: system
+        types: [python]
+      - id: test
+        name: Run offline tests
+        entry: python -B -m pytest tests -q --disable-plugin-autoload -p no:cacheprovider --tb=short
+        language: system
+        pass_filenames: false
+        always_run: true

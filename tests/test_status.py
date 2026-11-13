@@ -49,12 +49,15 @@ def test_ledger_failure_does_not_change_result(repo, monkeypatch):
     assert "unavailable" in ledger.status_command()
 
 
-def test_proposal_recorded_once_with_final_path(repo, tmp_path, monkeypatch):
+def test_default_proposal_recorded_once_with_final_path(repo, tmp_path, monkeypatch):
     monkeypatch.setattr(patches, "ARTIFACT_ROOT", tmp_path / "proposals")
     with scripted(EDIT, FINISH) as (url, _):
-        result = invoke(repo, url, mode="propose")
+        result = invoke(repo, url, mode=None)
     rows, _ = ledger.summaries()
+    assert PLUGIN.SCHEMA["parameters"]["properties"]["mode"]["default"] == "propose"
+    assert result["status"] == "done" and not result["applied"] and result["patch_path"]
     assert len(rows) == 1
+    assert rows[0]["mode"] == "propose"
     assert rows[0]["patch_path"] == result["patch_path"]
     assert rows[0]["tokens_est"] == result["tokens_est"]
     assert rows[0]["seconds"] == result["seconds"]
@@ -109,8 +112,9 @@ def test_bad_job_and_handler_input():
     assert json.loads(PLUGIN._handle_implement_task({"background": "yes"}))["reason"] == "invalid_input"
 
 
-def test_background_handler_runs_loop_and_records_once(repo, monkeypatch):
+def test_background_handler_runs_loop_and_records_once(repo, tmp_path, monkeypatch):
     import threading
+    monkeypatch.setattr(patches, "ARTIFACT_ROOT", tmp_path / "proposals")
     with scripted(EDIT, FINISH) as (url, _):
         monkeypatch.setenv("PS_ENDPOINT", url)
         job = json.loads(PLUGIN._handle_implement_task({
@@ -126,4 +130,6 @@ def test_background_handler_runs_loop_and_records_once(repo, monkeypatch):
     records, skipped = ledger.summaries()
     assert len(records) == 1 and skipped == 0
     assert records[0]["tokens_est"] == result["result"]["tokens_est"]
-    assert (repo / "app.py").read_bytes() == b"value = 2\n"
+    assert not result["result"]["applied"] and result["result"]["patch_path"]
+    assert records[0]["mode"] == "propose"
+    assert (repo / "app.py").read_bytes() == b"value = 1\n"

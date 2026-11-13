@@ -7,7 +7,7 @@ Why: the expensive model keeps its context and tokens for planning and review. T
 ## Install
 
 ```
-hermes plugins install <owner>/patchsmith --enable
+hermes plugins install icporcincula/patchsmith --enable
 ```
 
 You need a local OpenAI-compatible server with a tool-calling model, for example `ollama pull qwen3.5:9b`.
@@ -32,17 +32,17 @@ You need a local OpenAI-compatible server with a tool-calling model, for example
 
 ## Propose, review, apply
 
-Set `mode="propose"` to run the full loop in a temporary detached Git worktree. A plain directory is copied instead. Dirty, ignored and untracked files are copied so the model sees the current bytes. Linked checkout content is refused. The temporary checkout is removed when the run finishes, including on failure. Your original checkout receives no code, transcript or patch writes during proposal generation.
+By default, `implement_task` runs in a temporary detached Git worktree and returns a proposal. For a plain directory, it uses a temporary copy. Dirty, ignored and untracked files are copied so the model sees the current bytes. Linked checkout content is refused. The temporary checkout is removed when the run finishes, including on failure. Your original checkout receives no code, transcript or patch writes during proposal generation.
 
 A successful proposal returns its diff, `patch_path`, SHA-256 in `patch_sha256`, `base_head`, and `applied: false`. The complete patch and provenance record live beside the transcript under `<hermes home>/plugin-data/patchsmith/proposals/<id>/`. The returned diff may be clipped; the saved patch is complete. Only ordinary text patches are supported.
 
-1. Call `implement_task(task=..., workdir=..., mode="propose")`.
+1. Call `implement_task(task=..., workdir=...)`.
 2. Show the returned diff for review and obtain the user's approval.
 3. Call `apply_patch(patch_path=...)` with that exact saved path.
 
 `apply_patch` verifies the stored hash, original HEAD and branch, affected file bytes/modes and index entries. It validates the patch's actual paths against the same jail and test-file restrictions as the coding loop, then runs `git apply --check` before applying. A stale or tampered patch is refused; unrelated local edits are preserved. The result reports `applied: true` only after application. Tests run in the isolated proposal; rerun the authorized tests after applying if you need verification against later unrelated edits.
 
-The default `mode="apply"` retains direct-edit behavior and existing rollback rules. Git-backed proposals require an initial commit. Storage must be outside the chosen workdir. Detached worktrees share repository metadata; the configured test command remains trusted code, not an operating-system sandbox.
+Pass `mode="apply"` explicitly to edit the checkout directly under the existing rollback rules. Git-backed proposals require an initial commit. Storage must be outside the chosen workdir. Detached worktrees share repository metadata, and the configured test command runs with your local permissions.
 
 ## Retries and failure handback
 
@@ -58,7 +58,7 @@ Every run returns `attempt_history` with status, reason, model, turns, tokens, f
 
 - **No shell.** The model has only: `read_file`, `grep`, `glob`, `git_status`, `git_diff`, `write_file`, `edit_file`, `run_tests`, `finish`. `run_tests` runs only the configured test command.
 - **Path jail.** Writes outside `workdir`, through links, or under `.git` / `node_modules` are refused.
-- **Test files are read-only.** If they change anyway they are restored and the run is `blocked` (`test_files_modified`).
+- **Test files are read-only.** This covers `test/`, `tests/`, `__tests__/`, Python's `test_*.py`, `*_test.py` and `conftest.py`, Go's `*_test.go`, and JavaScript/TypeScript `.test` and `.spec` files. If a configured test command modifies a protected file, Patchsmith restores it and blocks the run (`test_files_modified`).
 - **Budgets.** Shared total turn and token budgets end the run as `blocked`.
 - **Repeat guard.** The same tool call three times without progress ends the run.
 - **Auto-finish.** Green tests after an edit end the run as `done`, so a small model cannot talk itself out of a fix.
@@ -106,7 +106,17 @@ Use `implement_task` for bounded, precisely specified edits that have a test com
 
 ## Development
 
-`python -m pytest tests -q` (offline; uses a scripted fake model server). License: MIT.
+Use Python 3.12 for the same development environment as CI.
+
+```sh
+python -m pip install -r requirements-dev.txt
+python -m pre_commit install
+python -B -m pytest tests -q --disable-plugin-autoload -p no:cacheprovider --tb=short
+```
+
+The test suite uses a scripted loopback server and runs without Hermes, Ollama or a GPU. GitHub Actions runs lint, byte-compilation and the offline suite on Linux and Windows. Maintainers merge pull requests into protected `main` manually.
+
+Released under the MIT license.
 
 ## Retry evaluation (Phase 3)
 
@@ -162,7 +172,7 @@ See [benchmark guidance](benchmarks/README.md) for CPU/partial-offload runs, rep
 
 ## Source publication
 
-See [publishing instructions](docs/PUBLISHING.md) for connecting the local repository to an empty remote and pinning the catalog entry to a pushed source commit.
+See [publishing instructions](docs/PUBLISHING.md) for updating the Hermes catalog entry from a verified Patchsmith commit.
 
 ## Speed and context experiment (Phase 5)
 

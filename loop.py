@@ -13,6 +13,7 @@ from .llm import LocalModel
 from .tools import Jail, Session, TRANSCRIPTS, clip, linked
 
 BRIEF = Path(__file__).with_name("brief.md")
+DEFAULT_MODE = "propose"
 ACTIVE = set()
 ACTIVE_LOCK = Lock()
 TOOLS = (
@@ -265,7 +266,7 @@ def _implement(args):
         raise ValueError("workdir must be an existing directory.")
     root = Path(workdir).resolve(strict=True)
     check_workdir(root)
-    mode = args.get("mode", "apply")
+    mode = args.get("mode", DEFAULT_MODE)
     if mode not in {"apply", "propose"}:
         raise ValueError("mode must be apply or propose.")
     turns = positive(configured(args, "max_turns", "PS_MAX_TURNS", 25), "max_turns", 60)
@@ -309,7 +310,7 @@ def implement(args):
     from .ledger import record
     seconds = monotonic() - started
     result["seconds"] = seconds
-    warning = record(result, seconds, args.get("mode", "apply"))
+    warning = record(result, seconds, args.get("mode", DEFAULT_MODE))
     if warning:
         result["ledger_warning"] = warning
     return result

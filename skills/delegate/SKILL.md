@@ -9,7 +9,7 @@ Use implement_task for a focused implementation change with a known test command
 
 Identify the checkout, implementation file hints, failing test name, and observable acceptance condition. Pass a test command authorized by the user for this checkout. Tests are read-only to the local loop. If a test command is unknown, inspect project instructions or ask for the missing command rather than inventing one.
 
-Prefer mode="propose". Omit model and endpoint arguments so the plugin uses the configured PS_MODEL and PS_ENDPOINT; never guess an address or switch to a hosted provider. Existing defaults also supply turn and token budgets. Use attempts only when a fresh context may help; attempts share one total budget.
+Use the default proposal mode for review. Omit model and endpoint arguments so the plugin uses the configured PS_MODEL and PS_ENDPOINT; never guess an address or switch to a hosted provider. Existing defaults also supply turn and token budgets. Use attempts only when a fresh context may help; attempts share one total budget.
 
 Example task: "Fix normalize_name in names.py. test_names.py::test_spaces currently fails. Collapse repeated spaces and trim the ends; preserve letter case. Acceptance: the configured test suite passes. Do not edit tests."
 

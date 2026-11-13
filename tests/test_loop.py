@@ -57,7 +57,7 @@ def scripted(*steps):
             worker.join()
 
 
-def invoke(root, endpoint, **options):
+def invoke(root, endpoint, *, mode="apply", **options):
     """Endpoint and test command are owner configuration, so they travel as environment."""
     command = options.pop("test_command", None)
     saved = {k: os.environ.get(k) for k in ("PS_ENDPOINT", "PS_TEST_COMMAND")}
@@ -67,9 +67,10 @@ def invoke(root, endpoint, **options):
     else:
         os.environ["PS_TEST_COMMAND"] = command
     try:
-        return json.loads(_handle_implement_task({
-            "task": "Make the value 2.", "workdir": str(root), **options,
-        }))
+        args = {"task": "Make the value 2.", "workdir": str(root), **options}
+        if mode is not None:
+            args["mode"] = mode
+        return json.loads(_handle_implement_task(args))
     finally:
         for k, v in saved.items():
             if v is None:
@@ -153,15 +154,17 @@ def test_bad_directory_and_nonlocal_endpoint(repo):
 
 
 def test_restores_tampered_tests(repo):
+    (repo / "conftest.py").write_bytes(b"# original fixtures\n")
     command = test_command(
         "-c", "from pathlib import Path; Path('test_app.py').write_text('changed'); "
-        "Path('test_new.py').write_text('new')",
+        "Path('conftest.py').unlink(); Path('service_test.go').write_text('new')",
     )
     with scripted(EDIT, TEST, FINISH) as (url, _):
         result = invoke(repo, url, test_command=command)
     assert result["reason"] == "test_files_modified"
     assert (repo / "test_app.py").read_bytes() == b"assert True\n"
-    assert not (repo / "test_new.py").exists()
+    assert (repo / "conftest.py").read_bytes() == b"# original fixtures\n"
+    assert not (repo / "service_test.go").exists()
     assert (repo / "app.py").read_bytes() == b"value = 1\n"
 
 

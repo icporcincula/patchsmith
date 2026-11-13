@@ -1,11 +1,11 @@
 name: patchsmith
-repo: https://github.com/<USER>/patchsmith
-sha: 0000000000000000000000000000000000000000
+repo: https://github.com/icporcincula/patchsmith
+sha: 537b1e4cdf4c7bed03b22cb949f4513e0d88e670
 title: Patchsmith
 description: >-
   Adds `implement_task` and `apply_patch`. The first hands a single well-specified coding task to a local
   model served through Ollama (the measured backend) and returns the resulting
-  diff. Propose mode runs in an isolated temporary checkout, preserves the source checkout,
+  diff. The default propose mode runs in an isolated temporary checkout, preserves the source checkout,
   and saves a full patch for review. The second tool applies an approved saved patch only
   after hash, base, affected-file and path checks. The local model works inside a fixed toolset with no shell (read, grep, glob, git
   status/diff, write/edit, run the configured test command, finish) under hard turn and
@@ -30,7 +30,7 @@ tier: community
 category: tools
 requires_hermes: ">=0.23.0"
 version: "0.1.1"
-docs_url: https://github.com/<USER>/patchsmith#readme
+docs_url: https://github.com/icporcincula/patchsmith#readme
 platforms: []
 capabilities:
   provides_tools:

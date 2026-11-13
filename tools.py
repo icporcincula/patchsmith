@@ -19,7 +19,11 @@ from .guards import child_env, protected_target
 OUT_LIMIT = 6000
 TRANSCRIPTS = ".patchsmith"
 HIDDEN = {".git", "node_modules", ".ship", TRANSCRIPTS}
-TEST_RE = re.compile(r"(\.(test|spec)\.[jt]sx?$)|(^|/)test_[^/]+\.py$|(^|/)(tests|__tests__)(/|$)", re.I)
+TEST_FILE_RE = re.compile(
+    r"(?:test_.+|.+_test|conftest)\.py|.+_test\.go|.*\.(?:test|spec)\.[cm]?[jt]sx?",
+    re.I,
+)
+TEST_DIRS = {"test", "tests", "__tests__"}
 
 
 class Jail(ValueError):
@@ -79,6 +83,12 @@ def hidden(path: Path) -> bool:
     return any(part.casefold() in HIDDEN for part in path.parts)
 
 
+def test_path(path: Path) -> bool:
+    return any(part.casefold() in TEST_DIRS for part in path.parts) or bool(
+        TEST_FILE_RE.fullmatch(path.name)
+    )
+
+
 def linked(path: Path) -> bool:
     return path.is_symlink() or path.is_junction()
 
@@ -128,9 +138,10 @@ class Session:
         if write:
             if resolved == self.root:
                 raise Jail("Expected a file path.")
-            if protected_target(raw.relative_to(self.root)) or protected_target(relative):
+            raw_relative = raw.relative_to(self.root)
+            if protected_target(raw_relative) or protected_target(relative):
                 raise Jail(f"Protected write target (.env* and .ssh/ are never written): {name}")
-            if TEST_RE.search(raw.relative_to(self.root).as_posix()) or TEST_RE.search(relative.as_posix()):
+            if test_path(raw_relative) or test_path(relative):
                 raise Jail(f"Test files are read-only: {name}")
             self.check_parents(raw)
             if linked(raw):
@@ -182,7 +193,7 @@ class Session:
     def test_snapshot(self):
         snapshot = {}
         for name in self.walk_files():
-            if TEST_RE.search(name):
+            if test_path(Path(name)):
                 state = capture(self.root / name)
                 if state is not None:
                     snapshot[name] = state
